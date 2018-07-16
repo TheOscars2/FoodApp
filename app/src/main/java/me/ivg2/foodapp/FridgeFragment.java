@@ -6,21 +6,28 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import me.ivg2.foodapp.Model.Food;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FridgeFragment extends Fragment {
     private Button foodDetailBtn;
-    private Callback callback;
+    private static Callback callback;
+
+    FoodItemRepository foods;
+    private FridgeGridAdapter gridAdapter;
+    private RecyclerView rvPosts;
 
     interface Callback {
-        void goToFoodDetail();
+        void goToFoodDetail(Food food);
     }
 
     @Override
@@ -44,7 +51,6 @@ public class FridgeFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,14 +60,17 @@ public class FridgeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        foodDetailBtn = view.findViewById(R.id.foodDetailBtn);
+        rvPosts= (RecyclerView) view.findViewById(R.id.rvGrid);
+        foods = FoodItemRepository.getInstance();
 
+        gridAdapter = new FridgeGridAdapter(foods);
 
-        foodDetailBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callback.goToFoodDetail();
-            }
-        });
+        //RecyclerView setup -- layout manager and use adapter
+        rvPosts.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        rvPosts.setAdapter(gridAdapter);
+    }
+
+    public static void onFoodViewClicked(Food food) {
+        callback.goToFoodDetail(food);
     }
 }
