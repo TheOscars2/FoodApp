@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import me.ivg2.foodapp.Model.Food;
+
 public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback{
 
     FragmentManager fragmentManager;
@@ -71,8 +73,16 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToFoodDetail() {
-        fragmentManager.beginTransaction().replace(R.id.homeFragment, new FoodDetailFragment()).commit();
-    }
+    public void goToFoodDetail(Food food) {
+        Bundle arguments = new Bundle();
+        arguments.putString("image_url", food.getImageURL());
+        arguments.putString("expiration_date", food.getExpirationDate().toString());
+        arguments.putString("quantity", Double.toString(food.getQuantity()));
+        arguments.putString("name", food.getName());
 
+        FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
+        foodDetailFragment.setArguments(arguments);
+
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, foodDetailFragment).commit();
+    }
 }
