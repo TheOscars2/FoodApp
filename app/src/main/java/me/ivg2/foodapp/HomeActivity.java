@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import me.ivg2.foodapp.Model.Food;
+import me.ivg2.foodapp.barcode.BarcodeFragment;
 
 public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback{
 
