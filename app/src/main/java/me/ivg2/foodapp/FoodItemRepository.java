@@ -39,8 +39,8 @@ public class FoodItemRepository {
     }
 
     public static ArrayList<Food> getAll() {
-        return getInstance().foods;
-    }
+    return getInstance().foods;
+}
 
     public static Food get(int index) {
         return getInstance().foods.get(index);

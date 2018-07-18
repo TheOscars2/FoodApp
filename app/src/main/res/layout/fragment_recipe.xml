@@ -6,21 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".RecipeFragment">
 
-    <Button
-        android:id="@+id/recipeDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Button" />
-
-    <ImageButton
-        android:id="@+id/addRecipe"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingAddRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="63dp"
-        android:layout_marginEnd="24dp"
-        android:src="@android:drawable/ic_input_add" />
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/plus"
+        app:backgroundTint="#ffffff"
+        android:layout_alignParentRight="true"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvRecipe"
+        android:layout_width="match_parent"
+        android:layout_height="517dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

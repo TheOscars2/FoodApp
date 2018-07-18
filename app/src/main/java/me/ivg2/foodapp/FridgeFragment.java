@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import me.ivg2.foodapp.Model.Food;
 
@@ -19,12 +18,11 @@ import me.ivg2.foodapp.Model.Food;
  * A simple {@link Fragment} subclass.
  */
 public class FridgeFragment extends Fragment {
-    private Button foodDetailBtn;
     private static Callback callback;
 
     FoodItemRepository foods;
     private FridgeGridAdapter gridAdapter;
-    private RecyclerView rvPosts;
+    private RecyclerView rvFoods;
 
     interface Callback {
         void goToFoodDetail(Food food);
@@ -60,14 +58,14 @@ public class FridgeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        rvPosts= (RecyclerView) view.findViewById(R.id.rvGrid);
+        rvFoods = (RecyclerView) view.findViewById(R.id.rvGrid);
         foods = FoodItemRepository.getInstance();
 
         gridAdapter = new FridgeGridAdapter(foods);
 
         //RecyclerView setup -- layout manager and use adapter
-        rvPosts.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        rvPosts.setAdapter(gridAdapter);
+        rvFoods.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        rvFoods.setAdapter(gridAdapter);
     }
 
     public static void onFoodViewClicked(Food food) {

@@ -1,5 +1,6 @@
 package me.ivg2.foodapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,15 +11,41 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Date;
+
+import me.ivg2.foodapp.Model.Food;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ManualAddFragment extends Fragment {
-    private String name;
-    private EditText etFood;
+
+    private EditText etFoodName;
     private EditText etFoodQuantity;
-    private EditText etFoodExp;
-    private Button addToFridgeBtn;
+    private EditText etFoodExpDate;
+    private Button addToFridge;
+
+    private Callback callback;
+
+    interface Callback {
+        void goToFridge();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof ManualAddFragment.Callback) {
+            callback = (ManualAddFragment.Callback) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        callback = null;
+    }
 
     public ManualAddFragment() {
         // Required empty public constructor
@@ -34,23 +61,27 @@ public class ManualAddFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        etFood = view.findViewById(R.id.etFood);
+        etFoodName = view.findViewById(R.id.etFood);
         etFoodQuantity = view.findViewById(R.id.etFoodQuantity);
-        etFoodExp = view.findViewById(R.id.etFoodExpirationDate);
-        addToFridgeBtn = view.findViewById(R.id.addToFridgeBtn);
-        try {
-            name = getArguments().getString("produceName", "");
-        } catch (NullPointerException n) {
-            name ="";
-        }
-        etFood.setText(name);
-    }
+        etFoodExpDate = view.findViewById(R.id.etFoodExpirationDate);
+        addToFridge = view.findViewById(R.id.addToFridgeBtn);
 
-    public static ManualAddFragment newInstance(String produceName) {
-        ManualAddFragment manFrag = new ManualAddFragment();
-        Bundle args = new Bundle();
-        args.putString("produceName", produceName);
-        manFrag.setArguments(args);
-        return manFrag;
+        try {
+            String name = getArguments().getString("produceName");
+            etFoodName.setText(name);
+        } catch (NullPointerException n) {
+        }
+
+        addToFridge.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Food newFood = new Food(etFoodName.getText().toString(), Double.parseDouble(etFoodQuantity.getText().toString()),
+                        new Date(etFoodExpDate.getText().toString()));
+                FoodItemRepository.create(newFood);
+
+                callback.goToFridge();
+            }
+        });
+
     }
 }

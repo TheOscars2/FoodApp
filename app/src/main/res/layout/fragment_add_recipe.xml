@@ -1,13 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddRecipeFragment">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text='"Add Recipe Manually"'
-        android:textSize="100sp" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/etMins"
+        android:layout_width="53dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/etHrs"
+        android:layout_marginEnd="134dp"
+        android:ems="10"
+        android:hint="min"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/etHrs"
+        android:layout_width="36dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textView"
+        android:layout_marginStart="133dp"
+        android:ems="10"
+        android:hint="hrs"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/etRecipeSource"
+        android:layout_width="299dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="94dp"
+        android:ems="10"
+        android:hint="Enter recipe source"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/etRecipeName"
+        android:layout_width="299dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="Enter recipe name"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btnAddIng"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="232dp"
+        android:text="Next" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="164dp"
+        android:text="Cook time: " />
+
+</RelativeLayout>

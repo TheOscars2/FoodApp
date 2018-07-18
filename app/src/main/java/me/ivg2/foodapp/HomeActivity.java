@@ -1,5 +1,6 @@
 package me.ivg2.foodapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,9 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import me.ivg2.foodapp.Model.Food;
+import me.ivg2.foodapp.Model.Recipe;
 import me.ivg2.foodapp.barcode.BarcodeFragment;
 
-public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback{
+public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback, AddRecipeFragment.Callback, ManualAddFragment.Callback, PluFragment.Callback {
 
     FragmentManager fragmentManager;
 
@@ -50,8 +52,21 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToRecipeDetail() {
-        fragmentManager.beginTransaction().replace(R.id.homeFragment, new RecipeDetailFragment()).commit();
+    public void goToRecipeDetail(Recipe recipe, int position) {
+        Bundle bundle = new Bundle();
+        bundle.putString("image_url", recipe.getImageUrl());
+        bundle.putString("name", recipe.getName());
+        bundle.putString("source", recipe.getSource());
+        bundle.putInt("hours", recipe.getCookTimeHours());
+        bundle.putInt("min", recipe.getCookTimeMinutes());
+        bundle.putStringArrayList("ingredients", recipe.getIngredients());
+        bundle.putStringArrayList("instructions", recipe.getInstructions());
+        bundle.putInt("position", position);
+
+        RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
+        recipeDetailFragment.setArguments(bundle);
+
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, recipeDetailFragment).commit();
     }
 
     @Override
@@ -85,5 +100,43 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         foodDetailFragment.setArguments(arguments);
 
         fragmentManager.beginTransaction().replace(R.id.homeFragment, foodDetailFragment).commit();
+    }
+
+    @Override
+    public void goToAddIngredients() {
+        Intent intent = new Intent(this, ManualAddIngredientsActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToFridge() {
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, new FridgeFragment()).commit();
+    }
+
+    @Override
+    public void goToEditRecipe(int position) {
+        Bundle arguments = new Bundle();
+        arguments.putInt("position", position);
+        AddRecipeFragment arFrag = new AddRecipeFragment();
+        arFrag.setArguments(arguments);
+
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, arFrag).commit();
+    }
+
+
+    @Override
+    public void goToEditIngredients(int position) {
+        Intent intent = new Intent(this, ManualAddIngredientsActivity.class);
+        intent.putExtra("position", position);
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToManualFromPlu(String foodName) {
+        Bundle arguments = new Bundle();
+        arguments.putString("produceName", foodName);
+        ManualAddFragment manualAddFragment = new ManualAddFragment();
+        manualAddFragment.setArguments(arguments);
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
     }
 }

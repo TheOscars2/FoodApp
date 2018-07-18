@@ -13,6 +13,13 @@ public class Food {
         imageURL = null;
     }
 
+    public Food(String name, double quantity, Date expirationDate) {
+        this.name = name;
+        this.quantity = quantity;
+        this.expirationDate = expirationDate;
+        imageURL = null;
+    }
+
     public Food(String name, String imageURL) {
         this.name = name;
         this.imageURL = imageURL;
