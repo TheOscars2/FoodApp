@@ -19,10 +19,10 @@ import com.bumptech.glide.Glide;
  */
 public class FoodDetailFragment extends Fragment {
 
-    private ImageView foodImage;
-    private TextView foodName;
-    private TextView foodQuantity;
-    private TextView foodExpDate;
+    private ImageView ivFoodImage;
+    private TextView etFoodName;
+    private TextView etFoodQuantity;
+    private TextView etFoodExpDate;
 
     public FoodDetailFragment() {
         // Required empty public constructor
@@ -37,23 +37,23 @@ public class FoodDetailFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        foodImage = view.findViewById(R.id.foodImage);
-        foodName = view.findViewById(R.id.name);
-        foodQuantity = view.findViewById(R.id.quantity);
-        foodExpDate = view.findViewById(R.id.expiration);
+        ivFoodImage = view.findViewById(R.id.foodImage);
+        etFoodName = view.findViewById(R.id.name);
+        etFoodQuantity = view.findViewById(R.id.quantity);
+        etFoodExpDate = view.findViewById(R.id.expiration);
 
         Bundle arguments = getArguments();
 
-        foodName.setText(arguments.getString("name"));
-        foodQuantity.setText(arguments.getString("quantity"));
-        foodExpDate.setText(arguments.getString("expiration_date"));
+        etFoodName.setText(arguments.getString("name"));
+        etFoodQuantity.setText(arguments.getString("quantity"));
+        etFoodExpDate.setText(arguments.getString("expiration_date"));
 
         String url = arguments.getString("image_url");
 
         if (url != null) {
             Glide.with(this)
                     .load(url)
-                    .into(foodImage);
+                    .into(ivFoodImage);
         }
     }
 }

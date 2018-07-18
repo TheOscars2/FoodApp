@@ -1,33 +1,37 @@
 package me.ivg2.foodapp;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 
+import me.ivg2.foodapp.Model.Recipe;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RecipeFragment extends Fragment {
 
-    ImageButton addButton;
+    FloatingActionButton floatingAddButton;
+
+    RecipeItemRepository recipes;
+    private RecipeAdapter recipeAdapter;
+    private RecyclerView rvRecipes;
 
     interface Callback {
-        void goToRecipeDetail();
+        void goToRecipeDetail(Recipe recipe, int position);
         void goToAddRecipe();
-
-        void goToBarcodeScanner();
+        void goToEditRecipe(int position);
     }
 
-    private Callback callback;
+    private static Callback callback;
 
 
     public RecipeFragment() {
@@ -44,24 +48,22 @@ public class RecipeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        addButton = view.findViewById(R.id.addRecipe);
+        floatingAddButton = view.findViewById(R.id.floatingAddRecipe);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        floatingAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 callback.goToAddRecipe();
             }
         });
 
-        Button button = view.findViewById(R.id.recipeDetail);
+        rvRecipes = (RecyclerView) view.findViewById(R.id.rvRecipe);
+        recipes = RecipeItemRepository.getInstance();
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //communicate between fragments
-                callback.goToRecipeDetail();
-            }
-        });
+        recipeAdapter = new RecipeAdapter(recipes);
+
+        rvRecipes.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvRecipes.setAdapter(recipeAdapter);
     }
 
     @Override
@@ -78,5 +80,13 @@ public class RecipeFragment extends Fragment {
         super.onDetach();
 
         callback = null;
+    }
+
+    public static void onRecipeClicked(Recipe recipe, int position) {
+        callback.goToRecipeDetail(recipe, position);
+    }
+
+    public static void onEditClicked(int position) {
+        callback.goToEditRecipe(position);
     }
 }

@@ -1,11 +1,11 @@
 package me.ivg2.foodapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +27,28 @@ public class PluFragment extends Fragment {
     private String produce;
     private String userInput;
 
+    private Callback callback;
+
+    interface Callback {
+        void goToManualFromPlu(String foodName);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof PluFragment.Callback) {
+            callback = (PluFragment.Callback) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        callback = null;
+    }
+
     public PluFragment() {
         // Required empty public constructor
     }
@@ -46,6 +68,7 @@ public class PluFragment extends Fragment {
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                userCode.clearFocus();
                 InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(getActivity().INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 userInput = userCode.getText().toString();
@@ -55,10 +78,10 @@ public class PluFragment extends Fragment {
                 }
                 pluProgress.setVisibility(ProgressBar.VISIBLE);
 
-                //int pluCode = Integer.parseInt(userCode.getText().toString());
-                //lookup in plu file what the pluCode is a key to
-                //produce = whatever value was found
-                //bundle the string
+//                int pluCode = Integer.parseInt(userCode.getText().toString());
+//                lookup in plu file what the pluCode is a key to
+//                produce = whatever value was found
+//                bundle the string
 
                 Handler handler = new Handler();
                 Runnable r = new Runnable() {
@@ -71,12 +94,7 @@ public class PluFragment extends Fragment {
                             Toast.makeText(getContext(), "Error during PLU look up, try again", Toast.LENGTH_LONG).show();
                             pluProgress.setVisibility(ProgressBar.INVISIBLE);
                         } else {
-                            //apple
-                            produce = "apple";
-                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            userCode.setText("");
-                            transaction.replace(R.id.homeFragment, ManualAddFragment.newInstance(produce));
-                            transaction.commit();
+                            callback.goToManualFromPlu("apple");
                         }
                     }
                 };
