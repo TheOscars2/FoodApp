@@ -1,13 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PluFragment">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="PLU FRAGMENT"
-        android:textSize="30sp" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/etPLU"
+        android:layout_width="168dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="78dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/tvPLU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/etPLU"
+        android:layout_margin="10dp"
+        android:layout_toStartOf="@+id/etPLU"
+        android:text="PLU code:"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnPLU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/etPLU"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/etPLU"
+        android:text="Go" />
+
+    <ProgressBar
+        android:id="@+id/pluProgress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="70dp"
+        android:layout_height="85dp"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="226dp" />
+</RelativeLayout>
