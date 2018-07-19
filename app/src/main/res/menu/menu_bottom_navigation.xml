@@ -7,19 +7,16 @@
         android:id="@+id/list"
         android:enabled="true"
         android:icon="@drawable/list_icon"
-        app:showAsAction="always"
-        android:title="" />
+        app:showAsAction="always"/>
     <item
         android:id="@+id/apple"
         android:enabled="true"
         android:icon="@drawable/apple_icon"
-        app:showAsAction="always"
-        android:title="" />
+        app:showAsAction="always"/>
     <item
         android:id="@+id/fridge"
         android:enabled="true"
         android:icon="@drawable/fridge_icon"
-        app:showAsAction="always"
-        android:title="" />
+        app:showAsAction="always"/>
 
 </menu>
