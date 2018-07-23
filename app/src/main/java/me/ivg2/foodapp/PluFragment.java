@@ -6,10 +6,10 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -21,12 +21,12 @@ import java.util.Random;
  * A simple {@link Fragment} subclass.
  */
 public class PluFragment extends Fragment {
-
     private Button goButton;
+    private static final int[] buttonIDArray = {R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9};
+    private Button[] buttonsArray = new Button[buttonIDArray.length];
+    private Button deleteButton;
     private ProgressBar pluProgress;
     private String produce;
-    private String userInput;
-
     private Callback callback;
 
     interface Callback {
@@ -36,7 +36,6 @@ public class PluFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if (context instanceof PluFragment.Callback) {
             callback = (PluFragment.Callback) context;
         }
@@ -45,7 +44,6 @@ public class PluFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
         callback = null;
     }
 
@@ -62,27 +60,41 @@ public class PluFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        goButton = view.findViewById(R.id.btnPLU);
-        final EditText userCode = view.findViewById(R.id.etPLU);
         pluProgress = view.findViewById(R.id.pluProgress);
+        final EditText userCode = view.findViewById(R.id.etPLU);
+        userCode.setInputType(InputType.TYPE_NULL);
+        for (int i = 0; i < buttonIDArray.length; i++) {
+            final int b = i;
+            buttonsArray[b] = view.findViewById(buttonIDArray[b]);
+            buttonsArray[b].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    userCode.setText(userCode.getText().insert(userCode.getText().length(), Integer.toString(b)));
+                }
+            });
+        }
+        deleteButton = view.findViewById(R.id.btnDelete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (userCode.getText().length() > 0) {
+                    userCode.setText(userCode.getText().delete(userCode.getText().length() - 1, userCode.getText().length()));
+                }
+            }
+        });
+        goButton = view.findViewById(R.id.btnEnter);
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userCode.clearFocus();
-                InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(getActivity().INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                userInput = userCode.getText().toString();
-                if (userInput.equals("")) {
-                    Toast.makeText(getActivity(), "please enter PLU", Toast.LENGTH_LONG).show();
+                if (userCode.getText().length() < 4) {
+                    Toast.makeText(getActivity(), "Please enter a valid PLU", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 pluProgress.setVisibility(ProgressBar.VISIBLE);
-
 //                int pluCode = Integer.parseInt(userCode.getText().toString());
 //                lookup in plu file what the pluCode is a key to
 //                produce = whatever value was found
 //                bundle the string
-
                 Handler handler = new Handler();
                 Runnable r = new Runnable() {
                     public void run() {
@@ -98,7 +110,7 @@ public class PluFragment extends Fragment {
                         }
                     }
                 };
-                handler.postDelayed(r, 3000);
+                handler.postDelayed(r, 1500);
             }
         });
     }
