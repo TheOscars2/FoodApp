@@ -8,6 +8,7 @@ package me.ivg2.foodapp.barcode;
 abstract class TrackedGraphic<T> extends GraphicOverlay.Graphic {
     private int mId;
 
+
     TrackedGraphic(GraphicOverlay overlay) {
         super(overlay);
     }

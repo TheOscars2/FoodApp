@@ -4,11 +4,15 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import me.ivg2.foodapp.R;
 
 /**
  * A view which renders a series of custom graphics to be overlayed on top of an associated preview
@@ -36,6 +40,8 @@ public class GraphicOverlay extends View {
     private float mHeightScaleFactor = 1.0f;
     private int mFacing = CameraSource.CAMERA_FACING_BACK;
     private Set<Graphic> mGraphics = new HashSet<>();
+    private Barcode b;
+
 
     /**
      * Base class for a custom graphics object to be rendered within the graphic overlay.  Subclass
@@ -123,6 +129,7 @@ public class GraphicOverlay extends View {
     public void add(Graphic graphic) {
         synchronized (mLock) {
             mGraphics.add(graphic);
+
         }
         postInvalidate();
     }
@@ -160,9 +167,16 @@ public class GraphicOverlay extends View {
             if ((mPreviewWidth != 0) && (mPreviewHeight != 0)) {
                 mWidthScaleFactor = (float) canvas.getWidth() / (float) mPreviewWidth;
                 mHeightScaleFactor = (float) canvas.getHeight() / (float) mPreviewHeight;
+
             }
+
             for (Graphic graphic : mGraphics) {
                 graphic.draw(canvas);
+                //Fire the intent to go to Girum's add item thing
+                BarcodeItemRepository barcodeItemRepository = BarcodeItemRepository.getInstance();
+                barcodeItemRepository.create(b);
+                BarcodeFragment.gotBarcode();
+
             }
         }
     }

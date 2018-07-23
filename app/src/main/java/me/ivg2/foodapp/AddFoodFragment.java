@@ -43,7 +43,6 @@ public class AddFoodFragment extends Fragment {
         callback = null;
     }
 
-
     public AddFoodFragment() {
         // Required empty public constructor
     }

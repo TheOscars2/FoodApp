@@ -9,11 +9,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.google.android.gms.vision.Tracker;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
+
 import me.ivg2.foodapp.Model.Food;
 import me.ivg2.foodapp.Model.Recipe;
 import me.ivg2.foodapp.barcode.BarcodeFragment;
+import me.ivg2.foodapp.barcode.GraphicOverlay;
 
-public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback, AddRecipeFragment.Callback, ManualAddFragment.Callback, PluFragment.Callback {
+
+public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback, AddRecipeFragment.Callback, ManualAddFragment.Callback, BarcodeFragment.Callback, PluFragment.Callback {
+
 
     FragmentManager fragmentManager;
 
@@ -87,7 +94,17 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     public void goToManualFoodAddition() {
         fragmentManager.beginTransaction().replace(R.id.homeFragment, new ManualAddFragment()).commit();
     }
+    @Override
+    public void goToManualFoodAdditionfromBarcode() {
+        Bundle arguments = new Bundle();
 
+        arguments.putString("productName", "Apple");
+
+        ManualAddFragment manualAddFragment = new ManualAddFragment();
+        manualAddFragment.setArguments(arguments);
+
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
+    }
     @Override
     public void goToFoodDetail(Food food) {
         Bundle arguments = new Bundle();
@@ -134,7 +151,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     @Override
     public void goToManualFromPlu(String foodName) {
         Bundle arguments = new Bundle();
-        arguments.putString("produceName", foodName);
+        arguments.putString("productName", foodName);
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
