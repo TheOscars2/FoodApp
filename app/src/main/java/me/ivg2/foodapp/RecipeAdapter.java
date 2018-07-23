@@ -12,6 +12,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+
+import com.google.android.gms.fido.fido2.api.common.RequestOptions;
+
 
 import me.ivg2.foodapp.Model.Recipe;
 
@@ -19,7 +23,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     private RecipeItemRepository recipes;
     Context context;
-
 
     public RecipeAdapter(RecipeItemRepository recipes) {
         this.recipes = recipes;
@@ -65,12 +68,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             }
         });
 
-        Recipe recipe = recipes.get(index);
 
+        Recipe recipe = recipes.get(index);
+        holder.tvHourTime.setText(recipe.getCookTime());
         holder.tvRecipeName.setText(recipe.getName());
         holder.tvRecipeSource.setText(recipe.getSource());
-        holder.tvHourTime.setText("" + recipe.getCookTimeHours());
-        holder.tvMinTime.setText("" + recipe.getCookTimeMinutes());
 
         if (recipe.getImageBitmap() != null) {
             holder.ivRecipeImage.setImageBitmap(recipe.getImageBitmap());
@@ -92,7 +94,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         ImageView ivRecipeImage;
         TextView tvRecipeName;
         TextView tvHourTime;
-        TextView tvMinTime;
         TextView tvRecipeSource;
         TextView tvOptions;
 
@@ -102,7 +103,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             ivRecipeImage = itemView.findViewById(R.id.recipeImage);
             tvRecipeName = itemView.findViewById(R.id.recipeName);
             tvHourTime = itemView.findViewById(R.id.hourTime);
-            tvMinTime = itemView.findViewById(R.id.minTime);
             tvRecipeSource = itemView.findViewById(R.id.recipeSource);
             tvOptions = itemView.findViewById(R.id.options);
 
