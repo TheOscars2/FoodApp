@@ -1,5 +1,6 @@
 package me.ivg2.foodapp.barcode;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,6 +9,9 @@ import android.graphics.RectF;
 import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
+
+import me.ivg2.foodapp.HomeActivity;
+import me.ivg2.foodapp.ManualAddFragment;
 
 /**
  * Factory for creating a tracker and associated graphic to be associated with a new barcode.  The
@@ -64,6 +68,12 @@ class BarcodeGraphic extends TrackedGraphic<Barcode> {
         //
         //switch fragment to "add item", pass in the mBarcode.rawValue (integer)
         postInvalidate();
+
+        /**
+         * get the barcode and put it into the barcodeItemRepositoruy and then
+         * finish this screen and move them to the manual entry activity
+         */
+
     }
 
     /**
