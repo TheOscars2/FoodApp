@@ -11,6 +11,7 @@ public class Recipe {
     //different units- min v hour
     private int cookTimeHours;
     private int cookTimeMinutes;
+    private String cookTime = "";
     private Bitmap imageBitmap;
 
     //The format of these two variables is unknown
@@ -43,11 +44,22 @@ public class Recipe {
         cookTimeMinutes = 0;
     }
 
+    private String formatTime(int minutes, int hours) {
+        if (hours > 0 && hours!=0) {
+            cookTime += hours + "h ";
+        }
+
+        if (minutes > 0) {
+            cookTime += minutes + "m ";
+        }
+        return cookTime;
+    }
+
     public Recipe(String name, String source, int cookTimeHours, int cookTimeMinutes) {
         this.name = name;
         this.source = source;
-        this.cookTimeHours = cookTimeHours;
-        this.cookTimeMinutes = cookTimeMinutes;
+        this.cookTime = formatTime(cookTimeMinutes, cookTimeHours);
+
         ingredients = new ArrayList<>();
         instructions = new ArrayList<>();
     }
@@ -87,6 +99,11 @@ public class Recipe {
     public int getCookTimeMinutes() {
         return cookTimeMinutes;
     }
+
+    public String getCookTime() {
+        return formatTime(getCookTimeMinutes(),getCookTimeHours());
+    }
+
 
     public void setCookTimeMinutes(int cookTimeMinutes) {
         this.cookTimeMinutes = cookTimeMinutes;
