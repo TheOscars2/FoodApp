@@ -8,12 +8,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
-import com.bumptech.glide.Glide;
 import android.widget.Button;
 import android.widget.EditText;
-import java.util.Date;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import me.ivg2.foodapp.Model.Food;
 
 /**
@@ -25,6 +26,10 @@ public class ManualAddFragment extends Fragment {
     private EditText etFoodQuantity;
     private EditText etFoodExpDate;
     private Button addToFridge;
+
+    private int index;
+    private boolean isEditMode;
+    private DateFormat dateFormat;
 
     private Callback callback;
 
@@ -67,24 +72,45 @@ public class ManualAddFragment extends Fragment {
         etFoodExpDate = view.findViewById(R.id.etFoodExpirationDate);
         addToFridge = view.findViewById(R.id.addToFridgeBtn);
 
+        dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+
         try {
             String name = getArguments().getString("productName");
             etFoodName.setText(name);
         } catch (NullPointerException n) {
-            //Toast.makeText(getContext(), "failed", Toast.LENGTH_LONG).show();
-
         }
 
-        addToFridge.setOnClickListener(new View.OnClickListener(){
+        isEditMode = true;
+        try {
+            index = getArguments().getInt("index");
+
+            etFoodName.setText(FoodItemRepository.get(index).getName());
+            etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()));
+            etFoodExpDate.setText(dateFormat.format(FoodItemRepository.get(index).getExpirationDate()));
+        } catch (NullPointerException e) {
+            isEditMode = false;
+        }
+
+        addToFridge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Food newFood = new Food(etFoodName.getText().toString(), Double.parseDouble(etFoodQuantity.getText().toString()),
-                        new Date(etFoodExpDate.getText().toString()));
-                FoodItemRepository.create(newFood);
+                Food newFood = null;
+                try {
+                    newFood = new Food(etFoodName.getText().toString(), Double.parseDouble(etFoodQuantity.getText().toString()),
+                            dateFormat.parse(etFoodExpDate.getText().toString()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (isEditMode) {
+                    newFood.setImageURL(FoodItemRepository.get(index).getImageURL());
+                    FoodItemRepository.update(index, newFood);
+                } else {
+                    FoodItemRepository.create(newFood);
+                }
 
                 callback.goToFridge();
             }
         });
-
     }
 }

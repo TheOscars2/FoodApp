@@ -26,9 +26,9 @@ public class RecipeFragment extends Fragment {
     private RecyclerView rvRecipes;
 
     interface Callback {
-        void goToRecipeDetail(Recipe recipe, int position);
+        void goToRecipeDetail(Recipe recipe, int index);
         void goToAddRecipe();
-        void goToEditRecipe(int position);
+        void goToEditRecipe(int index);
     }
 
     private static Callback callback;
@@ -80,11 +80,11 @@ public class RecipeFragment extends Fragment {
         callback = null;
     }
 
-    public static void onRecipeClicked(Recipe recipe, int position) {
-        callback.goToRecipeDetail(recipe, position);
+    public static void onRecipeClicked(Recipe recipe, int index) {
+        callback.goToRecipeDetail(recipe, index);
     }
 
-    public static void onEditClicked(int position) {
-        callback.goToEditRecipe(position);
+    public static void onEditClicked(int index) {
+        callback.goToEditRecipe(index);
     }
 }

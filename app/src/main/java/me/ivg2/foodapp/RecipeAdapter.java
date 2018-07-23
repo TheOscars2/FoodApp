@@ -37,7 +37,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int index) {
         holder.tvOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,11 +49,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete:
-                                recipes.delete(position);
+                                recipes.delete(index);
                                 notifyDataSetChanged();
                                 return true;
                             case R.id.edit:
-                                RecipeFragment.onEditClicked(position);
+                                RecipeFragment.onEditClicked(index);
                                 return true;
                             default:
                                 return false;
@@ -65,7 +65,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             }
         });
 
-        Recipe recipe = recipes.get(position);
+        Recipe recipe = recipes.get(index);
 
         holder.tvRecipeName.setText(recipe.getName());
         holder.tvRecipeSource.setText(recipe.getSource());
@@ -111,11 +111,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
-            int position = getAdapterPosition();
+            int index = getAdapterPosition();
 
-            if (position != RecyclerView.NO_POSITION) {
-                Recipe recipe = recipes.get(position);
-                RecipeFragment.onRecipeClicked(recipe, position);
+            if (index != RecyclerView.NO_POSITION) {
+                Recipe recipe = recipes.get(index);
+                RecipeFragment.onRecipeClicked(recipe, index);
             }
         }
     }

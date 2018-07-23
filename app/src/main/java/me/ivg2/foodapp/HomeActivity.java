@@ -9,17 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.google.android.gms.vision.Tracker;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
-
-import me.ivg2.foodapp.Model.Food;
 import me.ivg2.foodapp.Model.Recipe;
 import me.ivg2.foodapp.barcode.BarcodeFragment;
-import me.ivg2.foodapp.barcode.GraphicOverlay;
 
 
-public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback, AddRecipeFragment.Callback, ManualAddFragment.Callback, BarcodeFragment.Callback, PluFragment.Callback {
+public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback, AddRecipeFragment.Callback, ManualAddFragment.Callback, BarcodeFragment.Callback, PluFragment.Callback, RecipeDetailFragment.Callback, FoodDetailFragment.Callback {
 
 
     FragmentManager fragmentManager;
@@ -59,7 +53,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToRecipeDetail(Recipe recipe, int position) {
+    public void goToRecipeDetail(Recipe recipe, int index) {
         Bundle bundle = new Bundle();
         bundle.putString("image_url", recipe.getImageUrl());
         bundle.putString("name", recipe.getName());
@@ -68,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         bundle.putInt("min", recipe.getCookTimeMinutes());
         bundle.putStringArrayList("ingredients", recipe.getIngredients());
         bundle.putStringArrayList("instructions", recipe.getInstructions());
-        bundle.putInt("position", position);
+        bundle.putInt("index", index);
 
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
         recipeDetailFragment.setArguments(bundle);
@@ -94,6 +88,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     public void goToManualFoodAddition() {
         fragmentManager.beginTransaction().replace(R.id.homeFragment, new ManualAddFragment()).commit();
     }
+
     @Override
     public void goToManualFoodAdditionfromBarcode() {
         Bundle arguments = new Bundle();
@@ -105,13 +100,11 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
 
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
     }
+
     @Override
-    public void goToFoodDetail(Food food) {
+    public void goToFoodDetail(int index) {
         Bundle arguments = new Bundle();
-        arguments.putString("image_url", food.getImageURL());
-        arguments.putString("expiration_date", food.getExpirationDate().toString());
-        arguments.putString("quantity", Double.toString(food.getQuantity()));
-        arguments.putString("name", food.getName());
+        arguments.putInt("index", index);
 
         FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
         foodDetailFragment.setArguments(arguments);
@@ -131,9 +124,9 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToEditRecipe(int position) {
+    public void goToEditRecipe(int index) {
         Bundle arguments = new Bundle();
-        arguments.putInt("position", position);
+        arguments.putInt("index", index);
         AddRecipeFragment arFrag = new AddRecipeFragment();
         arFrag.setArguments(arguments);
 
@@ -142,9 +135,9 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
 
 
     @Override
-    public void goToEditIngredients(int position) {
+    public void goToEditIngredients(int index) {
         Intent intent = new Intent(this, ManualAddIngredientsActivity.class);
-        intent.putExtra("position", position);
+        intent.putExtra("index", index);
         startActivity(intent);
     }
 
@@ -154,6 +147,21 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         arguments.putString("productName", foodName);
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
+    }
+
+    @Override
+    public void goToRecipes() {
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, new RecipeFragment()).commit();
+    }
+
+    @Override
+    public void goToEditFood(int index) {
+        Bundle arguments = new Bundle();
+        arguments.putInt("index", index);
+        ManualAddFragment manualAddFragment = new ManualAddFragment();
+        manualAddFragment.setArguments(arguments);
+
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
     }
 }

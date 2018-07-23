@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +15,7 @@
         <ImageView
             android:id="@+id/recipeImageDetail"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             app:srcCompat="@android:color/background_dark"
@@ -25,10 +26,14 @@
             android:id="@+id/nameRecipeDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/recipeImageDetail"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/recipeImageDetail"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
             android:text="Recipe Name"
-            android:textSize="22sp"
+            android:textColor="#ffffff"
+            android:textSize="30sp"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="300dp" />
 
@@ -38,11 +43,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/nameRecipeDetail"
+            android:paddingLeft="10dp"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/timeRecipeDV"
-            android:layout_width="77dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/recipeImageDetail"
@@ -55,6 +61,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/RecipeSourceDV"
             android:layout_marginTop="26dp"
+            android:paddingLeft="10dp"
             android:text="As is talked about in this post, sometimes you want the ScrollView content to fill the screen. For example, if you had some buttons at the end of a readme. You want the buttons to always be at the end of the text and at bottom of the screen, even if the text doesn't scroll.  If the content scrolls, everything is fine. However, if the content is smaller than the size of the screen, the buttons are not at the bottom."
             android:textSize="16dp" />
 
@@ -64,6 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/ingredientsDV"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
             android:text="Instructions"
             android:textSize="18dp" />
 
@@ -73,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewInstructions"
+            android:paddingLeft="10dp"
             android:text="As is talked about in this post, sometimes you want the ScrollView content to fill the screen. For example, if you had some buttons at the end of a readme. You want the buttons to always be at the end of the text and at bottom of the screen, even if the text doesn't scroll.  If the content scrolls, everything is fine. However, if the content is smaller than the size of the screen, the buttons are not at the bottom."
             android:textSize="16dp" />
 
@@ -82,21 +92,32 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/RecipeSourceDV"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
             android:text="Ingredients"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/options"
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="41dp"
+            android:layout_alignBottom="@+id/recipeImageDetail"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="96dp"
             android:paddingLeft="25dp"
             android:text="&#8942;"
             android:textAppearance="?android:textAppearanceLarge"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="#ffffff"/>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/recipeImageDetail"
+            android:layout_toStartOf="@+id/timeRecipeDV"
+            app:srcCompat="@drawable/clock" />
+
 
     </RelativeLayout>
 </ScrollView>

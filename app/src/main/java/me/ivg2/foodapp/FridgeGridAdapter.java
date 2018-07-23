@@ -52,6 +52,7 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
                                 notifyDataSetChanged();
                                 return true;
                             case R.id.edit:
+                                FridgeFragment.onEditFoodClicked(i);
                                 return true;
                             default:
                                 return false;
@@ -96,11 +97,10 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
 
         @Override
         public void onClick(View v) {
-            int position = getAdapterPosition();
+            int index = getAdapterPosition();
 
-            if (position != RecyclerView.NO_POSITION) {
-                Food food = foods.get(position);
-                FridgeFragment.onFoodViewClicked(food);
+            if (index != RecyclerView.NO_POSITION) {
+                FridgeFragment.onFoodViewClicked(index);
             }
         }
     }
