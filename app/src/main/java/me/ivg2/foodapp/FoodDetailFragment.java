@@ -1,14 +1,17 @@
 package me.ivg2.foodapp;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +26,32 @@ public class FoodDetailFragment extends Fragment {
     private TextView etFoodName;
     private TextView etFoodQuantity;
     private TextView etFoodExpDate;
+    private TextView tvOptions;
+
+    private int index;
+
+    private Callback callback;
+
+    interface Callback {
+        void goToFridge();
+        void goToEditFood(int index);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof FoodDetailFragment.Callback) {
+            callback = (FoodDetailFragment.Callback) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        callback = null;
+    }
 
     public FoodDetailFragment() {
         // Required empty public constructor
@@ -41,12 +70,14 @@ public class FoodDetailFragment extends Fragment {
         etFoodName = view.findViewById(R.id.name);
         etFoodQuantity = view.findViewById(R.id.quantity);
         etFoodExpDate = view.findViewById(R.id.expiration);
+        tvOptions = view.findViewById(R.id.options);
 
         Bundle arguments = getArguments();
+        index = arguments.getInt("index");
 
-        etFoodName.setText(arguments.getString("name"));
-        etFoodQuantity.setText(arguments.getString("quantity"));
-        etFoodExpDate.setText(arguments.getString("expiration_date"));
+        etFoodName.setText(FoodItemRepository.get(index).getName());
+        etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()));
+        etFoodExpDate.setText(FoodItemRepository.get(index).getExpirationDate().toString());
 
         String url = arguments.getString("image_url");
 
@@ -55,5 +86,32 @@ public class FoodDetailFragment extends Fragment {
                     .load(url)
                     .into(ivFoodImage);
         }
+
+        tvOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu menu = new PopupMenu(getContext(), tvOptions);
+                menu.inflate(R.menu.recipe_menu);
+
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.delete:
+                                FoodItemRepository.delete(index);
+                                callback.goToFridge();
+                                return true;
+                            case R.id.edit:
+                                callback.goToEditFood(index);
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+
+                menu.show();
+            }
+        });
     }
 }

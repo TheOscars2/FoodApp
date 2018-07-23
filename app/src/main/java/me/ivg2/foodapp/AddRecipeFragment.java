@@ -23,13 +23,13 @@ public class AddRecipeFragment extends Fragment {
     private EditText etHoursField;
     private EditText etMinutesField;
     private Button addIngBtn;
-    private int position;
+    private int index;
 
     private static Callback callback;
 
     interface Callback {
         void goToAddIngredients();
-        void goToEditIngredients(int position);
+        void goToEditIngredients(int index);
     }
 
     @Override
@@ -72,8 +72,8 @@ public class AddRecipeFragment extends Fragment {
         boolean isEditMode = true;
 
         try {
-            position = getArguments().getInt("position");
-            Recipe recipe = RecipeItemRepository.get(position);
+            index = getArguments().getInt("index");
+            Recipe recipe = RecipeItemRepository.get(index);
 
             etRecipeName.setText(recipe.getName());
             etRecipeSource.setText(recipe.getSource());
@@ -96,7 +96,7 @@ public class AddRecipeFragment extends Fragment {
                 RecipeItemRepository.create(recipe);
                 //On click we also need to push user input to recipe in server
                 if (finalIsEditMode) {
-                    callback.goToEditIngredients(position);
+                    callback.goToEditIngredients(index);
                 } else {
                     callback.goToAddIngredients();
                 }

@@ -74,4 +74,17 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="369dp" />
 
+    <TextView
+        android:id="@+id/options"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="96dp"
+        android:paddingLeft="25dp"
+        android:text="&#8942;"
+        android:textAppearance="?android:textAppearanceLarge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </RelativeLayout>

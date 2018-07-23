@@ -20,7 +20,7 @@ public class ManualAddInstructionActivity extends AppCompatActivity {
     ArrayAdapter<String> instructionsAdapter;
     ListView lvInstructions;
     boolean isEditMode;
-    int position;
+    int index;
 
     public static final int EDIT_REQUEST_CODE = 20;
     public static final String ITEM_TEXT = "itemText";
@@ -39,9 +39,9 @@ public class ManualAddInstructionActivity extends AppCompatActivity {
         isEditMode = true;
 
         Intent intent = getIntent();
-        position = intent.getIntExtra("position", -1);
-        if (!(position == -1)) {
-            Recipe recipe = RecipeItemRepository.get(position);
+        index = intent.getIntExtra("index", -1);
+        if (!(index == -1)) {
+            Recipe recipe = RecipeItemRepository.get(index);
 
             for (String instruction : recipe.getInstructions()) {
                 instructions.add(instruction);
@@ -95,7 +95,10 @@ public class ManualAddInstructionActivity extends AppCompatActivity {
         currentRecipe.setInstructions(instructions);
 
         if (isEditMode) {
-            RecipeItemRepository.update(position, currentRecipe);
+            currentRecipe.setImageUrl(RecipeItemRepository.get(index).getImageUrl());
+            currentRecipe.setImageBitmap(RecipeItemRepository.get(index).getImageBitmap());
+
+            RecipeItemRepository.update(index, currentRecipe);
             RecipeItemRepository.delete(RecipeItemRepository.size() - 1);
         }
 

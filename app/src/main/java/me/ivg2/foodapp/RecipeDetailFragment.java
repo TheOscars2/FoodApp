@@ -52,11 +52,11 @@ public class RecipeDetailFragment extends Fragment {
     private Bitmap bitmap;
     private TextView tvOptions;
     private Callback callback;
-    private int position;
+    private int index;
 
     interface Callback {
-        void goToFridge();
-        void goToEditRecipe(int position);
+        void goToRecipes();
+        void goToEditRecipe(int index);
     }
 
     @Override
@@ -115,20 +115,10 @@ public class RecipeDetailFragment extends Fragment {
         setIngredientsInView(arguments.getStringArrayList("ingredients"));
         setInstructionsInView(arguments.getStringArrayList("instructions"));
 
-        //setup the change of recipe image from user's gallery
-        //set up changing profile image
-        ivRecipeImage.setOnClickListener(new View.OnClickListener () {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-            }
-        });
-
         String url = arguments.getString("image_url");
         final RecipeItemRepository recipeItemRepository = RecipeItemRepository.getInstance();
-        position = arguments.getInt("position");
-        Recipe recipe = recipeItemRepository.get(position);
+        index = arguments.getInt("index");
+        Recipe recipe = recipeItemRepository.get(index);
         if (recipe.getImageBitmap() != null) {
             ivRecipeImage.setImageBitmap(recipe.getImageBitmap());
         } else {
@@ -143,18 +133,22 @@ public class RecipeDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 PopupMenu menu = new PopupMenu(getContext(), tvOptions);
-                menu.inflate(R.menu.recipe_menu);
+                menu.inflate(R.menu.recipe_detail_menu);
 
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete:
-                                recipeItemRepository.delete(position);
-                                callback.goToFridge();
+                                recipeItemRepository.delete(index);
+                                callback.goToRecipes();
                                 return true;
                             case R.id.edit:
-                                callback.goToEditRecipe(position);
+                                callback.goToEditRecipe(index);
+                                return true;
+                            case R.id.changePicture:
+                                startActivityForResult(new Intent(Intent.ACTION_PICK,
+                                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
                                 return true;
                             default:
                                 return false;
@@ -201,7 +195,7 @@ public class RecipeDetailFragment extends Fragment {
 
                 Bundle arguments = getArguments();
                 RecipeItemRepository recipeItemRepository = RecipeItemRepository.getInstance();
-                Recipe recipe = recipeItemRepository.get(arguments.getInt("position"));
+                Recipe recipe = recipeItemRepository.get(arguments.getInt("index"));
 
                 recipe.setImageBitmap(bitmap);
             } catch (IOException e) {

@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.ivg2.foodapp.Model.Food;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -25,7 +23,8 @@ public class FridgeFragment extends Fragment {
     private RecyclerView rvFoods;
 
     interface Callback {
-        void goToFoodDetail(Food food);
+        void goToFoodDetail(int index);
+        void goToEditFood(int index);
     }
 
     @Override
@@ -68,7 +67,11 @@ public class FridgeFragment extends Fragment {
         rvFoods.setAdapter(gridAdapter);
     }
 
-    public static void onFoodViewClicked(Food food) {
-        callback.goToFoodDetail(food);
+    public static void onFoodViewClicked(int index) {
+        callback.goToFoodDetail(index);
+    }
+
+    public static void onEditFoodClicked(int index) {
+        callback.goToEditFood(index);
     }
 }

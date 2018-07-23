@@ -19,7 +19,7 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
     ArrayAdapter<String> ingredientAdapter;
     ListView lvIngredients;
     boolean isEditMode;
-    int position;
+    int index;
 
     public static final int EDIT_REQUEST_CODE = 20;
     public static final String ITEM_TEXT = "itemText";
@@ -38,9 +38,9 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
         isEditMode = true;
 
         Intent intent = getIntent();
-        position = intent.getIntExtra("position", -1);
-        if (!(position == -1)) {
-            Recipe recipe = RecipeItemRepository.get(position);
+        index = intent.getIntExtra("index", -1);
+        if (!(index == -1)) {
+            Recipe recipe = RecipeItemRepository.get(index);
 
             for (String ingredient : recipe.getIngredients()) {
                 ingredients.add(ingredient);
@@ -95,7 +95,7 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
         Intent intent = new Intent(ManualAddIngredientsActivity.this, ManualAddInstructionActivity.class);
         //send the user to the next add recipe screen
         if (isEditMode) {
-            intent.putExtra("position", position);
+            intent.putExtra("index", index);
         }
         startActivity(intent);
     }
