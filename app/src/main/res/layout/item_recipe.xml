@@ -23,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:paddingRight="5dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@android:color/background_dark"
+            app:srcCompat="@drawable/meal"
             tools:layout_editor_absoluteX="4dp"
             tools:layout_editor_absoluteY="2dp" />
         <LinearLayout
@@ -64,9 +64,6 @@
                     android:layout_weight="1"
                     android:textAppearance="?android:textAppearanceLarge" />
             </LinearLayout>
-
-
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,8 +91,6 @@
                     tools:layout_editor_absoluteY="29dp" />
 
             </LinearLayout>
-
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -123,27 +118,7 @@
                     android:paddingLeft="5dp"/>
 
             </LinearLayout>
-
-
-
-
-
-
         </LinearLayout>
-
-
     </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
 </android.support.v7.widget.CardView>
+

@@ -2,7 +2,6 @@ package me.ivg2.foodapp;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -91,26 +90,31 @@ public class PluFragment extends Fragment {
                     return;
                 }
                 pluProgress.setVisibility(ProgressBar.VISIBLE);
-//                int pluCode = Integer.parseInt(userCode.getText().toString());
-//                lookup in plu file what the pluCode is a key to
-//                produce = whatever value was found
-//                bundle the string
-                Handler handler = new Handler();
-                Runnable r = new Runnable() {
-                    public void run() {
-                        Random rand = new Random();
-                        int value = rand.nextInt(5);
-                        if (value == 1) {
-                            //error
-                            userCode.setText("");
-                            Toast.makeText(getContext(), "Error during PLU look up, try again", Toast.LENGTH_LONG).show();
-                            pluProgress.setVisibility(ProgressBar.INVISIBLE);
-                        } else {
-                            callback.goToManualFromPlu("apple");
-                        }
+                final int pluCode = Integer.parseInt(userCode.getText().toString());
+
+                Random rand = new Random();
+                int value = rand.nextInt(5);
+                if (value == 1) {
+                    //error
+                    userCode.setText("");
+                    Toast.makeText(getContext(), "Error during PLU look up, try again", Toast.LENGTH_LONG).show();
+                    pluProgress.setVisibility(ProgressBar.INVISIBLE);
+                } else {
+                    int firstDigit = Integer.parseInt(Integer.toString(pluCode).substring(0, 1));
+                    if (firstDigit == 1) {
+                        callback.goToManualFromPlu("apple");
+                    } else if (firstDigit == 2) {
+                        callback.goToManualFromPlu("banana");
+                    } else if (firstDigit == 3) {
+                        callback.goToManualFromPlu("pear");
+                    } else if (firstDigit == 4) {
+                        callback.goToManualFromPlu("grapes");
+                    } else if (firstDigit == 5) {
+                        callback.goToManualFromPlu("peach");
+                    } else {
+                        callback.goToManualFromPlu("plum");
                     }
-                };
-                handler.postDelayed(r, 1500);
+                }
             }
         });
     }
