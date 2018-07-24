@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -104,7 +105,7 @@ public class RecipeDetailFragment extends Fragment {
         minutes = arguments.getInt("min");
 
         if(hours > 0){
-            cookTime += hours + "hrs";
+            cookTime += hours + "h";
         }
 
         if(minutes > 0){
@@ -126,6 +127,8 @@ public class RecipeDetailFragment extends Fragment {
                 Glide.with(this)
                         .load(url)
                         .into(ivRecipeImage);
+            } else {
+                tvRecipeName.setTextColor(Color.parseColor("#000000"));
             }
         }
 
@@ -168,7 +171,7 @@ public class RecipeDetailFragment extends Fragment {
             ingDisplay += ingredient + "\n";
         }
 
-        tvRecipeIngredients.setText(ingDisplay);
+        tvRecipeIngredients.setText(ingDisplay.substring(0, ingDisplay.length() - 1));
     }
 
     public void setInstructionsInView(ArrayList<String> instructions) {
@@ -178,7 +181,7 @@ public class RecipeDetailFragment extends Fragment {
             instDisplay += instruction + "\n";
         }
 
-        tvRecipeInstructions.setText(instDisplay);
+        tvRecipeInstructions.setText(instDisplay.substring(0, instDisplay.length() - 1));
     }
 
     @Override

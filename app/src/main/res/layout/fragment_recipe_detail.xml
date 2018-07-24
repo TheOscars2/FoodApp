@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            app:srcCompat="@android:color/background_dark"
+            app:srcCompat="@drawable/meal"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
 
@@ -52,12 +52,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/recipeImageDetail"
-            android:text="TextView" />
+            android:text="TextView"
+            android:paddingRight="10dp"/>
 
         <TextView
             android:id="@+id/ingredientsDV"
             android:layout_width="match_parent"
-            android:layout_height="121dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/RecipeSourceDV"
             android:layout_marginTop="26dp"

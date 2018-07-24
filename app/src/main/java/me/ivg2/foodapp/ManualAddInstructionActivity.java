@@ -57,7 +57,7 @@ public class ManualAddInstructionActivity extends AppCompatActivity {
     public void onAddIngredient(View view) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewInstruction);
         String itemText = etNewItem.getText().toString();
-        instructions.add(itemText);
+        instructions.add('\u2022' + " " + itemText);
         etNewItem.setText("");
 
         instructionsAdapter.notifyDataSetChanged();

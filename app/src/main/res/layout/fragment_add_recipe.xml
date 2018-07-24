@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/etHrs"
-        android:layout_marginEnd="134dp"
+        android:layout_marginEnd="135dp"
         android:ems="10"
         android:hint="min"
         android:inputType="textMultiLine" />
@@ -21,8 +21,9 @@
         android:layout_width="36dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/textView"
-        android:layout_marginStart="133dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="157dp"
         android:ems="10"
         android:hint="hrs"
         android:inputType="textMultiLine" />
@@ -44,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="41dp"
         android:ems="10"
         android:hint="Enter recipe name"
         android:inputType="textMultiLine" />
@@ -59,12 +60,12 @@
         android:text="Next" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="164dp"
-        android:text="Cook time: " />
+        android:text="Add your recipe:"
+        android:textSize="20sp" />
 
 </RelativeLayout>

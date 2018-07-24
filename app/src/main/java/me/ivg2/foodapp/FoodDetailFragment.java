@@ -79,7 +79,7 @@ public class FoodDetailFragment extends Fragment {
         etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()));
         etFoodExpDate.setText(FoodItemRepository.get(index).getExpirationDate().toString());
 
-        String url = arguments.getString("image_url");
+        String url =FoodItemRepository.get(index).getImageURL();
 
         if (url != null) {
             Glide.with(this)

@@ -81,13 +81,13 @@ public class ManualAddFragment extends Fragment {
         }
 
         isEditMode = true;
-        try {
-            index = getArguments().getInt("index");
+        index = getArguments().getInt("index", -1);
 
+        if (!(index == -1)) {
             etFoodName.setText(FoodItemRepository.get(index).getName());
             etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()));
             etFoodExpDate.setText(dateFormat.format(FoodItemRepository.get(index).getExpirationDate()));
-        } catch (NullPointerException e) {
+        } else {
             isEditMode = false;
         }
 
