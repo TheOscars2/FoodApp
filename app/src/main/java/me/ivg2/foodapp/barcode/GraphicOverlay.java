@@ -184,11 +184,6 @@ public class GraphicOverlay extends View {
                             canvas.getWidth() - 300 + paint.getStrokeWidth() / 2, canvas.getHeight() - 450, canvas.getWidth() - 375, canvas.getHeight() - 450,       //bottom right
                             canvas.getWidth() - 300, canvas.getHeight() - 450, canvas.getWidth() - 300, canvas.getHeight() - 525};
             canvas.drawLines(pointsArray, paint);
-            if (!mGraphics.isEmpty()) {
-                BarcodeItemRepository barcodeItemRepository = BarcodeItemRepository.getInstance();
-                barcodeItemRepository.create(b);
-                BarcodeFragment.gotBarcode();
-            }
         }
     }
 }

@@ -64,7 +64,7 @@ public class BarcodeFragment extends Fragment {
     }
 
     public interface Callback {
-        void goToManualFoodAdditionfromBarcode();
+        void goToManualFoodAdditionfromBarcode(String foodName);
     }
 
     public BarcodeFragment() {
@@ -96,7 +96,20 @@ public class BarcodeFragment extends Fragment {
 
     public static void gotBarcode() {
         Barcode barcode = BarcodeItemRepository.get(BarcodeItemRepository.size() - 1);
-        callback.goToManualFoodAdditionfromBarcode();
+        int firstDigit = Integer.parseInt(Integer.toString(barcode.valueFormat).substring(0, 1));
+        if (firstDigit == 1) {
+            callback.goToManualFoodAdditionfromBarcode("apple");
+        } else if (firstDigit == 2) {
+            callback.goToManualFoodAdditionfromBarcode("banana");
+        } else if (firstDigit == 3) {
+            callback.goToManualFoodAdditionfromBarcode("pear");
+        } else if (firstDigit == 4) {
+            callback.goToManualFoodAdditionfromBarcode("grapes");
+        } else if (firstDigit == 5) {
+            callback.goToManualFoodAdditionfromBarcode("peach");
+        } else {
+            callback.goToManualFoodAdditionfromBarcode("plum");
+        }
     }
 
     /**
