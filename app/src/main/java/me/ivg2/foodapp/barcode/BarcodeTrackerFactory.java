@@ -68,6 +68,9 @@ class BarcodeGraphic extends TrackedGraphic<Barcode> {
          * get the barcode and put it into the barcodeItemRepositoruy and then
          * finish this screen and move them to the manual entry activity
          */
+        BarcodeItemRepository barcodeItemRepository = BarcodeItemRepository.getInstance();
+        barcodeItemRepository.create(mBarcode);
+        BarcodeFragment.gotBarcode();
     }
 
     /**
