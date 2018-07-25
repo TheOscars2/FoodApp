@@ -92,9 +92,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     @Override
     public void goToManualFoodAdditionfromBarcode(String foodName) {
         Bundle arguments = new Bundle();
-
         arguments.putString("productName", foodName);
-
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
 
