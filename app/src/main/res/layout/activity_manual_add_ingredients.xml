@@ -50,4 +50,14 @@
         android:onClick="ingredientsFinished"
         android:text="Next" />
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:paddingLeft="5dp"
+        android:layout_height="46dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Add Ingredients..."
+        android:textSize="30sp" />
+
 </RelativeLayout>
