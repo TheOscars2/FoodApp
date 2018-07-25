@@ -64,6 +64,10 @@ class BarcodeGraphic extends TrackedGraphic<Barcode> {
         //
         //switch fragment to "add item", pass in the mBarcode.rawValue (integer)
         postInvalidate();
+
+        //TODO clear canvas
+
+
         /**
          * get the barcode and put it into the barcodeItemRepositoruy and then
          * finish this screen and move them to the manual entry activity

@@ -41,8 +41,8 @@ public class BarcodeFragment extends Fragment {
     private static final int CAMERA_ACCESS_ERROR = 9001;
     // permission request codes need to be < 256
     private static final int RC_HANDLE_CAMERA_PERM = 2;
-    private CameraSource mCameraSource = null;
-    private CameraSourcePreview mPreview;
+    private static CameraSource mCameraSource = null;
+    private static CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
     private GraphicTracker graphicTracker;
     private ProgressBar pb;
@@ -95,8 +95,11 @@ public class BarcodeFragment extends Fragment {
     }
 
     public static void gotBarcode() {
+
+
         Barcode barcode = BarcodeItemRepository.get(BarcodeItemRepository.size() - 1);
         int firstDigit = Integer.parseInt(Integer.toString(barcode.valueFormat).substring(0, 1));
+
         if (firstDigit == 1) {
             callback.goToManualFoodAdditionfromBarcode("apple");
         } else if (firstDigit == 2) {
