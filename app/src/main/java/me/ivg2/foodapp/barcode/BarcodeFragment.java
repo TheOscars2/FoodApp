@@ -31,7 +31,6 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
-import me.ivg2.foodapp.AddFoodFragment;
 import me.ivg2.foodapp.R;
 
 /**
@@ -53,7 +52,6 @@ public class BarcodeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if (context instanceof BarcodeFragment.Callback) {
             callback = (BarcodeFragment.Callback) context;
         }
@@ -62,14 +60,12 @@ public class BarcodeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
         callback = null;
     }
 
     public interface Callback {
         void goToManualFoodAdditionfromBarcode();
     }
-
 
     public BarcodeFragment() {
         // Required empty public constructor
@@ -88,7 +84,6 @@ public class BarcodeFragment extends Fragment {
         mPreview = (CameraSourcePreview) view.findViewById(R.id.preview);
         mGraphicOverlay = (GraphicOverlay) view.findViewById(R.id.faceOverlay);
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
-
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
         int rear_camera_request = ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.CAMERA);
@@ -97,8 +92,6 @@ public class BarcodeFragment extends Fragment {
         } else {
             requestCameraPermission();
         }
-
-
     }
 
     public static void gotBarcode() {
