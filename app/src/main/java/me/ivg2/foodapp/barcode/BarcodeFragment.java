@@ -64,7 +64,11 @@ public class BarcodeFragment extends Fragment {
     }
 
     public interface Callback {
+<<<<<<< HEAD
         void goToManualFoodAdditionfromBarcode(String foodName);
+=======
+        void goToManualFoodAdditionfromBarcode(String name);
+>>>>>>> Barcode succesfully returns number and switches to different manual add food depending on first digit.
     }
 
     public BarcodeFragment() {
