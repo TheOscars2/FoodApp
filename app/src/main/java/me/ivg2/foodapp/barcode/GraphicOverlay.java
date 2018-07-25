@@ -2,17 +2,16 @@ package me.ivg2.foodapp.barcode;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import me.ivg2.foodapp.R;
 
 /**
  * A view which renders a series of custom graphics to be overlayed on top of an associated preview
@@ -41,7 +40,6 @@ public class GraphicOverlay extends View {
     private int mFacing = CameraSource.CAMERA_FACING_BACK;
     private Set<Graphic> mGraphics = new HashSet<>();
     private Barcode b;
-
 
     /**
      * Base class for a custom graphics object to be rendered within the graphic overlay.  Subclass
@@ -129,7 +127,6 @@ public class GraphicOverlay extends View {
     public void add(Graphic graphic) {
         synchronized (mLock) {
             mGraphics.add(graphic);
-
         }
         postInvalidate();
     }
@@ -167,16 +164,30 @@ public class GraphicOverlay extends View {
             if ((mPreviewWidth != 0) && (mPreviewHeight != 0)) {
                 mWidthScaleFactor = (float) canvas.getWidth() / (float) mPreviewWidth;
                 mHeightScaleFactor = (float) canvas.getHeight() / (float) mPreviewHeight;
-
             }
-
-            for (Graphic graphic : mGraphics) {
-                graphic.draw(canvas);
-                //Fire the intent to go to Girum's add item thing
+            Paint paint = new Paint();
+            paint.setColor(Color.BLACK);
+            paint.setAlpha(100);
+            canvas.drawRect(0, canvas.getHeight() - 450, canvas.getWidth(), canvas.getHeight(), paint);               //bottom rect
+            canvas.drawRect(0, 0, canvas.getWidth(), 450, paint);                                           //top rect
+            canvas.drawRect(0, 450, 300, canvas.getHeight() - 450, paint);                              //left rect
+            canvas.drawRect(canvas.getWidth() - 300, 450, canvas.getWidth(), canvas.getHeight() - 450, paint);  //right rect
+            paint.setColor(Color.RED);
+            paint.setStrokeWidth(14);
+            float[] pointsArray =
+                    {300 - paint.getStrokeWidth() / 2, 450, 375, 450,                                                                               //top left
+                            300, 450, 300, 525,
+                            canvas.getWidth() - 300 + paint.getStrokeWidth() / 2, 450, canvas.getWidth() - 375, 450,                                            //top right
+                            canvas.getWidth() - 300, 450, canvas.getWidth() - 300, 525,
+                            300, canvas.getHeight() - 450, 300, canvas.getHeight() - 525,                                                                   //bottom left
+                            300 - paint.getStrokeWidth() / 2, canvas.getHeight() - 450, 375, canvas.getHeight() - 450,
+                            canvas.getWidth() - 300 + paint.getStrokeWidth() / 2, canvas.getHeight() - 450, canvas.getWidth() - 375, canvas.getHeight() - 450,       //bottom right
+                            canvas.getWidth() - 300, canvas.getHeight() - 450, canvas.getWidth() - 300, canvas.getHeight() - 525};
+            canvas.drawLines(pointsArray, paint);
+            if (!mGraphics.isEmpty()) {
                 BarcodeItemRepository barcodeItemRepository = BarcodeItemRepository.getInstance();
                 barcodeItemRepository.create(b);
                 BarcodeFragment.gotBarcode();
-
             }
         }
     }

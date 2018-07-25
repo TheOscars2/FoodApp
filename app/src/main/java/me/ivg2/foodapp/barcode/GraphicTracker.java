@@ -1,14 +1,10 @@
 package me.ivg2.foodapp.barcode;
 
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.util.Log;
-import android.widget.ProgressBar;
+
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
-import javax.security.auth.callback.Callback;
-import me.ivg2.foodapp.Model.Food;
 
 class GraphicTracker<T> extends Tracker<T> {
     private GraphicOverlay mOverlay;
@@ -25,10 +21,8 @@ class GraphicTracker<T> extends Tracker<T> {
      */
     @Override
     public void onNewItem(int id, T item) {
-
         mGraphic.setId(id);
         Log.d("GRAPHIC TRACKER onUpdate", ((Barcode) item).rawValue);
-
     }
 
     /**
@@ -58,6 +52,5 @@ class GraphicTracker<T> extends Tracker<T> {
     public void onDone() {
         mOverlay.remove(mGraphic);
     }
-
 }
 
