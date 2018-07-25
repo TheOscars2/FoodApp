@@ -53,7 +53,6 @@ public class CameraSourcePreview extends ViewGroup {
 
     public void stop() {
         if (mCameraSource != null) {
-
             mCameraSource.stop();
         }
     }

@@ -95,11 +95,8 @@ public class BarcodeFragment extends Fragment {
     }
 
     public static void gotBarcode() {
-
-
         Barcode barcode = BarcodeItemRepository.get(BarcodeItemRepository.size() - 1);
         int firstDigit = Integer.parseInt(Integer.toString(barcode.valueFormat).substring(0, 1));
-
         if (firstDigit == 1) {
             callback.goToManualFoodAdditionfromBarcode("apple");
         } else if (firstDigit == 2) {
