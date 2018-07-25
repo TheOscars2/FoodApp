@@ -1,6 +1,7 @@
 package me.ivg2.foodapp;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +16,9 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 
 /**
@@ -64,6 +68,7 @@ public class FoodDetailFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_food_detail, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ivFoodImage = view.findViewById(R.id.foodImage);
@@ -77,7 +82,18 @@ public class FoodDetailFragment extends Fragment {
 
         etFoodName.setText(FoodItemRepository.get(index).getName());
         etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()));
-        etFoodExpDate.setText(FoodItemRepository.get(index).getExpirationDate().toString());
+
+        //setting food expiration date to proper format
+        DateTime targetDateTime = FoodItemRepository.get(index).getExpirationDate();
+        Period period = new Period(DateTime.now(), targetDateTime);
+
+        if (period.getYears() > 0) {
+            etFoodExpDate.setText("Expires in " + period.getYears() + " years");
+        } else if (period.getMonths() > 0) {
+            etFoodExpDate.setText("Expires in " + period.getMonths() + " months");
+        } else {
+            etFoodExpDate.setText("Expires in " + period.getDays() + " days");
+        }
 
         String url =FoodItemRepository.get(index).getImageURL();
 
