@@ -2,6 +2,7 @@ package me.ivg2.foodapp.barcode;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -12,6 +13,8 @@ import com.google.android.gms.common.images.Size;
 import com.google.android.gms.vision.CameraSource;
 
 import java.io.IOException;
+
+import me.ivg2.foodapp.R;
 
 public class CameraSourcePreview extends ViewGroup {
     private static final String TAG = "me.ivg2.foodapp.barcode.CameraSourcePreview";
@@ -50,6 +53,7 @@ public class CameraSourcePreview extends ViewGroup {
 
     public void stop() {
         if (mCameraSource != null) {
+
             mCameraSource.stop();
         }
     }
@@ -94,6 +98,9 @@ public class CameraSourcePreview extends ViewGroup {
 
         @Override
         public void surfaceDestroyed(SurfaceHolder surface) {
+            mOverlay.clear();
+            mCameraSource.stop();
+            android.os.SystemClock.sleep(500);
             mSurfaceAvailable = false;
         }
 

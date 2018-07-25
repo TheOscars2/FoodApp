@@ -166,9 +166,11 @@ public class GraphicOverlay extends View {
                 mHeightScaleFactor = (float) canvas.getHeight() / (float) mPreviewHeight;
             }
 
-            for (Graphic graphic : mGraphics) {
-                graphic.draw(canvas);
-            }
+//            for (Graphic graphic : mGraphics) {
+//                graphic.draw(canvas);
+//            }
+
+
             Paint paint = new Paint();
             paint.setColor(Color.BLACK);
             paint.setAlpha(100);
@@ -188,6 +190,12 @@ public class GraphicOverlay extends View {
                             canvas.getWidth() - 300 + paint.getStrokeWidth() / 2, canvas.getHeight() - 450, canvas.getWidth() - 375, canvas.getHeight() - 450,       //bottom right
                             canvas.getWidth() - 300, canvas.getHeight() - 450, canvas.getWidth() - 300, canvas.getHeight() - 525};
             canvas.drawLines(pointsArray, paint);
+//
+//            if (!mGraphics.isEmpty()){
+//                canvas.drawColor(Color.TRANSPARENT);
+//
+//                //pause camera
+//            }
         }
     }
 }
