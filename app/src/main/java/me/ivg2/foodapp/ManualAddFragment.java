@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.joda.time.DateTime;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -72,7 +74,7 @@ public class ManualAddFragment extends Fragment {
         etFoodExpDate = view.findViewById(R.id.etFoodExpirationDate);
         addToFridge = view.findViewById(R.id.addToFridgeBtn);
 
-        dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
         try {
             String name = getArguments().getString("productName");
@@ -80,15 +82,18 @@ public class ManualAddFragment extends Fragment {
         } catch (NullPointerException n) {
         }
 
-        isEditMode = true;
-        index = getArguments().getInt("index", -1);
 
-        if (!(index == -1)) {
-            etFoodName.setText(FoodItemRepository.get(index).getName());
-            etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()));
-            etFoodExpDate.setText(dateFormat.format(FoodItemRepository.get(index).getExpirationDate()));
-        } else {
-            isEditMode = false;
+        if (getArguments() != null) {
+            isEditMode = true;
+            index = getArguments().getInt("index", -1);
+
+            if (!(index == -1)) {
+                etFoodName.setText(FoodItemRepository.get(index).getName());
+                etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()));
+                etFoodExpDate.setText(dateFormat.format(FoodItemRepository.get(index).getExpirationDate().toDate()));
+            } else {
+                isEditMode = false;
+            }
         }
 
         addToFridge.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +102,7 @@ public class ManualAddFragment extends Fragment {
                 Food newFood = null;
                 try {
                     newFood = new Food(etFoodName.getText().toString(), Double.parseDouble(etFoodQuantity.getText().toString()),
-                            dateFormat.parse(etFoodExpDate.getText().toString()));
+                            new DateTime(dateFormat.parse(etFoodExpDate.getText().toString())));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
