@@ -40,42 +40,45 @@
         <TextView
             android:id="@+id/RecipeSourceDV"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/nameRecipeDetail"
+            android:gravity="center"
+            android:layout_height="29dp"
+            android:layout_below="@+id/recipeImageDetail"
+            android:layout_toEndOf="@+id/imageView"
             android:paddingLeft="10dp"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/timeRecipeDV"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/recipeImageDetail"
-            android:text="TextView"
-            android:paddingRight="10dp"/>
+            android:layout_height="29dp"
+            android:gravity="center"
+            android:layout_alignStart="@+id/RecipeSourceDV"
+            android:layout_below="@+id/RecipeSourceDV"
+            android:paddingLeft="10dp"
+            android:text="TextView" />
 
         <TextView
             android:id="@+id/ingredientsDV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/RecipeSourceDV"
-            android:layout_marginTop="26dp"
+            android:layout_below="@+id/textView2"
             android:paddingLeft="10dp"
             android:text="As is talked about in this post, sometimes you want the ScrollView content to fill the screen. For example, if you had some buttons at the end of a readme. You want the buttons to always be at the end of the text and at bottom of the screen, even if the text doesn't scroll.  If the content scrolls, everything is fine. However, if the content is smaller than the size of the screen, the buttons are not at the bottom."
-            android:textSize="16dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textViewInstructions"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="47dp"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/ingredientsDV"
+            android:layout_marginTop="0dp"
             android:paddingLeft="10dp"
-            android:textStyle="bold"
-            android:text="Instructions"
-            android:textSize="18dp" />
+            android:paddingTop="20dp"
+            android:text="INSTRUCTIONS"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/instructionsDV"
@@ -92,11 +95,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/RecipeSourceDV"
-            android:textStyle="bold"
+            android:layout_below="@+id/timeRecipeDV"
             android:paddingLeft="10dp"
-            android:text="Ingredients"
-            android:textSize="18sp" />
+            android:paddingTop="20dp"
+            android:text="INGREDIENTS"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/options"
@@ -113,11 +117,21 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_below="@+id/recipeImageDetail"
-            android:layout_toStartOf="@+id/timeRecipeDV"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/RecipeSourceDV"
+            android:paddingLeft="15dp"
             app:srcCompat="@drawable/clock" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/recipeImageDetail"
+            android:paddingLeft="15dp"
+            app:srcCompat="@drawable/user_icon" />
 
 
     </RelativeLayout>
