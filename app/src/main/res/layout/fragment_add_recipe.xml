@@ -8,22 +8,22 @@
     <EditText
 
         android:id="@+id/etRecipeSource"
-        android:layout_width="299dp"
+        android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="94dp"
+        android:layout_marginTop="99dp"
         android:ems="10"
         android:hint="Enter recipe source"
         android:inputType="textMultiLine" />
 
     <EditText
         android:id="@+id/etRecipeName"
-        android:layout_width="299dp"
+        android:layout_width="325dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/etRecipeSource"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
+        android:layout_marginBottom="-94dp"
         android:ems="10"
         android:hint="Enter recipe name"
         android:inputType="textMultiLine" />
@@ -32,20 +32,23 @@
         android:id="@+id/btnAddIng"
         android:layout_width="310dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/mybutton"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@android:color/background_light"
         android:layout_marginTop="232dp"
         android:text="Next" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="157dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/textView54"
+        android:layout_width="match_parent"
+        android:paddingLeft="5dp"
+        android:layout_height="46dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="15dp"
-        android:text="Add your recipe:"
-        android:textSize="20sp" />
+        android:gravity="center_horizontal"
+        android:text="ADD YOUR RECIPE"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -53,17 +56,18 @@
         android:layout_height="38dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="166dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="172dp"
         android:gravity="center"
-        android:text="Cook time: " />
+        android:text="COOK TIME: " />
 
     <EditText
         android:id="@+id/etHrs"
         android:layout_width="43dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView4"
-        android:layout_toEndOf="@+id/textView3"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="147dp"
         android:ems="10"
         android:hint="hrs"
         android:inputType="number" />
@@ -72,9 +76,9 @@
         android:id="@+id/etMins"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView4"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/textView4"
-        android:layout_marginEnd="139dp"
+        android:layout_marginEnd="138dp"
         android:ems="10"
         android:hint="min"
         android:inputType="number" />

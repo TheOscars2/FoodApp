@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,9 @@ import android.widget.Button;
  */
 public class AddFoodFragment extends Fragment {
     private Callback callback;
-    private Button barcodeBtn;
-    private Button pluBtn;
-    private Button manualAddBtn;
+    private CardView barcodeBtn;
+    private CardView pluBtn;
+    private CardView manualAddBtn;
 
     interface Callback {
         void goToBarcodeScanner();

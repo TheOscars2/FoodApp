@@ -23,7 +23,7 @@
         android:layout_height="27dp"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/textQuantity"
-        android:layout_marginStart="87dp"
+        android:layout_marginStart="99dp"
         android:text="3"
         android:textSize="17dp"
         tools:layout_editor_absoluteX="80dp"
@@ -35,7 +35,7 @@
         android:layout_height="300dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@android:color/background_dark"
+        app:srcCompat="@drawable/fooditemplaceholder"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
@@ -60,10 +60,11 @@
         android:layout_height="27dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="207dp"
+        android:layout_marginStart="15dp"
+        android:paddingLeft="5dp"
         android:text="Quantity:"
         android:textSize="17dp"
-        android:paddingLeft="5dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="342dp" />
 
@@ -72,8 +73,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="85dp"
+        android:layout_alignStart="@+id/textQuantity"
+        android:layout_marginBottom="169dp"
         android:paddingLeft="5dp"
         android:text="Exp.Date:"
         android:textSize="17dp"

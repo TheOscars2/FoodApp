@@ -1,6 +1,7 @@
 package me.ivg2.foodapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int index) {
+
         holder.tvOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

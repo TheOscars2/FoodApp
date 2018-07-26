@@ -11,12 +11,12 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="15dp"
         android:layout_marginRight="15dp"
-        android:src="@drawable/plus"
-        app:backgroundTint="#E4E4E4"
-        android:layout_alignParentRight="true"/>
+        android:src="@drawable/plus_1"
+        app:backgroundTint="#BCAAA4" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvRecipe"
