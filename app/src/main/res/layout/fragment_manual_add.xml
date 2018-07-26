@@ -8,14 +8,14 @@
 
     <Button
         android:id="@+id/addToFridgeBtn"
-        android:layout_width="213dp"
+        android:layout_width="276dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="72dp"
         android:background="@drawable/mybutton"
-        android:textColor="@android:color/background_light"
-        android:text="add to fridge" />
+        android:text="add to fridge"
+        android:textColor="@android:color/background_light" />
 
     <TextView
         android:id="@+id/textView"
