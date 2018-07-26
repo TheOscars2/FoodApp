@@ -24,8 +24,8 @@ class RecipeItemRepository   {
         ArrayList<String> instructions = new ArrayList<>();
         ArrayList<String> ingredients = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            instructions.add("instruction number " + (i + 1));
-            ingredients.add("ingredient number " + (i + 1));
+            instructions.add('\u2022' + " " + "instruction number " + (i + 1));
+            ingredients.add('\u2022' + " " + "ingredient number " + (i + 1));
         }
 
         recipes.get(0).setInstructions(instructions);
