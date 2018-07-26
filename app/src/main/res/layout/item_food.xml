@@ -22,7 +22,8 @@
             android:layout_height="120dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            app:srcCompat="@android:color/background_dark"
+            app:srcCompat="@drawable/fooditemplaceholder"
+
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
 
