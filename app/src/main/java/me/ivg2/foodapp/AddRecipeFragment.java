@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import me.ivg2.foodapp.Model.Recipe;
 
@@ -89,6 +90,11 @@ public class AddRecipeFragment extends Fragment {
         addIngBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (etRecipeName.getText().length() == 0 || etRecipeSource.getText().length() == 0 || etHoursField.getText().length() == 0 || etMinutesField.getText().length() == 0) {
+                    Toast.makeText(getActivity(), "Please fill out all recipe information", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Recipe recipe = new Recipe(etRecipeName.getText().toString(), etRecipeSource.getText().toString(),
                         Integer.parseInt(etHoursField.getText().toString()), Integer.parseInt(etMinutesField.getText().toString()));
 
