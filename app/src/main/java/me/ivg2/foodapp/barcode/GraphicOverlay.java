@@ -13,6 +13,8 @@ import com.google.android.gms.vision.barcode.Barcode;
 import java.util.HashSet;
 import java.util.Set;
 
+import me.ivg2.foodapp.R;
+
 /**
  * A view which renders a series of custom graphics to be overlayed on top of an associated preview
  * (i.e., the camera preview).  The creator can add graphics objects, update the objects, and remove
@@ -172,7 +174,7 @@ public class GraphicOverlay extends View {
             canvas.drawRect(0, 0, canvas.getWidth(), 450, paint);                                           //top rect
             canvas.drawRect(0, 450, 300, canvas.getHeight() - 450, paint);                              //left rect
             canvas.drawRect(canvas.getWidth() - 300, 450, canvas.getWidth(), canvas.getHeight() - 450, paint);  //right rect
-            paint.setColor(Color.RED);
+            paint.setColor(getResources().getColor(R.color.Pink3));
             paint.setStrokeWidth(14);
             float[] pointsArray =
                     {300 - paint.getStrokeWidth() / 2, 450, 375, 450,                                                                               //top left
@@ -185,5 +187,9 @@ public class GraphicOverlay extends View {
                             canvas.getWidth() - 300, canvas.getHeight() - 450, canvas.getWidth() - 300, canvas.getHeight() - 525};
             canvas.drawLines(pointsArray, paint);
         }
+    }
+
+    public Set<Graphic> getmGraphics() {
+        return mGraphics;
     }
 }

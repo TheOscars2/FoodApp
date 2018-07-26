@@ -18,7 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -45,7 +44,6 @@ public class BarcodeFragment extends Fragment {
     private static CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
     private GraphicTracker graphicTracker;
-    private ProgressBar pb;
     public static View v;
     public static Callback callback;
 
@@ -83,7 +81,6 @@ public class BarcodeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mPreview = (CameraSourcePreview) view.findViewById(R.id.preview);
         mGraphicOverlay = (GraphicOverlay) view.findViewById(R.id.faceOverlay);
-        pb = (ProgressBar) view.findViewById(R.id.pbLoading);
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
         int rear_camera_request = ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.CAMERA);

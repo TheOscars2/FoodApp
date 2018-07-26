@@ -97,9 +97,10 @@ public class CameraSourcePreview extends ViewGroup {
 
         @Override
         public void surfaceDestroyed(SurfaceHolder surface) {
-            mOverlay.clear();
-            mCameraSource.stop();
-            android.os.SystemClock.sleep(500);
+            if (!mOverlay.getmGraphics().isEmpty()) {
+                mCameraSource.stop();
+                android.os.SystemClock.sleep(1750);
+            }
             mSurfaceAvailable = false;
         }
 
