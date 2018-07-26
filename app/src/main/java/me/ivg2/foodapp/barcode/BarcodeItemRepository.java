@@ -12,7 +12,6 @@ class BarcodeItemRepository {
     }
 
     private void save() {
-
     }
 
     private static final BarcodeItemRepository ourInstance = new BarcodeItemRepository();
@@ -46,5 +45,4 @@ class BarcodeItemRepository {
     public static int size() {
         return getInstance().barcodes.size();
     }
-
 }
