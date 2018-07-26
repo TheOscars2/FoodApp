@@ -30,14 +30,14 @@
 
     <Button
         android:id="@+id/btnAddIng"
-        android:layout_width="310dp"
+        android:layout_width="321dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/mybutton"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@android:color/background_light"
         android:layout_marginTop="232dp"
-        android:text="Next" />
+        android:background="@drawable/mybutton"
+        android:text="Next"
+        android:textColor="@android:color/background_light" />
 
     <TextView
         android:id="@+id/textView54"
