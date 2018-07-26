@@ -1,7 +1,6 @@
 package me.ivg2.foodapp;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,10 +12,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-
-import com.google.android.gms.fido.fido2.api.common.RequestOptions;
-
 
 import me.ivg2.foodapp.Model.Recipe;
 
@@ -115,7 +110,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public void onClick(View v) {
             int index = getAdapterPosition();
 
-            if (index != RecyclerView.NO_POSITION) {
+            if (index != RecyclerView.NO_POSITION || index != -1) {
                 Recipe recipe = recipes.get(index);
                 RecipeFragment.onRecipeClicked(recipe, index);
             }

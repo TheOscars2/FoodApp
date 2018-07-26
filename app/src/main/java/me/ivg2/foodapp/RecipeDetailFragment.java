@@ -171,7 +171,9 @@ public class RecipeDetailFragment extends Fragment {
             ingDisplay += ingredient + "\n";
         }
 
-        tvRecipeIngredients.setText(ingDisplay.substring(0, ingDisplay.length() - 1));
+        if (ingDisplay.length() > 0) {
+            tvRecipeIngredients.setText(ingDisplay.substring(0, ingDisplay.length() - 1));
+        }
     }
 
     public void setInstructionsInView(ArrayList<String> instructions) {
@@ -181,7 +183,9 @@ public class RecipeDetailFragment extends Fragment {
             instDisplay += instruction + "\n";
         }
 
-        tvRecipeInstructions.setText(instDisplay.substring(0, instDisplay.length() - 1));
+        if (instDisplay.length() > 0) {
+            tvRecipeInstructions.setText(instDisplay.substring(0, instDisplay.length() - 1));
+        }
     }
 
     @Override
