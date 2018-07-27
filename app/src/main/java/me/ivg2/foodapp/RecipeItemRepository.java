@@ -75,6 +75,11 @@ class RecipeItemRepository   {
         getInstance().save();
     }
 
+    public static void clear() {
+        getInstance().recipes.clear();
+        getInstance().save();
+    }
+
     public static int size() {
         return getInstance().recipes.size();
     }

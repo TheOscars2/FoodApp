@@ -107,7 +107,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public void onClick(View v) {
             int index = getAdapterPosition();
 
-            if (index != RecyclerView.NO_POSITION || index != -1) {
+            if (index != RecyclerView.NO_POSITION && recipes.get(index) == null) {
                 Recipe recipe = recipes.get(index);
                 RecipeFragment.onRecipeClicked(recipe, index);
             }
