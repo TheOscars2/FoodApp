@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.ivg2.foodapp.Model.Recipe;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
@@ -88,20 +90,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView ivRecipeImage;
-        TextView tvRecipeName;
-        TextView tvHourTime;
-        TextView tvRecipeSource;
-        TextView tvOptions;
+        @BindView(R.id.recipeImage) ImageView ivRecipeImage;
+        @BindView(R.id.recipeName) TextView tvRecipeName;
+        @BindView(R.id.hourTime) TextView tvHourTime;
+        @BindView(R.id.recipeSource) TextView tvRecipeSource;
+        @BindView(R.id.options) TextView tvOptions;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-            ivRecipeImage = itemView.findViewById(R.id.recipeImage);
-            tvRecipeName = itemView.findViewById(R.id.recipeName);
-            tvHourTime = itemView.findViewById(R.id.hourTime);
-            tvRecipeSource = itemView.findViewById(R.id.recipeSource);
-            tvOptions = itemView.findViewById(R.id.options);
+            ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(this);
         }

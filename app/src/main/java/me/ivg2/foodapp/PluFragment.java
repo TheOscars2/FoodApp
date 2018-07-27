@@ -16,16 +16,24 @@ import android.widget.Toast;
 
 import java.util.Random;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PluFragment extends Fragment {
-    private Button goButton;
+    @BindView(R.id.btnEnter)
+    Button goButton;
+    @BindView(R.id.btnDelete)
+    Button deleteButton;
+    @BindView(R.id.pluProgress)
+    ProgressBar pluProgress;
     private static final int[] buttonIDArray = {R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9};
     private Button[] buttonsArray = new Button[buttonIDArray.length];
-    private Button deleteButton;
-    private ProgressBar pluProgress;
     private String produce;
+    private Unbinder unbinder;
     private Callback callback;
 
     interface Callback {
@@ -59,7 +67,7 @@ public class PluFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        pluProgress = view.findViewById(R.id.pluProgress);
+        unbinder = ButterKnife.bind(this, view);
         final EditText userCode = view.findViewById(R.id.etPLU);
         userCode.setInputType(InputType.TYPE_NULL);
         for (int i = 0; i < buttonIDArray.length; i++) {
@@ -72,7 +80,6 @@ public class PluFragment extends Fragment {
                 }
             });
         }
-        deleteButton = view.findViewById(R.id.btnDelete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +88,6 @@ public class PluFragment extends Fragment {
                 }
             }
         });
-        goButton = view.findViewById(R.id.btnEnter);
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +97,6 @@ public class PluFragment extends Fragment {
                 }
                 pluProgress.setVisibility(ProgressBar.VISIBLE);
                 final int pluCode = Integer.parseInt(userCode.getText().toString());
-
                 Random rand = new Random();
                 int value = rand.nextInt(5);
                 if (value == 1) {
@@ -117,5 +122,11 @@ public class PluFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

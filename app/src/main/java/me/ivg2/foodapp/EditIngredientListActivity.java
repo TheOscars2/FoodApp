@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-public class EditIngredientListActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
+public class EditIngredientListActivity extends AppCompatActivity {
+    @BindView(R.id.etIngredient)
     EditText etItemText;
     int position;
 
@@ -15,8 +18,7 @@ public class EditIngredientListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_ingredient_list);
-
-        etItemText = (EditText) findViewById(R.id.etIngredient);
+        ButterKnife.bind(this);
         etItemText.setText(getIntent().getStringExtra("item_text"));
         position = getIntent().getIntExtra("item_position", 0);
     }
@@ -24,7 +26,6 @@ public class EditIngredientListActivity extends AppCompatActivity {
     //prepares and passes updated item text into MainActivity.java at original position
     public void onSaveItem(View v) {
         Intent data = new Intent();
-
         data.putExtra("item_text", etItemText.getText().toString());
         data.putExtra("item_position", position);
         setResult(RESULT_OK, data);

@@ -27,7 +27,7 @@
         android:layout_marginEnd="71dp"
         android:background="@drawable/mybutton2"
         android:textColor="@android:color/background_light"
-        android:onClick="onAddIngredient"
+        android:onClick="onAddInstruction"
         android:text="Add"
         tools:layout_editor_absoluteX="280dp"
         tools:layout_editor_absoluteY="447dp" />

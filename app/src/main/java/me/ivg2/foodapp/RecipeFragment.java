@@ -12,27 +12,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import me.ivg2.foodapp.Model.Recipe;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RecipeFragment extends Fragment {
-
+    @BindView(R.id.floatingAddRecipe)
     FloatingActionButton floatingAddButton;
-
+    @BindView(R.id.rvRecipe)
+    RecyclerView rvRecipes;
     RecipeItemRepository recipes;
     private RecipeAdapter recipeAdapter;
-    private RecyclerView rvRecipes;
+    private Unbinder unbinder;
 
     interface Callback {
         void goToRecipeDetail(Recipe recipe, int index);
+
         void goToAddRecipe();
+
         void goToEditRecipe(int index);
     }
 
     private static Callback callback;
-
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -47,20 +53,9 @@ public class RecipeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        floatingAddButton = view.findViewById(R.id.floatingAddRecipe);
-
-        floatingAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callback.goToAddRecipe();
-            }
-        });
-
-        rvRecipes = (RecyclerView) view.findViewById(R.id.rvRecipe);
+        unbinder = ButterKnife.bind(this, view);
         recipes = RecipeItemRepository.getInstance();
-
         recipeAdapter = new RecipeAdapter(recipes);
-
         rvRecipes.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvRecipes.setAdapter(recipeAdapter);
     }
@@ -68,7 +63,6 @@ public class RecipeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if (context instanceof Callback) {
             callback = (Callback) context;
         }
@@ -86,5 +80,16 @@ public class RecipeFragment extends Fragment {
 
     public static void onEditClicked(int index) {
         callback.goToEditRecipe(index);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick(R.id.floatingAddRecipe)
+    public void tryToAddRecipe() {
+        callback.goToAddRecipe();
     }
 }
