@@ -12,7 +12,7 @@ public class FoodItemRepository {
     private void load() {
         foods = new ArrayList<>();
 
-        foods.add(new Food("apple", "https://www.vaporfi.com.au/media/catalog/product/cache/34/thumbnail/600x600/9df78eab33525d08d6e5fb8d27136e95/v/z/vz_eliquid_juicy_red_apple.jpg"));
+        foods.add(new Food("apple", "https://www.vaporfi.com.au/media/catalog/product/cache/34/thumbnail/600x600/9df78 eab33525d08d6e5fb8d27136e95/v/z/vz_eliquid_juicy_red_apple.jpg"));
         foods.add(new Food("pear", "http://vaporhauschicago.com/wp-content/uploads/2017/06/pear.jpg"));
         foods.add(new Food("pizza", "https://www.messforless.net/wp-content/uploads/2018/01/2-ingredient-pizza-dough-weight-watchers-9.jpg"));
         foods.add(new Food("smoothie", "http://images.media-allrecipes.com/userphotos/960x960/3756353.jpg"));

@@ -80,7 +80,7 @@ public class ManualAddFragment extends Fragment {
             index = getArguments().getInt("index", -1);
             if (!(index == -1)) {
                 etFoodName.setText(FoodItemRepository.get(index).getName());
-                etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()));
+                etFoodQuantity.setText(Integer.toString(FoodItemRepository.get(index).getQuantity()));
                 etFoodExpDate.setText(dateFormat.format(FoodItemRepository.get(index).getExpirationDate().toDate()));
             } else {
                 isEditMode = false;
@@ -121,7 +121,7 @@ public class ManualAddFragment extends Fragment {
                 }
                 Food newFood = null;
                 try {
-                    newFood = new Food(etFoodName.getText().toString(), Double.parseDouble(etFoodQuantity.getText().toString()),
+                    newFood = new Food(etFoodName.getText().toString(), Integer.parseInt(etFoodQuantity.getText().toString()),
                             new DateTime(dateFormat.parse(etFoodExpDate.getText().toString())));
                 } catch (ParseException e) {
                     e.printStackTrace();

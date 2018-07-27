@@ -133,11 +133,14 @@
 
             <ImageView
                 android:id="@+id/image353"
-                android:layout_width="434dp"
+                android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_weight="1"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/manualadd"
+                android:tint="#c60148"
+                app:srcCompat="@drawable/plus_1"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 

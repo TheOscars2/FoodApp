@@ -7,7 +7,7 @@ import static java.lang.String.format;
 
 public class Food {
     private String name;
-    private double quantity;
+    private int quantity;
     private DateTime expirationDate;
     private String imageURL;
 
@@ -20,7 +20,7 @@ public class Food {
         expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));
     }
 
-    public Food(String name, double quantity, DateTime expirationDate) {
+    public Food(String name, int quantity, DateTime expirationDate) {
         this.name = name;
         this.quantity = quantity;
         imageURL = null;
@@ -39,7 +39,7 @@ public class Food {
         expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));
     }
 
-    public Food(String name, double quantity, DateTime expirationDate, String imageURL) {
+    public Food(String name, int quantity, DateTime expirationDate, String imageURL) {
         this.name = name;
         this.quantity = quantity;
         this.imageURL = imageURL;
@@ -57,11 +57,11 @@ public class Food {
         this.name = name;
     }
 
-    public double getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

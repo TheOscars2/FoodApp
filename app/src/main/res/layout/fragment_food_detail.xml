@@ -10,20 +10,21 @@
         android:id="@+id/expiration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/quantity"
-        android:layout_alignTop="@+id/textExpiration"
+        android:layout_alignStart="@+id/textQuantity"
+        android:layout_below="@+id/textQuantity"
+        android:layout_marginTop="15dp"
         android:text="expiration"
         android:textSize="17dp"
-        tools:layout_editor_absoluteX="80dp"
-        tools:layout_editor_absoluteY="369dp" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/quantity"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
-        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
         android:layout_alignTop="@+id/textQuantity"
-        android:layout_marginStart="99dp"
+        android:layout_toRightOf="@id/textQuantity"
+
         android:text="3"
         android:textSize="17dp"
         tools:layout_editor_absoluteX="80dp"
@@ -42,10 +43,15 @@
     <TextView
         android:id="@+id/name"
         android:layout_width="172dp"
+        android:layout_marginLeft="5dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/foodImage"
         android:layout_alignParentStart="true"
         android:text="Food Name"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="7"
         android:textColor="#ffffff"
         android:textAllCaps="true"
         android:textSize="20dp"
@@ -58,28 +64,28 @@
         android:id="@+id/textQuantity"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="207dp"
-        android:layout_marginStart="15dp"
-        android:paddingLeft="5dp"
+        android:layout_below="@+id/foodImage"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
         android:text="Quantity:"
         android:textSize="17dp"
+        android:textStyle="bold"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="342dp" />
 
-    <TextView
-        android:id="@+id/textExpiration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textQuantity"
-        android:layout_marginBottom="169dp"
-        android:paddingLeft="5dp"
-        android:text="Exp.Date:"
-        android:textSize="17dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="369dp" />
+    <!--<TextView-->
+        <!--android:id="@+id/textExpiration"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignStart="@+id/textQuantity"-->
+        <!--android:layout_marginBottom="169dp"-->
+        <!--android:paddingLeft="5dp"-->
+        <!--android:text="Exp.Date:"-->
+        <!--android:textSize="17dp"-->
+        <!--tools:layout_editor_absoluteX="0dp"-->
+        <!--tools:layout_editor_absoluteY="369dp" />-->
 
     <TextView
         android:id="@+id/options"
