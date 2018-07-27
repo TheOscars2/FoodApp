@@ -23,6 +23,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         fragmentManager = getSupportFragmentManager();
 
         final Fragment recipeFragment = new RecipeFragment();
@@ -74,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     public void goToAddRecipe() {
         fragmentManager.beginTransaction().replace(R.id.homeFragment, new AddRecipeFragment()).commit();
     }
+
 
     @Override
     public void goToBarcodeScanner() {

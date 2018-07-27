@@ -41,4 +41,7 @@ dependencies {
     implementation 'joda-time:joda-time:2.3'
 
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    //butter knife
+    implementation 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

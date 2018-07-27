@@ -1,6 +1,5 @@
 package me.ivg2.foodapp;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -20,31 +19,38 @@ import com.bumptech.glide.Glide;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FoodDetailFragment extends Fragment {
-
-    private ImageView ivFoodImage;
-    private TextView etFoodName;
-    private TextView etFoodQuantity;
-    private TextView etFoodExpDate;
-    private TextView tvOptions;
-
+    @BindView(R.id.foodImage)
+    ImageView ivFoodImage;
+    @BindView(R.id.name)
+    TextView etFoodName;
+    @BindView(R.id.quantity)
+    TextView etFoodQuantity;
+    @BindView(R.id.expiration)
+    TextView etFoodExpDate;
+    @BindView(R.id.options)
+    TextView tvOptions;
+    private Unbinder unbinder;
     private int index;
-
     private Callback callback;
 
     interface Callback {
         void goToFridge();
+
         void goToEditFood(int index);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if (context instanceof FoodDetailFragment.Callback) {
             callback = (FoodDetailFragment.Callback) context;
         }
@@ -53,7 +59,6 @@ public class FoodDetailFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
         callback = null;
     }
 
@@ -71,22 +76,14 @@ public class FoodDetailFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ivFoodImage = view.findViewById(R.id.foodImage);
-        etFoodName = view.findViewById(R.id.name);
-        etFoodQuantity = view.findViewById(R.id.quantity);
-        etFoodExpDate = view.findViewById(R.id.expiration);
-        tvOptions = view.findViewById(R.id.options);
-
+        unbinder = ButterKnife.bind(this, view);
         Bundle arguments = getArguments();
         index = arguments.getInt("index");
-
         etFoodName.setText(FoodItemRepository.get(index).getName());
         etFoodQuantity.setText(Integer.toString(FoodItemRepository.get(index).getQuantity()));
-
         //setting food expiration date to proper format
         DateTime targetDateTime = FoodItemRepository.get(index).getExpirationDate();
         Period period = new Period(DateTime.now(), targetDateTime);
-
         if (period.getYears() > 0) {
             etFoodExpDate.setText("Expires in " + period.getYears() + " years");
         } else if (period.getMonths() > 0) {
@@ -94,40 +91,40 @@ public class FoodDetailFragment extends Fragment {
         } else {
             etFoodExpDate.setText("Expires in " + period.getDays() + " days");
         }
-
-        String url =FoodItemRepository.get(index).getImageURL();
-
+        String url = FoodItemRepository.get(index).getImageURL();
         if (url != null) {
             Glide.with(this)
                     .load(url)
                     .into(ivFoodImage);
         }
+    }
 
-        tvOptions.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick(R.id.options)
+    public void optionMenuClicks() {
+        PopupMenu menu = new PopupMenu(getContext(), tvOptions);
+        menu.inflate(R.menu.recipe_menu);
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
-            public void onClick(View view) {
-                PopupMenu menu = new PopupMenu(getContext(), tvOptions);
-                menu.inflate(R.menu.recipe_menu);
-
-                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.delete:
-                                FoodItemRepository.delete(index);
-                                callback.goToFridge();
-                                return true;
-                            case R.id.edit:
-                                callback.goToEditFood(index);
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                });
-
-                menu.show();
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.delete:
+                        FoodItemRepository.delete(index);
+                        callback.goToFridge();
+                        return true;
+                    case R.id.edit:
+                        callback.goToEditFood(index);
+                        return true;
+                    default:
+                        return false;
+                }
             }
         });
+        menu.show();
     }
 }

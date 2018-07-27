@@ -1,6 +1,5 @@
 package me.ivg2.foodapp;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,25 +11,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FridgeFragment extends Fragment {
     private static Callback callback;
-
     FoodItemRepository foods;
     private FridgeGridAdapter gridAdapter;
-    private RecyclerView rvFoods;
+    @BindView(R.id.rvGrid)
+    RecyclerView rvFoods;
+    private Unbinder unbinder;
 
     interface Callback {
         void goToFoodDetail(int index);
+
         void goToEditFood(int index);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if (context instanceof FridgeFragment.Callback) {
             callback = (Callback) context;
         }
@@ -39,10 +43,8 @@ public class FridgeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
         callback = null;
     }
-
 
     public FridgeFragment() {
         // Required empty public constructor
@@ -51,18 +53,14 @@ public class FridgeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_fridge, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        rvFoods = (RecyclerView) view.findViewById(R.id.rvGrid);
+        unbinder = ButterKnife.bind(this, view);
         foods = FoodItemRepository.getInstance();
-
         gridAdapter = new FridgeGridAdapter(foods);
-
-        //RecyclerView setup -- layout manager and use adapter
         rvFoods.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         rvFoods.setAdapter(gridAdapter);
     }
@@ -73,5 +71,11 @@ public class FridgeFragment extends Fragment {
 
     public static void onEditFoodClicked(int index) {
         callback.goToEditFood(index);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

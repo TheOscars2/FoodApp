@@ -1,6 +1,5 @@
 package me.ivg2.foodapp;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,28 +9,36 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddFoodFragment extends Fragment {
     private Callback callback;
-    private CardView barcodeBtn;
-    private CardView pluBtn;
-    private CardView manualAddBtn;
+    @BindView(R.id.barcodeBtn)
+    CardView barcodeBtn;
+    @BindView(R.id.pluBtn)
+    CardView pluBtn;
+    @BindView(R.id.manualAddBtn)
+    CardView manualAddBtn;
+    private Unbinder unbinder;
 
     interface Callback {
         void goToBarcodeScanner();
+
         void goToPLUInput();
+
         void goToManualFoodAddition();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if (context instanceof AddFoodFragment.Callback) {
             callback = (Callback) context;
         }
@@ -40,7 +47,6 @@ public class AddFoodFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
         callback = null;
     }
 
@@ -57,28 +63,27 @@ public class AddFoodFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        barcodeBtn = view.findViewById(R.id.barcodeBtn);
-        pluBtn = view.findViewById(R.id.pluBtn);
-        manualAddBtn = view.findViewById(R.id.manualAddBtn);
+        unbinder = ButterKnife.bind(this, view);
+    }
 
-        barcodeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callback.goToBarcodeScanner();
-            }
-        });
-        pluBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callback.goToPLUInput();
-            }
-        });
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
-        manualAddBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callback.goToManualFoodAddition();
-            }
-        });
+    @OnClick(R.id.barcodeBtn)
+    public void goToBCScan() {
+        callback.goToBarcodeScanner();
+    }
+
+    @OnClick(R.id.pluBtn)
+    public void goToPlu() {
+        callback.goToPLUInput();
+    }
+
+    @OnClick(R.id.manualAddBtn)
+    public void goToManAdd() {
+        callback.goToManualFoodAddition();
     }
 }

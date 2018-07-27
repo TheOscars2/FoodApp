@@ -13,12 +13,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.ivg2.foodapp.Model.Food;
 
-public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.ViewHolder>{
+public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.ViewHolder> {
     private FoodItemRepository foods;
     Context context;
-
 
     public FridgeGridAdapter(FoodItemRepository foods) {
         this.foods = foods;
@@ -29,7 +30,6 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
     public FridgeGridAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
         View foodView = inflater.inflate(R.layout.item_food, viewGroup, false);
         FridgeGridAdapter.ViewHolder view = new FridgeGridAdapter.ViewHolder(foodView);
         return view;
@@ -42,7 +42,6 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
             public void onClick(View view) {
                 PopupMenu menu = new PopupMenu(context, viewHolder.options);
                 menu.inflate(R.menu.recipe_menu);
-
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -62,11 +61,8 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
                 menu.show();
             }
         });
-
         Food food = foods.get(i);
-
         viewHolder.foodName.setText(food.getName());
-
         if (food.getImageURL() != null) {
             Glide.with(context)
                     .load(food.getImageURL())
@@ -84,26 +80,23 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
         return foods.size();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-       ImageView foodImage;
-       TextView foodName;
-       TextView options;
+        @BindView(R.id.imageFood)
+        ImageView foodImage;
+        @BindView(R.id.name)
+        TextView foodName;
+        @BindView(R.id.options)
+        TextView options;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-            foodName = itemView.findViewById(R.id.name);
-            foodImage = itemView.findViewById(R.id.imageFood);
-            options = itemView.findViewById(R.id.options);
-
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             int index = getAdapterPosition();
-
             if (index != RecyclerView.NO_POSITION) {
                 FridgeFragment.onFoodViewClicked(index);
             }
