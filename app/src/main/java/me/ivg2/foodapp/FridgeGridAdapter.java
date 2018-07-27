@@ -72,6 +72,11 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
                     .load(food.getImageURL())
                     .into(viewHolder.foodImage);
         }
+        if (food.getImageURL() == null) {
+            Glide.with(context)
+                    .load(R.drawable.fooditemplaceholder)
+                    .into(viewHolder.foodImage);
+        }
     }
 
     @Override
