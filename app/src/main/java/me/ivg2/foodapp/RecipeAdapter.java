@@ -82,6 +82,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                         .into(holder.ivRecipeImage);
             }
         }
+
+        if (recipe.getIngredientsMissing().size() > 0) {
+            holder.missingIngredient.setText("You have one missing ingredient");
+            holder.missingIngredient.setTextColor(0xFFFF0000);
+        }
     }
 
     @Override
@@ -95,6 +100,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         @BindView(R.id.hourTime) TextView tvHourTime;
         @BindView(R.id.recipeSource) TextView tvRecipeSource;
         @BindView(R.id.options) TextView tvOptions;
+        @BindView(R.id.missingIngredient) TextView missingIngredient;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -107,7 +113,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public void onClick(View v) {
             int index = getAdapterPosition();
 
-            if (index != RecyclerView.NO_POSITION && recipes.get(index) == null) {
+            if (index != RecyclerView.NO_POSITION && recipes.get(index) != null) {
                 Recipe recipe = recipes.get(index);
                 RecipeFragment.onRecipeClicked(recipe, index);
             }

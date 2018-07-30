@@ -8,8 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
@@ -41,6 +44,7 @@ public class ManualAddFragment extends Fragment {
     private DateFormat dateFormat;
     private Callback callback;
     private Unbinder unbinder;
+    private String unitEntered;
 
     interface Callback {
         void goToFridge();
@@ -92,6 +96,25 @@ public class ManualAddFragment extends Fragment {
                 isEditMode = false;
             }
         }
+
+        Spinner dynamicSpinner = view.findViewById(R.id.dynamic_spinner);
+
+        final String[] items = new String[] { "gal", "cups", "mL" };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
+
+        dynamicSpinner.setAdapter(adapter);
+
+        dynamicSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                unitEntered = items[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getActivity(), "Please fill out all food information", Toast.LENGTH_SHORT).show();            }
+        });
     }
 
     @Override
@@ -107,6 +130,7 @@ public class ManualAddFragment extends Fragment {
         try {
             newFood = new Food(etFoodName.getText().toString(), Integer.parseInt(etFoodQuantity.getText().toString()),
                     new DateTime(dateFormat.parse(etFoodExpDate.getText().toString())));
+            newFood.setUnit(unitEntered);
         } catch (ParseException e) {
             e.printStackTrace();
         }

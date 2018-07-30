@@ -12,6 +12,7 @@ public class Food {
     private int quantity;
     private DateTime expirationDate;
     private String imageURL;
+    private String unit;
 
     public Food(String name) {
         this.name = name;
@@ -85,4 +86,12 @@ public class Food {
             return o1.getName().compareTo(o2.getName());
         }
     };
+    
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
 }

@@ -35,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.ivg2.foodapp.Model.Food;
 import me.ivg2.foodapp.Model.Recipe;
 
 /**
@@ -56,6 +57,9 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvRecipeSource;
     @BindView(R.id.options)
     TextView tvOptions;
+    @BindView(R.id.ingredientsMissing)
+    TextView tvMissingIngredients;
+
     private int hours;
     private int minutes;
     private String cookTime = "";
@@ -111,11 +115,11 @@ public class RecipeDetailFragment extends Fragment {
             cookTime += minutes + "m";
         }
         tvRecipeTime.setText(cookTime);
-        setIngredientsInView(arguments.getStringArrayList("ingredients"));
         setInstructionsInView(arguments.getStringArrayList("instructions"));
         String url = arguments.getString("image_url");
         index = arguments.getInt("index");
         Recipe recipe = recipeItemRepository.get(index);
+        setIngredientsInView(recipe.getIngredients());
         if (recipe.getImageBitmap() != null) {
             ivRecipeImage.setImageBitmap(recipe.getImageBitmap());
         } else {
@@ -127,12 +131,21 @@ public class RecipeDetailFragment extends Fragment {
                 tvRecipeName.setTextColor(Color.parseColor("#000000"));
             }
         }
+
+        if (recipe.getIngredientsMissing().size() > 0) {
+            String ingredients = "";
+            for (Food ingredient : recipe.getIngredientsMissing()) {
+                ingredients += ingredient.getName() + "\n";
+            }
+            tvMissingIngredients.setText("You have missing ingredients: " +"\n" + ingredients);
+            tvMissingIngredients.setTextColor(0xFFFF0000);
+        }
     }
 
-    public void setIngredientsInView(ArrayList<String> ingredients) {
+    public void setIngredientsInView(ArrayList<Food> ingredients) {
         String ingDisplay = "";
-        for (String ingredient : ingredients) {
-            ingDisplay += ingredient + "\n";
+        for (Food ingredient : ingredients) {
+            ingDisplay += '\u2022' + " " + ingredient.getName() + " " + ingredient.getQuantity() + ingredient.getUnit() + "\n";
         }
         if (ingDisplay.length() > 0) {
             tvRecipeIngredients.setText(ingDisplay.substring(0, ingDisplay.length() - 1));
@@ -142,7 +155,7 @@ public class RecipeDetailFragment extends Fragment {
     public void setInstructionsInView(ArrayList<String> instructions) {
         String instDisplay = "";
         for (String instruction : instructions) {
-            instDisplay += instruction + "\n";
+            instDisplay += '\u2022' + " " + instruction + "\n";
         }
         if (instDisplay.length() > 0) {
             tvRecipeInstructions.setText(instDisplay.substring(0, instDisplay.length() - 1));

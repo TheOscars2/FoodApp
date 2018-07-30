@@ -52,10 +52,20 @@
         android:id="@+id/etFoodExpirationDate"
         android:layout_width="304dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="13dp"
         android:ems="10"
         android:hint="Expiration date (MM/DD/YYYY)"
         android:inputType="date" />
+
+    <Spinner
+        android:id="@+id/dynamic_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="224dp" />
 
 
 
