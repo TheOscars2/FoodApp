@@ -14,11 +14,9 @@ public class Recipe {
     private String cookTime;
     private Bitmap imageBitmap;
 
-    //The format of these two variables is unknown
-    //could format into map with key string ("Sugar") linked to a quantity (2 tbls)
-    private ArrayList<String> ingredients;
+    private ArrayList<Food> ingredientsMissing;
+    private ArrayList<Food> ingredients;
 
-    //could just be a string too for this one
     private ArrayList<String> instructions;
 
     public Recipe(String name, String imageUrl, String source, int hr, int min) {
@@ -31,9 +29,11 @@ public class Recipe {
         cookTimeMinutes = min;
 
         this.source = source;
+
+        ingredientsMissing = new ArrayList<>();
     }
 
-    public Recipe(String name, String imageUrl, String source, ArrayList<String> ingredients, ArrayList<String> instructions) {
+    public Recipe(String name, String imageUrl, String source, ArrayList<Food> ingredients, ArrayList<String> instructions) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.source = source;
@@ -42,6 +42,7 @@ public class Recipe {
 
         cookTimeHours = 0;
         cookTimeMinutes = 0;
+        ingredientsMissing = new ArrayList<>();
     }
 
     private String formatTime(int minutes, int hours) {
@@ -66,6 +67,7 @@ public class Recipe {
 
         ingredients = new ArrayList<>();
         instructions = new ArrayList<>();
+        ingredientsMissing = new ArrayList<>();
     }
 
     public String getName() {
@@ -108,11 +110,11 @@ public class Recipe {
         this.cookTimeMinutes = cookTimeMinutes;
     }
 
-    public ArrayList<String> getIngredients() {
+    public ArrayList<Food> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<String> ingredients) {
+    public void setIngredients(ArrayList<Food> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -130,5 +132,13 @@ public class Recipe {
 
     public void setImageBitmap(Bitmap imageBitmap) {
         this.imageBitmap = imageBitmap;
+    }
+
+    public ArrayList<Food> getIngredientsMissing() {
+        return ingredientsMissing;
+    }
+
+    public void setIngredientsMissing(ArrayList<Food> ingredientsMissing) {
+        this.ingredientsMissing = ingredientsMissing;
     }
 }

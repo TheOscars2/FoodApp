@@ -14,11 +14,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import butterknife.OnItemLongClick;
+import me.ivg2.foodapp.Model.Food;
 import me.ivg2.foodapp.Model.Recipe;
 
 public class ManualAddIngredientsActivity extends AppCompatActivity {
-    ArrayList<String> ingredients;
-    ArrayAdapter<String> ingredientAdapter;
+    ArrayList<Food> ingredients;
+    ArrayAdapter<Food> ingredientAdapter;
     @BindView(R.id.lvIngredients)
     ListView lvIngredients;
     boolean isEditMode;
@@ -40,7 +41,7 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
         index = intent.getIntExtra("index", -1);
         if (!(index == -1)) {
             Recipe recipe = RecipeItemRepository.get(index);
-            for (String ingredient : recipe.getIngredients()) {
+            for (Food ingredient : recipe.getIngredients()) {
                 ingredients.add(ingredient);
                 ingredientAdapter.notifyDataSetChanged();
             }
@@ -52,7 +53,7 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
     public void onAddIngredient(View view) {
         EditText etNewItem = (EditText) findViewById(R.id.newIngredient);
         String itemText = etNewItem.getText().toString();
-        ingredients.add('\u2022' + " " + itemText);
+        ingredients.add(new Food(itemText));
         etNewItem.setText("");
         ingredientAdapter.notifyDataSetChanged();
     }
@@ -76,7 +77,7 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == EDIT_REQUEST_CODE) {
             String updatedItem = data.getExtras().getString("item_text");
             int position = data.getExtras().getInt("item_position", 0);
-            ingredients.set(position, updatedItem);
+            ingredients.set(position, new Food(updatedItem));
             ingredientAdapter.notifyDataSetChanged();
         }
     }
@@ -91,7 +92,7 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
     @OnItemClick(R.id.lvIngredients)
     public void editTheIngredient(int position) {
         Intent i = new Intent(ManualAddIngredientsActivity.this, EditInstructionListActivity.class);
-        i.putExtra("item_text", ingredients.get(position));
+        i.putExtra("item_text", ingredients.get(position).getName());
         i.putExtra("item_position", position);
         startActivityForResult(i, EDIT_REQUEST_CODE);
     }

@@ -52,7 +52,6 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         bundle.putString("source", recipe.getSource());
         bundle.putInt("hours", recipe.getCookTimeHours());
         bundle.putInt("min", recipe.getCookTimeMinutes());
-        bundle.putStringArrayList("ingredients", recipe.getIngredients());
         bundle.putStringArrayList("instructions", recipe.getInstructions());
         bundle.putInt("index", index);
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
