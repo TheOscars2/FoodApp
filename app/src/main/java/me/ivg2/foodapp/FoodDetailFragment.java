@@ -38,8 +38,6 @@ public class FoodDetailFragment extends Fragment {
     TextView etFoodExpDate;
     @BindView(R.id.options)
     TextView tvOptions;
-    @BindView(R.id.units)
-    TextView tvUnits;
     private Unbinder unbinder;
     private int index;
     private Callback callback;
@@ -82,8 +80,7 @@ public class FoodDetailFragment extends Fragment {
         Bundle arguments = getArguments();
         index = arguments.getInt("index");
         etFoodName.setText(FoodItemRepository.get(index).getName());
-        etFoodQuantity.setText(Integer.toString(FoodItemRepository.get(index).getQuantity()));
-        tvUnits.setText(FoodItemRepository.get(index).getUnit());
+        etFoodQuantity.setText(Integer.toString(FoodItemRepository.get(index).getQuantity()) + " " + FoodItemRepository.get(index).getUnit());
         //setting food expiration date to proper format
         DateTime targetDateTime = FoodItemRepository.get(index).getExpirationDate();
         Period period = new Period(DateTime.now(), targetDateTime);

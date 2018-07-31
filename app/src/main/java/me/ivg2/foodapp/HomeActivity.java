@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,7 @@ import java.lang.reflect.Field;
 import me.ivg2.foodapp.Model.Recipe;
 import me.ivg2.foodapp.barcode.BarcodeFragment;
 
-public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback, AddRecipeFragment.Callback, ManualAddFragment.Callback, BarcodeFragment.Callback, PluFragment.Callback, RecipeDetailFragment.Callback, FoodDetailFragment.Callback {
+public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback, AddRecipeFragment.Callback, ManualAddFragment.Callback, BarcodeFragment.Callback, PluFragment.Callback, RecipeDetailFragment.Callback, FoodDetailFragment.Callback, DatePickerFragment.Callback {
     FragmentManager fragmentManager;
 
     @Override
@@ -30,7 +31,6 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         final Fragment addFoodFragment = new AddFoodFragment();
         final Fragment fridgeFragment = new FridgeFragment();
         final Fragment groceryListFragment = new GroceryListFragment();
-
         fragmentManager.beginTransaction().replace(R.id.homeFragment, recipeFragment).commit();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
@@ -178,6 +178,29 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     public void goToEditFood(int index) {
         Bundle arguments = new Bundle();
         arguments.putInt("index", index);
+        ManualAddFragment manualAddFragment = new ManualAddFragment();
+        manualAddFragment.setArguments(arguments);
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
+    }
+
+    @Override
+    public void goToDatePicker(int index, String tempName, String tempQuantity) {
+        Bundle arguments = new Bundle();
+        arguments.putInt("index", index);
+        arguments.putString("tempName", tempName);
+        arguments.putString("tempQuantity", tempQuantity);
+        DialogFragment dialogFragment = new DatePickerFragment();
+        dialogFragment.setArguments(arguments);
+        dialogFragment.show(fragmentManager, "datePicker");
+    }
+
+    @Override
+    public void goToEditFoodFromDatePicker(int index, String newDate, String tempName, String tempQuantity) {
+        Bundle arguments = new Bundle();
+        arguments.putInt("index", index);
+        arguments.putString("newExpDate", newDate);
+        arguments.putString("tempName", tempName);
+        arguments.putString("tempQuantity", tempQuantity);
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();

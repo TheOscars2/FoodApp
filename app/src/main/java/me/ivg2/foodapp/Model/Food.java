@@ -36,6 +36,8 @@ public class Food {
         this.imageURL = imageURL;
         String eventDate = "10/28/2018";
         String eventTime = "00:00";
+        this.quantity = 1;
+        this.unit = "servings";
         expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));
     }
 
@@ -85,7 +87,6 @@ public class Food {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
-
 
     public static final Comparator<Food> ALPHABETICAL = new Comparator<Food>() {
         @Override

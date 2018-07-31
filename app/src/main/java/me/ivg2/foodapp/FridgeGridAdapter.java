@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,7 +70,7 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
                 menu.show();
             }
         });
-        //Collections.sort(listOfFoodObjects, Food.ALPHABETICAL);
+        Collections.sort(listOfFoodObjects, Food.ALPHABETICAL);
         Food food = listOfFoodObjects.get(i);
         viewHolder.foodName.setText(food.getName());
         if (food.getImageURL() != null) {

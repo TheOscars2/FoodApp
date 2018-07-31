@@ -1,13 +1,16 @@
 package me.ivg2.foodapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +43,7 @@ public class ManualAddFragment extends Fragment {
     @BindView(R.id.addToFridgeBtn)
     Button addToFridge;
     private int index;
+    private final int NEW_ENTRY = -2;
     private boolean isEditMode;
     private DateFormat dateFormat;
     private Callback callback;
@@ -48,6 +52,8 @@ public class ManualAddFragment extends Fragment {
 
     interface Callback {
         void goToFridge();
+
+        void goToDatePicker(int index, String tempName, String tempQuantity);
     }
 
     @Override
@@ -72,6 +78,7 @@ public class ManualAddFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        index = NEW_ENTRY;//default value indicates new Add
         return inflater.inflate(R.layout.fragment_manual_add, container, false);
     }
 
@@ -83,28 +90,45 @@ public class ManualAddFragment extends Fragment {
         try {
             String name = getArguments().getString("productName");
             etFoodName.setText(name);
+            index = getArguments().getInt("index", -1);
         } catch (NullPointerException n) {
         }
         if (getArguments() != null) {
             isEditMode = true;
-            index = getArguments().getInt("index", -1);
-            if (!(index == -1)) {
+            if (index > -1) {
                 etFoodName.setText(FoodItemRepository.get(index).getName());
                 etFoodQuantity.setText(Integer.toString(FoodItemRepository.get(index).getQuantity()));
                 etFoodExpDate.setText(dateFormat.format(FoodItemRepository.get(index).getExpirationDate().toDate()));
             } else {
                 isEditMode = false;
+                if (index == NEW_ENTRY) {
+                    etFoodName.setText(getArguments().getString("tempName"));
+                    etFoodQuantity.setText(getArguments().getString("tempQuantity"));
+                    etFoodExpDate.setText(getArguments().getString("newExpDate"));
+                }
             }
         }
-
         Spinner dynamicSpinner = view.findViewById(R.id.dynamic_spinner);
-
-        final String[] items = new String[] { "gal", "cups", "mL" };
-
+        etFoodExpDate.setInputType(InputType.TYPE_NULL);
+        etFoodExpDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.goToDatePicker(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString());
+            }
+        });
+        etFoodExpDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getRootView().getWindowToken(), 0);
+                    callback.goToDatePicker(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString());
+                }
+            }
+        });
+        final String[] items = new String[]{"servings", "gal", "cups", "mL"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
-
         dynamicSpinner.setAdapter(adapter);
-
         dynamicSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -113,7 +137,8 @@ public class ManualAddFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(getActivity(), "Please fill out all food information", Toast.LENGTH_SHORT).show();            }
+                Toast.makeText(getActivity(), "Please fill out all food information", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

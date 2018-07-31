@@ -42,8 +42,8 @@
         android:id="@+id/etFoodQuantity"
         android:layout_width="59dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/etFood"
-        android:layout_toEndOf="@+id/etFood"
+        android:layout_alignStart="@+id/etFood"
+        android:layout_below="@+id/etFoodExpirationDate"
         android:ems="10"
         android:hint="  Qty"
         android:inputType="number" />
@@ -57,15 +57,16 @@
         android:layout_marginStart="13dp"
         android:ems="10"
         android:hint="Expiration date (MM/DD/YYYY)"
-        android:inputType="date" />
+        android:inputType="none" />
 
     <Spinner
         android:id="@+id/dynamic_spinner"
         android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/etFoodQuantity"
+        android:layout_alignBottom="@id/etFoodQuantity"
+        android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="224dp" />
+        android:layout_toEndOf="@+id/etFoodQuantity" />
 
 
 
