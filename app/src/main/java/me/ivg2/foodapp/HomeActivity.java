@@ -23,6 +23,8 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         final Fragment recipeFragment = new RecipeFragment();
         final Fragment addFoodFragment = new AddFoodFragment();
         final Fragment fridgeFragment = new FridgeFragment();
+        final Fragment groceryListFragment = new GroceryListFragment();
+
         fragmentManager.beginTransaction().replace(R.id.homeFragment, recipeFragment).commit();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -37,6 +39,9 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
                         return true;
                     case R.id.fridge:
                         fragmentManager.beginTransaction().replace(R.id.homeFragment, fridgeFragment).commit();
+                        return true;
+                    case R.id.groceryList:
+                        fragmentManager.beginTransaction().replace(R.id.homeFragment, groceryListFragment).commit();
                         return true;
                 }
                 return false;

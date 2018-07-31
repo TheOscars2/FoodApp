@@ -48,6 +48,12 @@ public class Food {
         this.expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));
     }
 
+    public Food(String name, int quantity, String unit) {
+        this.name = name;
+        this.quantity = quantity;
+        this.unit = unit;
+    }
+
     public String getName() {
         return name;
     }
@@ -80,6 +86,7 @@ public class Food {
         this.imageURL = imageURL;
     }
 
+<<<<<<< HEAD
     public static final Comparator<Food> ALPHABETICAL = new Comparator<Food>() {
         @Override
         public int compare(Food o1, Food o2) {
@@ -87,6 +94,8 @@ public class Food {
         }
     };
     
+=======
+>>>>>>> 6d8d619... Added recycler view and fragments for grocery list.
     public String getUnit() {
         return unit;
     }

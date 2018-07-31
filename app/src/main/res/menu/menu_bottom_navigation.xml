@@ -12,7 +12,9 @@
     <item
         android:id="@+id/fridge"
         android:icon="@drawable/fridge_icon" />
-
+    <item
+        android:id="@+id/groceryList"
+        android:icon="@drawable/grocery_list" />
 
 </menu>
 
