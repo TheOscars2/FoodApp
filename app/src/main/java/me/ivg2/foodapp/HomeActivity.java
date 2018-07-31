@@ -12,28 +12,19 @@ import android.view.MenuItem;
 import me.ivg2.foodapp.Model.Recipe;
 import me.ivg2.foodapp.barcode.BarcodeFragment;
 
-
 public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback, AddRecipeFragment.Callback, ManualAddFragment.Callback, BarcodeFragment.Callback, PluFragment.Callback, RecipeDetailFragment.Callback, FoodDetailFragment.Callback {
-
-
     FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-
         fragmentManager = getSupportFragmentManager();
-
         final Fragment recipeFragment = new RecipeFragment();
         final Fragment addFoodFragment = new AddFoodFragment();
         final Fragment fridgeFragment = new FridgeFragment();
-
         fragmentManager.beginTransaction().replace(R.id.homeFragment, recipeFragment).commit();
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -64,10 +55,8 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         bundle.putStringArrayList("ingredients", recipe.getIngredients());
         bundle.putStringArrayList("instructions", recipe.getInstructions());
         bundle.putInt("index", index);
-
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
         recipeDetailFragment.setArguments(bundle);
-
         fragmentManager.beginTransaction().replace(R.id.homeFragment, recipeDetailFragment).commit();
     }
 
@@ -76,11 +65,11 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         fragmentManager.beginTransaction().replace(R.id.homeFragment, new AddRecipeFragment()).commit();
     }
 
-
     @Override
     public void goToBarcodeScanner() {
         fragmentManager.beginTransaction().replace(R.id.homeFragment, new BarcodeFragment()).commit();
     }
+
     @Override
     public void goToPLUInput() {
         fragmentManager.beginTransaction().replace(R.id.homeFragment, new PluFragment()).commit();
@@ -97,7 +86,6 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         arguments.putString("productName", foodName);
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
-
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
     }
 
@@ -105,10 +93,8 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     public void goToFoodDetail(int index) {
         Bundle arguments = new Bundle();
         arguments.putInt("index", index);
-
         FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
         foodDetailFragment.setArguments(arguments);
-
         fragmentManager.beginTransaction().replace(R.id.homeFragment, foodDetailFragment).commit();
     }
 
@@ -129,10 +115,8 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         arguments.putInt("index", index);
         AddRecipeFragment arFrag = new AddRecipeFragment();
         arFrag.setArguments(arguments);
-
         fragmentManager.beginTransaction().replace(R.id.homeFragment, arFrag).commit();
     }
-
 
     @Override
     public void goToEditIngredients(int index) {
@@ -161,7 +145,6 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         arguments.putInt("index", index);
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
-
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
     }
 }
