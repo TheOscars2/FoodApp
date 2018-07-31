@@ -3,6 +3,8 @@ package me.ivg2.foodapp.Model;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
+import java.util.Comparator;
+
 import static java.lang.String.format;
 
 public class Food {
@@ -14,7 +16,6 @@ public class Food {
     public Food(String name) {
         this.name = name;
         imageURL = null;
-
         String eventDate = "10/28/2018";
         String eventTime = "00:00";
         expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));
@@ -24,7 +25,6 @@ public class Food {
         this.name = name;
         this.quantity = quantity;
         imageURL = null;
-
         String eventDate = expirationDate.getMonthOfYear() + "/" + expirationDate.getDayOfMonth() + "/" + expirationDate.getYear();
         String eventTime = "00:00";
         this.expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));
@@ -33,7 +33,6 @@ public class Food {
     public Food(String name, String imageURL) {
         this.name = name;
         this.imageURL = imageURL;
-
         String eventDate = "10/28/2018";
         String eventTime = "00:00";
         expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));
@@ -43,7 +42,6 @@ public class Food {
         this.name = name;
         this.quantity = quantity;
         this.imageURL = imageURL;
-
         String eventDate = expirationDate.getMonthOfYear() + "/" + expirationDate.getDayOfMonth() + "/" + expirationDate.getYear();
         String eventTime = "00:00";
         this.expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));
@@ -80,4 +78,11 @@ public class Food {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+    public static final Comparator<Food> ALPHABETICAL = new Comparator<Food>() {
+        @Override
+        public int compare(Food o1, Food o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
+    };
 }

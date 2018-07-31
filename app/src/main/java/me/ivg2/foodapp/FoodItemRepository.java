@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import me.ivg2.foodapp.Model.Food;
 
 public class FoodItemRepository {
-
     private ArrayList<Food> foods;
 
     //will load from a server but for now I will hardcode Food data in
     private void load() {
         foods = new ArrayList<>();
-
         foods.add(new Food("apple", "https://www.vaporfi.com.au/media/catalog/product/cache/34/thumbnail/600x600/9df78eab33525d08d6e5fb8d27136e95/v/z/vz_eliquid_juicy_red_apple.jpg"));
         foods.add(new Food("pear", "http://vaporhauschicago.com/wp-content/uploads/2017/06/pear.jpg"));
         foods.add(new Food("pizza", "https://www.messforless.net/wp-content/uploads/2018/01/2-ingredient-pizza-dough-weight-watchers-9.jpg"));
@@ -36,7 +34,7 @@ public class FoodItemRepository {
         //upload food to server here
     }
 
-    private ArrayList<Food> getData() {
+    public ArrayList<Food> getData() {
         return new ArrayList<Food>(foods);
     }
 
@@ -51,8 +49,8 @@ public class FoodItemRepository {
     }
 
     public static ArrayList<Food> getAll() {
-    return getInstance().foods;
-}
+        return getInstance().foods;
+    }
 
     public static Food get(int index) {
         return getInstance().foods.get(index);

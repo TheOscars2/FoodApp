@@ -13,16 +13,22 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.ivg2.foodapp.Model.Food;
 
 public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.ViewHolder> {
     private FoodItemRepository foods;
+    private ArrayList<Food> listOfFoodObjects;
+    private ArrayList<Food> foodListCopy;
     Context context;
 
-    public FridgeGridAdapter(FoodItemRepository foods) {
-        this.foods = foods;
+    public FridgeGridAdapter(FoodItemRepository foodRepo) {
+        this.foods = foodRepo;
+        this.listOfFoodObjects = foodRepo.getData();
+        this.foodListCopy = foodRepo.getData();
     }
 
     @NonNull
@@ -47,7 +53,9 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete:
-                                foods.delete(i);
+                                foods.delete(foods.getAll().indexOf(listOfFoodObjects.get(i)));
+                                listOfFoodObjects.remove(i);
+                                //maybe re get listOfFoodObjects
                                 notifyDataSetChanged();
                                 return true;
                             case R.id.edit:
@@ -61,7 +69,8 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
                 menu.show();
             }
         });
-        Food food = foods.get(i);
+        //Collections.sort(listOfFoodObjects, Food.ALPHABETICAL);
+        Food food = listOfFoodObjects.get(i);
         viewHolder.foodName.setText(food.getName());
         if (food.getImageURL() != null) {
             Glide.with(context)
@@ -77,7 +86,25 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return foods.size();
+        return listOfFoodObjects.size();
+    }
+
+    public void filter(String searchText) {
+        if (searchText.isEmpty()) {
+            listOfFoodObjects.clear();
+            listOfFoodObjects.addAll(foods.getData());
+        } else {
+            ArrayList<Food> searchResult = new ArrayList<>();
+            searchText = searchText.toLowerCase();
+            for (Food foodItem : foods.getData()) {
+                if (foodItem.getName().toLowerCase().contains(searchText)) {
+                    searchResult.add(foodItem);
+                }
+            }
+            listOfFoodObjects.clear();
+            listOfFoodObjects.addAll(searchResult);
+        }
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -101,6 +128,10 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
                 FridgeFragment.onFoodViewClicked(index);
             }
         }
+    }
+
+    public ArrayList<Food> getListOfFoodObjects() {
+        return listOfFoodObjects;
     }
 }
 
