@@ -86,16 +86,14 @@ public class Food {
         this.imageURL = imageURL;
     }
 
-<<<<<<< HEAD
+
     public static final Comparator<Food> ALPHABETICAL = new Comparator<Food>() {
         @Override
         public int compare(Food o1, Food o2) {
             return o1.getName().compareTo(o2.getName());
         }
     };
-    
-=======
->>>>>>> 6d8d619... Added recycler view and fragments for grocery list.
+
     public String getUnit() {
         return unit;
     }
