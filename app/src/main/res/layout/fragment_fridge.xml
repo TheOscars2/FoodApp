@@ -11,26 +11,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="19dp"
-            android:layout_weight="1"
-            android:background="#F50057"
-            android:id="@+id/toolbar">
+            android:layout_height="wrap_content"
+
+            android:background="#F50057">
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#F50057"
+                android:fontFamily="cursive"
                 android:gravity="center"
                 android:text="Your Fridge  "
-                android:textStyle="italic"
-                android:fontFamily="cursive"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:textStyle="italic" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -40,8 +41,7 @@
             xmlns:tools="http://schemas.android.com/tools"
 
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:clickable="true"
 
             app:cardElevation="4dp">
