@@ -1,11 +1,13 @@
 package me.ivg2.foodapp;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -97,29 +106,13 @@ public class PluFragment extends Fragment {
                 }
                 pluProgress.setVisibility(ProgressBar.VISIBLE);
                 final int pluCode = Integer.parseInt(userCode.getText().toString());
-                Random rand = new Random();
-                int value = rand.nextInt(5);
-                if (value == 1) {
-                    //error
-                    userCode.setText("");
-                    Toast.makeText(getContext(), "Error during PLU look up, try again", Toast.LENGTH_LONG).show();
-                    pluProgress.setVisibility(ProgressBar.INVISIBLE);
-                } else {
-                    int firstDigit = Integer.parseInt(Integer.toString(pluCode).substring(0, 1));
-                    if (firstDigit == 1) {
-                        callback.goToManualFromPlu("apple");
-                    } else if (firstDigit == 2) {
-                        callback.goToManualFromPlu("banana");
-                    } else if (firstDigit == 3) {
-                        callback.goToManualFromPlu("pear");
-                    } else if (firstDigit == 4) {
-                        callback.goToManualFromPlu("grapes");
-                    } else if (firstDigit == 5) {
-                        callback.goToManualFromPlu("peach");
-                    } else {
-                        callback.goToManualFromPlu("plum");
-                    }
-                }
+
+                userCode.setText("");
+                MyDownloadTask task = (MyDownloadTask) new MyDownloadTask(Integer.toString(pluCode)).execute();
+
+
+
+
             }
         });
     }
@@ -128,5 +121,46 @@ public class PluFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    class MyDownloadTask extends AsyncTask {
+        public String line;
+        private String pluCode;
+
+        public MyDownloadTask(String plu) {
+            super();
+            pluCode = plu;
+        }
+
+        @Override
+        protected String doInBackground(Object[] objects) {
+            URL url = null;
+
+            try {
+                url = new URL("http://10.0.2.2:5000/plu/" + pluCode);
+                //url = new URL("http://google.com");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                InputStream in = connection.getInputStream();
+
+                BufferedReader reader = null;
+                StringBuffer response = new StringBuffer();
+                reader = new BufferedReader(new InputStreamReader(in));
+                line = reader.readLine();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (line == null) {
+
+                Toast.makeText(getContext(), "Error during PLU look up, try again", Toast.LENGTH_LONG).show();
+                pluProgress.setVisibility(ProgressBar.INVISIBLE);
+            } else {
+                callback.goToManualFromPlu(line);
+            }
+            return null;
+        }
+
     }
 }
