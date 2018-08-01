@@ -4,11 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GroceryListFragment">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvGrocery"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#F50057"
+            android:id="@+id/toolbar">
+
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:background="#F50057"
+                android:gravity="center"
+                android:text="Grocery List "
+                android:textStyle="italic"
+                android:fontFamily="cursive"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvGrocery"
+            android:layout_weight="10"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true" />
+
+    </LinearLayout>
+
+
 </FrameLayout>

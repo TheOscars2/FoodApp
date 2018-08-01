@@ -1,51 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="2dp"
+    >
 
-    <TextView
-        android:id="@+id/groceryFoodName"
-        android:layout_width="133dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="Name"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="3dp"
-        android:paddingLeft="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp">
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"/>
 
-    <TextView
-        android:id="@+id/groceryFoodQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/groceryFoodUnit"
-        android:text="quantity"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="215dp"
-        tools:layout_editor_absoluteY="46dp" />
+        <TextView
+            android:id="@+id/groceryFoodName"
+            android:layout_width="0dp"
+            android:textStyle="bold"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="4"
+            android:gravity="center_vertical|left"
+            android:text="Name"
+            android:textSize="25sp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="3dp"
+            android:paddingRight="2dp"
+            android:paddingLeft="3dp"/>
 
-    <TextView
-        android:id="@+id/groceryFoodUnit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/checkBox"
-        android:text="gallons"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="182dp"
-        tools:layout_editor_absoluteY="88dp" />
 
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="24dp"
-        android:text="Bought" />
+        <TextView
+            android:id="@+id/groceryFoodQuantity"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:textStyle="italic"
+            android:layout_toStartOf="@+id/groceryFoodUnit"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:text="quantity"
+            android:textSize="25sp"
+            tools:layout_editor_absoluteX="215dp"
+            tools:layout_editor_absoluteY="46dp" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/groceryFoodUnit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/checkBox"
+            android:layout_weight="1.5"
+            android:textStyle="italic"
+            android:gravity="center_vertical|left"
+            android:text="gallons"
+            android:textSize="25sp"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            tools:layout_editor_absoluteX="182dp"
+            tools:layout_editor_absoluteY="88dp" />
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
