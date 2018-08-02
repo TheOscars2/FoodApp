@@ -13,8 +13,6 @@
         android:background="#F50057"
         android:id="@+id/toolbar">
 
-
-
         <TextView
             android:id="@+id/textView"
             android:layout_height="wrap_content"
@@ -30,7 +28,6 @@
             android:textSize="34sp" />
 
     </android.support.v7.widget.Toolbar>
-
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvRecipe"
