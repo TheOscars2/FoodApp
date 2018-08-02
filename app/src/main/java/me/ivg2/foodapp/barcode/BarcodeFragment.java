@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -28,9 +30,17 @@ import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import me.ivg2.foodapp.PluFragment;
 import me.ivg2.foodapp.R;
+import me.ivg2.foodapp.server.UrlManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,20 +103,41 @@ public class BarcodeFragment extends Fragment {
 
     public static void gotBarcode() {
         Barcode barcode = BarcodeItemRepository.get(BarcodeItemRepository.size() - 1);
-        int firstDigit = Integer.parseInt(Integer.toString(barcode.valueFormat).substring(0, 1));
-        if (firstDigit == 1) {
-            callback.goToManualFoodAdditionfromBarcode("apple");
-        } else if (firstDigit == 2) {
-            callback.goToManualFoodAdditionfromBarcode("banana");
-        } else if (firstDigit == 3) {
-            callback.goToManualFoodAdditionfromBarcode("pear");
-        } else if (firstDigit == 4) {
-            callback.goToManualFoodAdditionfromBarcode("grapes");
-        } else if (firstDigit == 5) {
-            callback.goToManualFoodAdditionfromBarcode("peach");
-        } else {
-            callback.goToManualFoodAdditionfromBarcode("plum");
+        // new GetBarcodeTask(barcode).execute();
+    }
+
+     class GetBarcodeTask extends AsyncTask {
+        private int barcode;
+
+        public GetBarcodeTask(int code) {
+            super();
+            barcode = code;
         }
+
+        @Override
+        protected String doInBackground(Object[] objects) {
+            String foodName = null;
+            try {
+                URL url = UrlManager.getBarcodeEndpoint(barcode);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                InputStream in = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                foodName = reader.readLine();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (foodName == null) {
+                Toast.makeText(getContext(), "Error during barcode look up, try again", Toast.LENGTH_LONG).show();
+                callback.goToManualFoodAdditionfromBarcode("");
+            } else {
+                callback.goToManualFoodAdditionfromBarcode(foodName);
+            }
+            return null;
+        }
+
     }
 
     /**
