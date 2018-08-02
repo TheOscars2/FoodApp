@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -38,7 +37,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import me.ivg2.foodapp.PluFragment;
 import me.ivg2.foodapp.R;
 import me.ivg2.foodapp.server.UrlManager;
 
@@ -53,9 +51,13 @@ public class BarcodeFragment extends Fragment {
     private static CameraSource mCameraSource = null;
     private static CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
-    private GraphicTracker graphicTracker;
-    public static View v;
+
     public static Callback callback;
+    public static Barcode barcode;
+
+    public interface Callback {
+        void goToManualFoodAdditionFromBarcode(String foodName);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -71,10 +73,6 @@ public class BarcodeFragment extends Fragment {
         callback = null;
     }
 
-    public interface Callback {
-        void goToManualFoodAdditionfromBarcode(String foodName);
-    }
-
     public BarcodeFragment() {
         // Required empty public constructor
     }
@@ -83,7 +81,6 @@ public class BarcodeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_barcode, container, false);
         return inflater.inflate(R.layout.fragment_barcode, container, false);
     }
 
@@ -101,22 +98,23 @@ public class BarcodeFragment extends Fragment {
         }
     }
 
-    public static void gotBarcode() {
-        Barcode barcode = BarcodeItemRepository.get(BarcodeItemRepository.size() - 1);
-        // new GetBarcodeTask(barcode).execute();
+    public void gotBarcode() {
+        barcode = BarcodeItemRepository.get(BarcodeItemRepository.size() - 1);
+        GetBarcodeTask task = new GetBarcodeTask(barcode.rawValue);
+        task.execute();
     }
 
-     class GetBarcodeTask extends AsyncTask {
-        private int barcode;
+    class GetBarcodeTask extends AsyncTask {
+        private String barcode;
 
-        public GetBarcodeTask(int code) {
+        public GetBarcodeTask(String code) {
             super();
             barcode = code;
         }
 
         @Override
         protected String doInBackground(Object[] objects) {
-            String foodName = null;
+            String foodName = "";
             try {
                 URL url = UrlManager.getBarcodeEndpoint(barcode);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -130,10 +128,10 @@ public class BarcodeFragment extends Fragment {
             }
 
             if (foodName == null) {
-                Toast.makeText(getContext(), "Error during barcode look up, try again", Toast.LENGTH_LONG).show();
-                callback.goToManualFoodAdditionfromBarcode("");
+                Toast.makeText(getContext(), "This barcode is not in our records. Enter it manually", Toast.LENGTH_LONG).show();
             } else {
-                callback.goToManualFoodAdditionfromBarcode(foodName);
+                Log.d("barcodeFrag pre crash", foodName);
+                callback.goToManualFoodAdditionFromBarcode(foodName);
             }
             return null;
         }

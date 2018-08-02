@@ -9,10 +9,14 @@ import static java.lang.String.format;
 
 public class Food {
     private String name;
-    private int quantity;
+    private double quantity;
     private DateTime expirationDate;
     private String imageURL;
     private String unit;
+
+    public Food() {
+
+    }
 
     public Food(String name) {
         this.name = name;
@@ -24,7 +28,7 @@ public class Food {
         expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));
     }
 
-    public Food(String name, int quantity, DateTime expirationDate) {
+    public Food(String name, double quantity, DateTime expirationDate) {
         this.name = name;
         this.quantity = quantity;
         imageURL = null;
@@ -66,11 +70,11 @@ public class Food {
         this.name = name;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
@@ -96,7 +100,6 @@ public class Food {
             return o1.getName().compareTo(o2.getName());
         }
     };
-
     public String getUnit() {
         return unit;
     }

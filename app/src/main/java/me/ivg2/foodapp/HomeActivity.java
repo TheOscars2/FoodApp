@@ -54,7 +54,11 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
                 return false;
             }
         });
+
+        new RecipeFragment().loadRecommendedRecipes();
     }
+
+
     public static class BottomNavigationViewHelper {
         @SuppressLint("RestrictedApi")
         public static void disableShiftMode(BottomNavigationView view) {
@@ -116,7 +120,16 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToManualFoodAdditionfromBarcode(String foodName) {
+    public void goToManualFoodAdditionFromBarcode(String foodName) {
+        Bundle arguments = new Bundle();
+        arguments.putString("productName", foodName);
+        ManualAddFragment manualAddFragment = new ManualAddFragment();
+        manualAddFragment.setArguments(arguments);
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
+    }
+
+    @Override
+    public void goToManualFromPlu(String foodName) {
         Bundle arguments = new Bundle();
         arguments.putString("productName", foodName);
         ManualAddFragment manualAddFragment = new ManualAddFragment();
@@ -161,15 +174,6 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToManualFromPlu(String foodName) {
-        Bundle arguments = new Bundle();
-        arguments.putString("productName", foodName);
-        ManualAddFragment manualAddFragment = new ManualAddFragment();
-        manualAddFragment.setArguments(arguments);
-        fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
-    }
-
-    @Override
     public void goToRecipes() {
         fragmentManager.beginTransaction().replace(R.id.homeFragment, new RecipeFragment()).commit();
     }
@@ -204,5 +208,14 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
+    }
+
+    @Override
+    public void goToBarcodeWithNewFood() {
+        Bundle arguments = new Bundle();
+        arguments.putInt("index", FoodItemRepository.size() - 1);
+        BarcodeFragment barcodeFragment = new BarcodeFragment();
+        barcodeFragment.setArguments(arguments);
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, barcodeFragment).commit();
     }
 }

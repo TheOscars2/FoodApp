@@ -13,9 +13,20 @@ public class Recipe {
     private int cookTimeMinutes;
     private String cookTime;
     private Bitmap imageBitmap;
+<<<<<<< HEAD
+=======
+    private String sourceLink;
+
+>>>>>>> Recipes and barcodes pulling from backend.
     private ArrayList<Food> ingredientsMissing;
     private ArrayList<Food> ingredients;
     private ArrayList<String> instructions;
+
+    public Recipe() {
+        ingredientsMissing = new ArrayList<>();
+        ingredients = new ArrayList<>();
+        instructions = new ArrayList<>();
+    }
 
     public Recipe(String name, String imageUrl, String source, int hr, int min) {
         this.name = name;
@@ -131,5 +142,21 @@ public class Recipe {
 
     public void setIngredientsMissing(ArrayList<Food> ingredientsMissing) {
         this.ingredientsMissing = ingredientsMissing;
+    }
+
+    public void setCookTimeHours(int cookTimeHours) {
+        this.cookTimeHours = cookTimeHours;
+    }
+
+    public void setCookTime(String cookTime) {
+        this.cookTime = cookTime;
+    }
+
+    public String getSourceLink() {
+        return sourceLink;
+    }
+
+    public void setSourceLink(String sourceLink) {
+        this.sourceLink = sourceLink;
     }
 }
