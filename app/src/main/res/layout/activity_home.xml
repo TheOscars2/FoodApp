@@ -7,7 +7,28 @@
     android:orientation="vertical"
     tools:context=".HomeActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#F50057"
+        android:id="@+id/toolbar">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:background="#F50057"
+            android:gravity="center"
+            android:fontFamily="cursive"
+            android:text="APPetite "
+            android:textStyle="bold|italic"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="34sp" />
+
+    </android.support.v7.widget.Toolbar>
     <FrameLayout
         android:id="@+id/homeFragment"
         android:layout_width="match_parent"

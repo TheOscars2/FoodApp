@@ -1,17 +1,30 @@
 package me.ivg2.foodapp;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -20,6 +33,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.ivg2.foodapp.Model.Food;
 import me.ivg2.foodapp.Model.Recipe;
+import me.ivg2.foodapp.server.UrlManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +46,7 @@ public class RecipeFragment extends Fragment {
     RecipeItemRepository recipes;
     private RecipeAdapter recipeAdapter;
     private Unbinder unbinder;
+    private SwipeRefreshLayout swipeContainer;
 
     interface Callback {
         void goToRecipeDetail(Recipe recipe, int index);
@@ -65,11 +80,26 @@ public class RecipeFragment extends Fragment {
             }
         });
         loadRecommendedRecipes();
+
         rvRecipes = (RecyclerView) view.findViewById(R.id.rvRecipe);
         recipes = RecipeItemRepository.getInstance();
         recipeAdapter = new RecipeAdapter(recipes);
         rvRecipes.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvRecipes.setAdapter(recipeAdapter);
+
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadRecommendedRecipes();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     public void loadRecommendedRecipes() {
@@ -118,40 +148,57 @@ public class RecipeFragment extends Fragment {
      */
     public ArrayList<Recipe> setUpRecipeList() {
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-        ArrayList<Food> ingredients = new ArrayList<>();
-        ArrayList<String> instructions = new ArrayList<>();
-        ingredients.add(new Food("apple"));
-        ingredients.add(new Food("pringles"));
-        instructions.add("Step 1");
-        recipes.add(new Recipe("recipe 1", "https://purewows3.imgix.net/images/articles/2017_09/Sliced-red-apple-on-wooden-board.jpg?auto=format,compress&cs=strip", "Mother's Recipe", ingredients, instructions));
-        ArrayList<Food> ingredients2 = new ArrayList<>();
-        ArrayList<String> instructions2 = new ArrayList<>();
-        ingredients2.add(new Food("apple"));
-        ingredients2.add(new Food("pringles"));
-        ingredients2.add(new Food("peanut butter"));
-        instructions2.add("Step 1");
-        recipes.add(new Recipe("recipe 2", "https://img.sndimg.com/food/image/upload/w_896,h_504,c_fill,fl_progressive,q_80/v1/img/recipes/21/83/90/picZLz4xF.jpg", "Mother's Recipe", ingredients2, instructions2));
-        ArrayList<Food> ingredients3 = new ArrayList<>();
-        ArrayList<String> instructions3 = new ArrayList<>();
-        ingredients3.add(new Food("apple"));
-        ingredients3.add(new Food("pear"));
-        ingredients3.add(new Food("banana"));
-        ingredients3.add(new Food("smoothie"));
-        instructions3.add("Step 1");
-        recipes.add(new Recipe("recipe 3", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/pasta-salad-horizontal-jpg-1522265695.jpg", "Mother's Recipe", ingredients3, instructions3));
-        ArrayList<Food> ingredients4 = new ArrayList<>();
-        ArrayList<String> instructions4 = new ArrayList<>();
-        ingredients4.add(new Food("spaghetti"));
-        ingredients4.add(new Food("egg"));
-        ingredients4.add(new Food("chives"));
-        instructions4.add("Step 1");
-        recipes.add(new Recipe("Spaghetii Carbonara", "https://imagesvc.timeincapp.com/v3/mm/image?url=http%3A%2F%2Fcdn-image.myrecipes.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2Frecipes%2Fck%2F11%2F04%2Ffettuccine-olive-oil-ck-x.jpg%3Fitok%3DN9u99OOY&w=700&q=85", "Food.com", ingredients4, instructions4));
-        ArrayList<Food> ingredients5 = new ArrayList<>();
-        ArrayList<String> instructions5 = new ArrayList<>();
-        ingredients5.add(new Food("ravioli"));
-        ingredients5.add(new Food("tomato sauce"));
-        instructions5.add("Step 1");
-        recipes.add(new Recipe("Ravioli", "https://imagesvc.timeincapp.com/v3/mm/image?url=https%3A%2F%2Fimg1.southernliving.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2F2015%2F11%2Fmain%2Ffofoma051120100_0.jpg%3Fitok%3DuG-PCDzS&w=700&q=85", "Recipes.com", ingredients5, instructions5));
+        GetRecipes jsonRecipes = new GetRecipes();
+        jsonRecipes.execute();
+
+        String jsonRecipesArray = jsonRecipes.line;
+
+        while (jsonRecipesArray == null) {
+            jsonRecipesArray = jsonRecipes.line;
+        }
+
+        try {
+            JSONObject jsonObject = new JSONObject(jsonRecipesArray);
+            JSONArray jsonArray = jsonObject.getJSONArray("recipes");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject recipeObject = jsonArray.getJSONObject(i);
+                Recipe recipe = new Recipe();
+                recipe.setName(recipeObject.getString("name"));
+                recipe.setSource(recipeObject.getString("sourceName"));
+                recipe.setSourceLink(recipeObject.getString("sourceLink"));
+                recipe.setCookTimeHours(recipeObject.getInt("cookTimeHours"));
+                recipe.setCookTimeMinutes(recipeObject.getInt("cookTimeMinutes"));
+                recipe.setImageUrl(recipeObject.getString("imageUrl"));
+
+                JSONArray ingredients = recipeObject.getJSONArray("ingredients");
+                ArrayList<Food> recipeIngredients = new ArrayList<>();
+                for (int j = 0; j < ingredients.length(); j++) {
+                    String fullIngredient = ingredients.getString(j);
+                    Food food = new Food();
+                    String[] splitIngredient = fullIngredient.split(" of ", 2);
+                    String[] splitQuantity = splitIngredient[0].split(" ", 2);
+                    food.setQuantity(Double.parseDouble(splitQuantity[0]));
+                    if (splitQuantity[1] != null && splitQuantity[1] != "") {
+                        food.setUnit(splitQuantity[1]);
+                    }
+                    food.setName(splitIngredient[1]);
+                    recipeIngredients.add(food);
+                }
+                recipe.setIngredients(recipeIngredients);
+
+                JSONArray instructions = recipeObject.getJSONArray("instructions");
+                ArrayList<String> recipeInstructions = new ArrayList<>();
+                for (int k = 0; k < instructions.length(); k++) {
+                    recipeInstructions.add(instructions.getString(k));
+                }
+                recipe.setInstructions(recipeInstructions);
+
+                recipes.add(recipe);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return recipes;
     }
 
@@ -186,5 +233,41 @@ public class RecipeFragment extends Fragment {
     @OnClick(R.id.floatingAddRecipe)
     public void tryToAddRecipe() {
         callback.goToAddRecipe();
+    }
+
+    class GetRecipes extends AsyncTask {
+
+        String line = null;
+
+        @Override
+        protected String doInBackground(Object[] objects) {
+            URL url = null;
+
+            try {
+                url = UrlManager.getRecipeEndpoint();
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                InputStream in = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                StringBuilder sb = new StringBuilder();
+
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                line = sb.toString();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (line != null) {
+                return line;
+            }
+            return null;
+        }
+
     }
 }

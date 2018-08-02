@@ -144,7 +144,6 @@ public class PluFragment extends Fragment {
             }
 
             if (foodName == null) {
-
                 Toast.makeText(getContext(), "Error during PLU look up, try again", Toast.LENGTH_LONG).show();
                 pluProgress.setVisibility(ProgressBar.INVISIBLE);
             } else {

@@ -69,7 +69,7 @@ class BarcodeGraphic extends TrackedGraphic<Barcode> {
          */
         BarcodeItemRepository barcodeItemRepository = BarcodeItemRepository.getInstance();
         barcodeItemRepository.create(mBarcode);
-        BarcodeFragment.gotBarcode();
+        new BarcodeFragment().gotBarcode();
     }
 
     /**

@@ -49,11 +49,16 @@ public class ManualAddFragment extends Fragment {
     private Callback callback;
     private Unbinder unbinder;
     private String unitEntered;
+    private boolean isNewBarcode;
 
     interface Callback {
         void goToFridge();
+<<<<<<< HEAD
 
         void goToDatePicker(int index, String tempName, String tempQuantity);
+=======
+        void goToBarcodeWithNewFood();
+>>>>>>> Recipes and barcodes pulling from backend.
     }
 
     @Override
@@ -93,11 +98,11 @@ public class ManualAddFragment extends Fragment {
             index = getArguments().getInt("index", -1);
         } catch (NullPointerException n) {
         }
-        if (getArguments() != null) {
+        if (getArguments() != null && !isNewBarcode) {
             isEditMode = true;
             if (index > -1) {
                 etFoodName.setText(FoodItemRepository.get(index).getName());
-                etFoodQuantity.setText(Integer.toString(FoodItemRepository.get(index).getQuantity()));
+                etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()));
                 etFoodExpDate.setText(dateFormat.format(FoodItemRepository.get(index).getExpirationDate().toDate()));
             } else {
                 isEditMode = false;
@@ -154,7 +159,7 @@ public class ManualAddFragment extends Fragment {
         GroceryListItemRepository groceryList = GroceryListItemRepository.getInstance();
         Food newFood = null;
         try {
-            newFood = new Food(etFoodName.getText().toString(), Integer.parseInt(etFoodQuantity.getText().toString()),
+            newFood = new Food(etFoodName.getText().toString(), Double.parseDouble(etFoodQuantity.getText().toString()),
                     new DateTime(dateFormat.parse(etFoodExpDate.getText().toString())));
             newFood.setUnit(unitEntered);
         } catch (ParseException e) {
@@ -176,6 +181,7 @@ public class ManualAddFragment extends Fragment {
         } else {
             FoodItemRepository.create(newFood);
         }
+
         callback.goToFridge();
     }
 
