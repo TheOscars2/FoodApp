@@ -21,8 +21,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,8 +62,6 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvRecipeSource;
     @BindView(R.id.options)
     TextView tvOptions;
-    @BindView(R.id.ingredientsMissing)
-    TextView tvMissingIngredients;
     @BindView(R.id.cookedBtn)
     Button cookedBtn;
     private int hours;
@@ -72,6 +73,11 @@ public class RecipeDetailFragment extends Fragment {
     private Unbinder unbinder;
     RecipeItemRepository recipeItemRepository = RecipeItemRepository.getInstance();
     Recipe recipe;
+
+    //List view for ingredients missing
+    ArrayList<String> items;
+    ArrayAdapter<String> itemsAdapter;
+    ListView lvItems;
 
     interface Callback {
         void goToRecipes();
@@ -135,14 +141,30 @@ public class RecipeDetailFragment extends Fragment {
                 tvRecipeName.setTextColor(Color.parseColor("#000000"));
             }
         }
+
         if (recipe.getIngredientsMissing().size() > 0) {
-            String ingredients = "";
+            items = new ArrayList<>();
+            items.add("You are missing the following ingredients:" + "\n");
             for (Food ingredient : recipe.getIngredientsMissing()) {
-                ingredients += ingredient.getName() + "\n";
+                items.add(ingredient.getName());
             }
-            tvMissingIngredients.setText("You have missing ingredients: " + "\n" + ingredients);
-            tvMissingIngredients.setTextColor(0xFFFF0000);
         }
+
+        lvItems = view.findViewById(R.id.ingredientsMissing);
+        itemsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, items);
+        lvItems.setAdapter(itemsAdapter);
+
+        setupListViewListener();
+    }
+
+    public void setupListViewListener() {
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                GroceryListItemRepository.create(recipe.getIngredientsMissing().get(position - 1));
+                Toast.makeText(getContext(), recipe.getIngredientsMissing().get(position - 1).getName() + " added to grocery list", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void setIngredientsInView(ArrayList<Food> ingredients) {

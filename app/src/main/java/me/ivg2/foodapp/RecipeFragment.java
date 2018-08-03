@@ -91,6 +91,7 @@ public class RecipeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 loadRecommendedRecipes();
+                recipeAdapter.notifyDataSetChanged();
                 swipeContainer.setRefreshing(false);
             }
         });
