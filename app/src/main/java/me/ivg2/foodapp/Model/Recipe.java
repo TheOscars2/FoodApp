@@ -13,11 +13,9 @@ public class Recipe {
     private int cookTimeMinutes;
     private String cookTime;
     private Bitmap imageBitmap;
-<<<<<<< HEAD
-=======
+
     private String sourceLink;
 
->>>>>>> Recipes and barcodes pulling from backend.
     private ArrayList<Food> ingredientsMissing;
     private ArrayList<Food> ingredients;
     private ArrayList<String> instructions;

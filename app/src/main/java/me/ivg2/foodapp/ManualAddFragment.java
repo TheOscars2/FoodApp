@@ -53,12 +53,9 @@ public class ManualAddFragment extends Fragment {
 
     interface Callback {
         void goToFridge();
-<<<<<<< HEAD
 
         void goToDatePicker(int index, String tempName, String tempQuantity);
-=======
         void goToBarcodeWithNewFood();
->>>>>>> Recipes and barcodes pulling from backend.
     }
 
     @Override

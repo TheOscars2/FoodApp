@@ -10,29 +10,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#F50057">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#F50057"
-                android:fontFamily="cursive"
-                android:gravity="center"
-                android:text="Grocery List "
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="30sp"
-                android:textStyle="italic" />
-
-        </android.support.v7.widget.Toolbar>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvGrocery"
             android:layout_width="match_parent"
