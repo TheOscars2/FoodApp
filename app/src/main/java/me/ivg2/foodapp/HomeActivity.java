@@ -122,7 +122,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     @Override
     public void goToManualFoodAdditionFromBarcode(String foodName) {
         Bundle arguments = new Bundle();
-        arguments.putString("productName", foodName);
+        arguments.putString("tempName", foodName);
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     @Override
     public void goToManualFromPlu(String foodName) {
         Bundle arguments = new Bundle();
-        arguments.putString("productName", foodName);
+        arguments.putString("tempName", foodName);
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();

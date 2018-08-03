@@ -92,7 +92,7 @@ public class ManualAddFragment extends Fragment {
         try {
             String name = getArguments().getString("productName");
             etFoodName.setText(name);
-            index = getArguments().getInt("index", -1);
+            index = getArguments().getInt("index", NEW_ENTRY);
         } catch (NullPointerException n) {
         }
         if (getArguments() != null && !isNewBarcode) {
