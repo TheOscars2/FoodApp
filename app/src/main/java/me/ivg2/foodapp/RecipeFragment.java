@@ -79,7 +79,6 @@ public class RecipeFragment extends Fragment {
                 callback.goToAddRecipe();
             }
         });
-        loadRecommendedRecipes();
 
         rvRecipes = (RecyclerView) view.findViewById(R.id.rvRecipe);
         recipes = RecipeItemRepository.getInstance();
