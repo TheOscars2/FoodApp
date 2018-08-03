@@ -80,7 +80,6 @@ public class RecipeFragment extends Fragment {
             }
         });
 
-
         rvRecipes = (RecyclerView) view.findViewById(R.id.rvRecipe);
         recipes = RecipeItemRepository.getInstance();
         recipeAdapter = new RecipeAdapter(recipes);
