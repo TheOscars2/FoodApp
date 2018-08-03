@@ -151,6 +151,7 @@ public class ManualAddFragment extends Fragment {
     @OnClick(R.id.addToFridgeBtn)
     public void tryToAddFoodToFridge() {
         if (!validInput()) return;
+        GroceryListItemRepository groceryList = GroceryListItemRepository.getInstance();
         Food newFood = null;
         try {
             newFood = new Food(etFoodName.getText().toString(), Integer.parseInt(etFoodQuantity.getText().toString()),
@@ -158,6 +159,16 @@ public class ManualAddFragment extends Fragment {
             newFood.setUnit(unitEntered);
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+        //updates grocery list on addition of new foods; assumes unit match up
+        for (Food f : groceryList.getAll()) {
+            if (newFood.getName().toLowerCase().equals(f.getName().toLowerCase())) {
+                f.setQuantity(f.getQuantity() - newFood.getQuantity());
+                if (f.getQuantity() <= 0) {
+                    groceryList.delete(groceryList.getIndex(f));
+                }
+                break;
+            }
         }
         if (isEditMode) {
             newFood.setImageURL(FoodItemRepository.get(index).getImageURL());

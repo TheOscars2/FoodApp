@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 import me.ivg2.foodapp.Model.Food;
 
 public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.ViewHolder> {
-
     private GroceryListItemRepository groceryList;
     Context context;
 
@@ -27,7 +26,6 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
     public GroceryListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
         View recipeView = inflater.inflate(R.layout.item_grocery_list, viewGroup, false);
         GroceryListAdapter.ViewHolder view = new GroceryListAdapter.ViewHolder(recipeView);
         return view;
@@ -60,6 +58,5 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
     }
 }

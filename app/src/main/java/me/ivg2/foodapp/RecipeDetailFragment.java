@@ -21,9 +21,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -59,7 +61,8 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvOptions;
     @BindView(R.id.ingredientsMissing)
     TextView tvMissingIngredients;
-
+    @BindView(R.id.cookedBtn)
+    Button cookedBtn;
     private int hours;
     private int minutes;
     private String cookTime = "";
@@ -68,6 +71,7 @@ public class RecipeDetailFragment extends Fragment {
     private int index;
     private Unbinder unbinder;
     RecipeItemRepository recipeItemRepository = RecipeItemRepository.getInstance();
+    Recipe recipe;
 
     interface Callback {
         void goToRecipes();
@@ -118,7 +122,7 @@ public class RecipeDetailFragment extends Fragment {
         setInstructionsInView(arguments.getStringArrayList("instructions"));
         String url = arguments.getString("image_url");
         index = arguments.getInt("index");
-        Recipe recipe = recipeItemRepository.get(index);
+        recipe = recipeItemRepository.get(index);
         setIngredientsInView(recipe.getIngredients());
         if (recipe.getImageBitmap() != null) {
             ivRecipeImage.setImageBitmap(recipe.getImageBitmap());
@@ -131,13 +135,12 @@ public class RecipeDetailFragment extends Fragment {
                 tvRecipeName.setTextColor(Color.parseColor("#000000"));
             }
         }
-
         if (recipe.getIngredientsMissing().size() > 0) {
             String ingredients = "";
             for (Food ingredient : recipe.getIngredientsMissing()) {
                 ingredients += ingredient.getName() + "\n";
             }
-            tvMissingIngredients.setText("You have missing ingredients: " +"\n" + ingredients);
+            tvMissingIngredients.setText("You have missing ingredients: " + "\n" + ingredients);
             tvMissingIngredients.setTextColor(0xFFFF0000);
         }
     }
@@ -145,7 +148,7 @@ public class RecipeDetailFragment extends Fragment {
     public void setIngredientsInView(ArrayList<Food> ingredients) {
         String ingDisplay = "";
         for (Food ingredient : ingredients) {
-            ingDisplay += '\u2022' + " " + ingredient.getName() + " " + ingredient.getQuantity() + ingredient.getUnit() + "\n";
+            ingDisplay += '\u2022' + " " + ingredient.getQuantity() + " " + ingredient.getUnit() + " " + ingredient.getName() + "\n";
         }
         if (ingDisplay.length() > 0) {
             tvRecipeIngredients.setText(ingDisplay.substring(0, ingDisplay.length() - 1));
@@ -343,5 +346,23 @@ public class RecipeDetailFragment extends Fragment {
             }
         });
         menu.show();
+    }
+
+    @OnClick(R.id.cookedBtn)
+    public void tryToCook() {
+        FoodItemRepository foodItemRepository = FoodItemRepository.getInstance();
+        for (Food ingredient : recipe.getIngredients()) {
+            for (Food f : foodItemRepository.getAll()) {
+                if (f.getName().toLowerCase().equals(ingredient.getName())) {
+                    //remove
+                    f.setQuantity(f.getQuantity() - ingredient.getQuantity());
+                    if (f.getQuantity() <= 0) {
+                        foodItemRepository.delete(foodItemRepository.getIndex(f));
+                    }
+                    break;
+                }
+            }
+        }
+        Toast.makeText(getActivity(), "Ingredients removed from your fridge", Toast.LENGTH_LONG).show();
     }
 }

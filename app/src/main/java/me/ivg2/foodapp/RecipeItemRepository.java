@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import me.ivg2.foodapp.Model.Recipe;
 
-class RecipeItemRepository   {
-
+class RecipeItemRepository {
     private ArrayList<Recipe> recipes;
 
     private void load() {
