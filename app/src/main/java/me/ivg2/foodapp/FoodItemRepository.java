@@ -74,4 +74,8 @@ public class FoodItemRepository {
     public static int size() {
         return getInstance().foods.size();
     }
+
+    public static int getIndex(Food f){
+        return getAll().indexOf(f);
+    }
 }

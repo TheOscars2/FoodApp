@@ -17,6 +17,8 @@ public class Food {
     public Food(String name) {
         this.name = name;
         imageURL = null;
+        this.unit = "servings";
+        this.quantity = 2;
         String eventDate = "10/28/2018";
         String eventTime = "00:00";
         expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));

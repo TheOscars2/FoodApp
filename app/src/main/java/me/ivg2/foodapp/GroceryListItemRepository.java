@@ -61,6 +61,10 @@ class GroceryListItemRepository {
         getInstance().save();
     }
 
+    public static int getIndex(Food f){
+        return getAll().indexOf(f);
+    }
+
     public static int size() {
         return getInstance().groceryList.size();
     }

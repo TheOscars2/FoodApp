@@ -13,23 +13,18 @@ public class Recipe {
     private int cookTimeMinutes;
     private String cookTime;
     private Bitmap imageBitmap;
-
     private ArrayList<Food> ingredientsMissing;
     private ArrayList<Food> ingredients;
-
     private ArrayList<String> instructions;
 
     public Recipe(String name, String imageUrl, String source, int hr, int min) {
         this.name = name;
         this.imageUrl = imageUrl;
-
         ingredients = new ArrayList<>();
         instructions = new ArrayList<>();
         cookTimeHours = hr;
         cookTimeMinutes = min;
-
         this.source = source;
-
         ingredientsMissing = new ArrayList<>();
     }
 
@@ -39,7 +34,6 @@ public class Recipe {
         this.source = source;
         this.ingredients = ingredients;
         this.instructions = instructions;
-
         cookTimeHours = 0;
         cookTimeMinutes = 0;
         ingredientsMissing = new ArrayList<>();
@@ -47,10 +41,9 @@ public class Recipe {
 
     private String formatTime(int minutes, int hours) {
         String formattedCookTime = "";
-        if (hours > 0 && hours!=0) {
+        if (hours > 0 && hours != 0) {
             formattedCookTime += hours + "h ";
         }
-
         if (minutes > 0) {
             formattedCookTime += minutes + "m ";
         }
@@ -58,13 +51,11 @@ public class Recipe {
     }
 
     public Recipe(String name, String source, int cookTimeHours, int cookTimeMinutes) {
-
         this.name = name;
         this.source = source;
         this.cookTimeHours = cookTimeHours;
         this.cookTimeMinutes = cookTimeMinutes;
         this.cookTime = formatTime(cookTimeMinutes, cookTimeHours);
-
         ingredients = new ArrayList<>();
         instructions = new ArrayList<>();
         ingredientsMissing = new ArrayList<>();
@@ -103,7 +94,7 @@ public class Recipe {
     }
 
     public String getCookTime() {
-        return formatTime(getCookTimeMinutes(),getCookTimeHours());
+        return formatTime(getCookTimeMinutes(), getCookTimeHours());
     }
 
     public void setCookTimeMinutes(int cookTimeMinutes) {

@@ -6,4 +6,5 @@
     <string name="approve_access">Approve camera access</string>
     <string name="ok">ok</string>
     <string name="fridgeSearchPrompt">What are you looking for?</string>
+    <string name="btnCooked">🍲\t\t\t\tCooked!\t\t\t\t🍲</string>
 </resources>

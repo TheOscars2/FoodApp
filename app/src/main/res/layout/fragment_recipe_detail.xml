@@ -9,110 +9,115 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/recipeImageDetail"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            app:srcCompat="@drawable/meal"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/recipeImageDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="0dp"
+                app:srcCompat="@drawable/meal"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
 
             <TextView
                 android:id="@+id/nameRecipeDetail"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/recipeImageDetail"
+                android:layout_alignParentStart="true"
+                android:layout_weight="10"
+                android:fontFamily="sans-serif"
+                android:paddingLeft="10dp"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="12"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/recipeImageDetail"
-                android:layout_alignParentStart="true"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:paddingLeft="10dp"
                 android:text="Recipe Name"
                 android:textColor="#ffffff"
                 android:textSize="30sp"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="300dp"
-                android:layout_weight="10"/>
+                tools:layout_editor_absoluteY="300dp" />
+
             <TextView
                 android:id="@+id/options"
                 android:layout_width="45dp"
-                android:layout_weight="1"
                 android:layout_height="41dp"
                 android:layout_alignBottom="@+id/recipeImageDetail"
                 android:layout_alignParentEnd="true"
+                android:layout_weight="1"
                 android:paddingLeft="25dp"
                 android:text="&#8942;"
                 android:textAppearance="?android:textAppearanceLarge"
+                android:textColor="#ffffff"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textColor="#ffffff"/>
-    </RelativeLayout>
+                app:layout_constraintTop_toTopOf="parent" />
+        </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/recipeImageDetail"
-            android:paddingLeft="15dp"
-            app:srcCompat="@drawable/user_icon" />
-        <TextView
-            android:id="@+id/RecipeSourceDV"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:layout_height="29dp"
-            android:layout_below="@+id/recipeImageDetail"
-            android:layout_toEndOf="@+id/imageView"
-            android:paddingLeft="10dp"
-            android:text="TextView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/recipeImageDetail"
+                android:paddingLeft="15dp"
+                app:srcCompat="@drawable/user_icon" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/RecipeSourceDV"
-            android:paddingLeft="15dp"
-            app:srcCompat="@drawable/clock" />
-        <TextView
-            android:id="@+id/timeRecipeDV"
-            android:layout_width="wrap_content"
-            android:layout_height="29dp"
-            android:gravity="center"
-            android:layout_alignStart="@+id/RecipeSourceDV"
-            android:layout_below="@+id/RecipeSourceDV"
-            android:paddingLeft="10dp"
-            android:text="TextView" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/RecipeSourceDV"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:layout_below="@+id/recipeImageDetail"
+                android:layout_toEndOf="@+id/imageView"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="TextView" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/RecipeSourceDV"
+                android:paddingLeft="15dp"
+                app:srcCompat="@drawable/clock" />
+
+            <TextView
+                android:id="@+id/timeRecipeDV"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:layout_alignStart="@+id/RecipeSourceDV"
+                android:layout_below="@+id/RecipeSourceDV"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="TextView" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/ingredientsMissing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp" />
 
         <TextView
             android:id="@+id/textView2"
@@ -158,5 +163,17 @@
             android:paddingLeft="20dp"
             android:text="As is talked about in this post, sometimes you want the ScrollView content to fill the screen. For example, if you had some buttons at the end of a readme. You want the buttons to always be at the end of the text and at bottom of the screen, even if the text doesn't scroll.  If the content scrolls, everything is fine. However, if the content is smaller than the size of the screen, the buttons are not at the bottom."
             android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/cookedBtn"
+            android:layout_width="276dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/mybutton"
+            android:text="@string/btnCooked"
+            android:textColor="@android:color/background_light"
+            android:textSize="18dp" />
     </LinearLayout>
 </ScrollView>

@@ -19,7 +19,8 @@ import me.ivg2.foodapp.Model.Recipe;
 
 public class ManualAddIngredientsActivity extends AppCompatActivity {
     ArrayList<Food> ingredients;
-    ArrayAdapter<Food> ingredientAdapter;
+    ArrayList<String> ingredientNames;
+    ArrayAdapter<String> ingredientAdapter;
     @BindView(R.id.lvIngredients)
     ListView lvIngredients;
     boolean isEditMode;
@@ -34,7 +35,8 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manual_add_ingredients);
         ButterKnife.bind(this);
         ingredients = new ArrayList<>();
-        ingredientAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ingredients);
+        ingredientNames = new ArrayList<>();
+        ingredientAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ingredientNames);
         lvIngredients.setAdapter(ingredientAdapter);
         isEditMode = true;
         Intent intent = getIntent();
@@ -43,6 +45,7 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
             Recipe recipe = RecipeItemRepository.get(index);
             for (Food ingredient : recipe.getIngredients()) {
                 ingredients.add(ingredient);
+                ingredientNames.add(ingredient.getName());
                 ingredientAdapter.notifyDataSetChanged();
             }
         } else {
@@ -53,6 +56,7 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
     public void onAddIngredient(View view) {
         EditText etNewItem = (EditText) findViewById(R.id.newIngredient);
         String itemText = etNewItem.getText().toString();
+        ingredientNames.add(itemText);
         ingredients.add(new Food(itemText));
         etNewItem.setText("");
         ingredientAdapter.notifyDataSetChanged();
@@ -78,6 +82,7 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
             String updatedItem = data.getExtras().getString("item_text");
             int position = data.getExtras().getInt("item_position", 0);
             ingredients.set(position, new Food(updatedItem));
+            ingredientNames.set(position, updatedItem);
             ingredientAdapter.notifyDataSetChanged();
         }
     }
@@ -85,6 +90,7 @@ public class ManualAddIngredientsActivity extends AppCompatActivity {
     @OnItemLongClick(R.id.lvIngredients)
     public boolean deleteTheIngredient(int position) {
         ingredients.remove(position);
+        ingredientNames.remove(position);
         ingredientAdapter.notifyDataSetChanged();
         return true;
     }

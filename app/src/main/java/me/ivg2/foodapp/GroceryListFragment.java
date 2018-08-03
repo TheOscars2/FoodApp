@@ -1,6 +1,5 @@
 package me.ivg2.foodapp;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,12 +14,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class GroceryListFragment extends Fragment {
-
     private GroceryListAdapter adapter;
     @BindView(R.id.rvGrocery)
     RecyclerView rvGroceries;
@@ -29,7 +26,6 @@ public class GroceryListFragment extends Fragment {
     public GroceryListFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
