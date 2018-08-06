@@ -1,5 +1,7 @@
 package me.ivg2.foodapp.server;
 
+import android.util.Log;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 

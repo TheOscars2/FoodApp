@@ -137,6 +137,7 @@ public class PluFragment extends Fragment {
                 InputStream in = connection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 foodName = reader.readLine();
+                connection.disconnect();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

@@ -51,12 +51,11 @@ public class BarcodeFragment extends Fragment {
     private static CameraSource mCameraSource = null;
     private static CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
-
     public static Callback callback;
     public static Barcode barcode;
 
     public interface Callback {
-        void goToManualFoodAdditionFromBarcode(String foodName);
+        void goToManualFoodAdditionFromBarcode(String foodName, String barcode);
     }
 
     @Override
@@ -121,6 +120,7 @@ public class BarcodeFragment extends Fragment {
                 InputStream in = connection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 foodName = reader.readLine();
+                connection.disconnect();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -131,7 +131,8 @@ public class BarcodeFragment extends Fragment {
                 Toast.makeText(getContext(), "This barcode is not in our records. Enter it manually", Toast.LENGTH_LONG).show();
             } else {
                 Log.d("barcodeFrag pre crash", foodName);
-                callback.goToManualFoodAdditionFromBarcode(foodName);
+                callback.goToManualFoodAdditionFromBarcode(foodName, barcode);
+
             }
             return null;
         }
