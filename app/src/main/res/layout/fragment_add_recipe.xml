@@ -37,7 +37,8 @@
         android:layout_marginTop="232dp"
         android:background="@drawable/mybutton"
         android:text="Next"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:backgroundTint="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/textView54"

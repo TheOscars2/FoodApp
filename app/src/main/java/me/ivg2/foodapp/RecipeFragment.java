@@ -158,6 +158,8 @@ public class RecipeFragment extends Fragment {
 
     public void refreshRecommendedRecipes() {
         ArrayList<Recipe> allRecipes = appendRecipes(cookingRecipes, browsingRecipes);
+        cookingRecipes.clear();
+        browsingRecipes.clear();
         ArrayList<Food> fridge = FoodItemRepository.getAll();
         RecipeItemRepository.clear();
         ArrayList<ArrayList<Food>> ingredientsMissingFromRecipes = new ArrayList<ArrayList<Food>>();
@@ -376,6 +378,5 @@ public class RecipeFragment extends Fragment {
             }
             return null;
         }
-
     }
 }
