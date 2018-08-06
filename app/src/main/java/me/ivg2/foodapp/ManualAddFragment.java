@@ -2,11 +2,13 @@ package me.ivg2.foodapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +17,30 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.ivg2.foodapp.Model.Food;
+import me.ivg2.foodapp.server.UrlManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +55,7 @@ public class ManualAddFragment extends Fragment {
     @BindView(R.id.addToFridgeBtn)
     Button addToFridge;
     private int index;
+    private String gotCode;
     private final int NEW_ENTRY = -2;
     private boolean isEditMode;
     private DateFormat dateFormat;
@@ -53,8 +66,7 @@ public class ManualAddFragment extends Fragment {
 
     interface Callback {
         void goToFridge();
-
-        void goToDatePicker(int index, String tempName, String tempQuantity);
+        void goToDatePicker(int index, String tempName, String tempQuantity, String tempbarcode);
         void goToBarcodeWithNewFood();
     }
 
@@ -89,6 +101,7 @@ public class ManualAddFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
         try {
             String name = getArguments().getString("productName");
             etFoodName.setText(name);
@@ -105,17 +118,20 @@ public class ManualAddFragment extends Fragment {
                 isEditMode = false;
                 if (index == NEW_ENTRY) {
                     etFoodName.setText(getArguments().getString("tempName"));
+                    gotCode = getArguments().getString("tempBarcode");
                     etFoodQuantity.setText(getArguments().getString("tempQuantity"));
                     etFoodExpDate.setText(getArguments().getString("newExpDate"));
                 }
             }
+
         }
+
         Spinner dynamicSpinner = view.findViewById(R.id.dynamic_spinner);
         etFoodExpDate.setInputType(InputType.TYPE_NULL);
         etFoodExpDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.goToDatePicker(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString());
+                callback.goToDatePicker(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString(), getArguments().getString("notInDatabase"));
             }
         });
         etFoodExpDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -124,7 +140,7 @@ public class ManualAddFragment extends Fragment {
                 if (hasFocus) {
                     InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getRootView().getWindowToken(), 0);
-                    callback.goToDatePicker(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString());
+                    callback.goToDatePicker(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString(), getArguments().getString("notInDatabase"));
                 }
             }
         });
@@ -178,8 +194,45 @@ public class ManualAddFragment extends Fragment {
         } else {
             FoodItemRepository.create(newFood);
         }
+        SaveBarcodeTask task = (SaveBarcodeTask) new SaveBarcodeTask(gotCode, etFoodName.getText().toString()).execute();
 
-        callback.goToFridge();
+    }
+
+    class SaveBarcodeTask extends AsyncTask {
+        private String barcode;
+        private String itemName;
+
+        public SaveBarcodeTask(String code, String name) {
+            super();
+            barcode = code;
+            itemName = name;
+        }
+
+        @Override
+        protected String doInBackground(Object[] objects) {
+            URL url = null;
+            Log.d("doInBackground", gotCode);
+            String savedItemName = "";
+            try {
+                url = UrlManager.saveBarcodeEndpoint(barcode, itemName);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                InputStream in = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                savedItemName = reader.readLine();
+                connection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (savedItemName == null) {
+                Toast.makeText(getContext(), "Error saving barcode, try again", Toast.LENGTH_LONG).show();
+            } else {
+                callback.goToFridge();
+            }
+
+            return null;
+        }
     }
 
     private boolean validInput() {

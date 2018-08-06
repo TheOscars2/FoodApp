@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.widget.DatePicker;
 
 import org.joda.time.DateTime;
@@ -20,7 +21,7 @@ public class DatePickerFragment extends DialogFragment
     FoodItemRepository foods;
 
     interface Callback {
-        void goToEditFoodFromDatePicker(int index, String newDate, String tempName, String tempQuantity);
+        void goToEditFoodFromDatePicker(int index, String newDate, String tempName, String tempQuantity, String tempbarcode);
     }
 
     @Override
@@ -70,6 +71,6 @@ public class DatePickerFragment extends DialogFragment
                 e.printStackTrace();
             }
         }
-        callback.goToEditFoodFromDatePicker(index, rawDate, getArguments().getString("tempName"), getArguments().getString("tempQuantity"));
+        callback.goToEditFoodFromDatePicker(index, rawDate, getArguments().getString("tempName"), getArguments().getString("tempQuantity"), getArguments().getString("tempBarcode"));
     }
 }

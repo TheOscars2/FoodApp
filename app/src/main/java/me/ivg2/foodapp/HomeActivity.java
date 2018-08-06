@@ -120,9 +120,10 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToManualFoodAdditionFromBarcode(String foodName) {
+    public void goToManualFoodAdditionFromBarcode(String foodName, String barcode) {
         Bundle arguments = new Bundle();
         arguments.putString("tempName", foodName);
+        arguments.putString("notInDatabase", barcode);
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
@@ -188,10 +189,11 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToDatePicker(int index, String tempName, String tempQuantity) {
+    public void goToDatePicker(int index, String tempName, String tempQuantity, String tempbarcode) {
         Bundle arguments = new Bundle();
         arguments.putInt("index", index);
         arguments.putString("tempName", tempName);
+        arguments.putString("tempBarcode", tempbarcode);
         arguments.putString("tempQuantity", tempQuantity);
         DialogFragment dialogFragment = new DatePickerFragment();
         dialogFragment.setArguments(arguments);
@@ -199,9 +201,10 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToEditFoodFromDatePicker(int index, String newDate, String tempName, String tempQuantity) {
+    public void goToEditFoodFromDatePicker(int index, String newDate, String tempName, String tempQuantity, String tempbarcode) {
         Bundle arguments = new Bundle();
         arguments.putInt("index", index);
+        arguments.putString("tempBarcode", tempbarcode);
         arguments.putString("newExpDate", newDate);
         arguments.putString("tempName", tempName);
         arguments.putString("tempQuantity", tempQuantity);
