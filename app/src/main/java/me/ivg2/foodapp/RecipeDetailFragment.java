@@ -17,15 +17,14 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,8 +75,9 @@ public class RecipeDetailFragment extends Fragment {
 
     //List view for ingredients missing
     ArrayList<String> items;
-    ArrayAdapter<String> itemsAdapter;
-    ListView lvItems;
+    private MissingIngredientsAdapter itemsAdapter;
+    @BindView(R.id.ingredientsMissing)
+    RecyclerView rvMissingIngredients;
 
     interface Callback {
         void goToRecipes();
@@ -142,29 +142,14 @@ public class RecipeDetailFragment extends Fragment {
             }
         }
 
+
         if (recipe.getIngredientsMissing().size() > 0) {
-            items = new ArrayList<>();
-            items.add("You are missing the following ingredients:" + "\n");
-            for (Food ingredient : recipe.getIngredientsMissing()) {
-                items.add(ingredient.getName());
-            }
+            ArrayList<Food> ingMissing = recipe.getIngredientsMissing();
+            ingMissing.add(0, new Food("You are missing the following ingredients: "));
+            itemsAdapter = new MissingIngredientsAdapter(ingMissing);
+            rvMissingIngredients.setLayoutManager(new LinearLayoutManager(getActivity()));
+            rvMissingIngredients.setAdapter(itemsAdapter);
         }
-
-        lvItems = view.findViewById(R.id.ingredientsMissing);
-        itemsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, items);
-        lvItems.setAdapter(itemsAdapter);
-
-        setupListViewListener();
-    }
-
-    public void setupListViewListener() {
-        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                GroceryListItemRepository.create(recipe.getIngredientsMissing().get(position - 1));
-                Toast.makeText(getContext(), recipe.getIngredientsMissing().get(position - 1).getName() + " added to grocery list", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public void setIngredientsInView(ArrayList<Food> ingredients) {

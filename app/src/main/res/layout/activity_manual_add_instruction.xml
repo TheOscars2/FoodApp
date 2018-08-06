@@ -27,6 +27,7 @@
         android:layout_marginEnd="71dp"
         android:background="@drawable/mybutton2"
         android:textColor="@android:color/background_light"
+        android:backgroundTint="@color/colorPrimary"
         android:onClick="onAddInstruction"
         android:text="Add"
         tools:layout_editor_absoluteX="280dp"
@@ -54,7 +55,8 @@
         android:layout_alignTop="@+id/btnAddInstruction"
         android:onClick="onFinishedInstructions"
         android:textColor="@android:color/background_light"
-        android:text="Done" />
+        android:text="Done"
+        android:backgroundTint="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/textView4"

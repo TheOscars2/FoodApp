@@ -36,21 +36,21 @@
 
                 <TextView
                     android:id="@+id/recipeName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="210dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/recipeImage"
-                    android:paddingTop="10dp"
-                    android:paddingLeft="10dp"
+                    android:layout_weight="10"
                     android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
                     android:text="TextView"
                     android:textAllCaps="true"
-                    android:textSize="20sp"
                     android:textColor="#000000"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     tools:layout_editor_absoluteX="104dp"
-                    tools:layout_editor_absoluteY="2dp"
-                    android:layout_weight="10"/>
+                    tools:layout_editor_absoluteY="2dp" />
                 <TextView
                     android:id="@+id/options"
                     android:layout_width="48dp"
@@ -75,17 +75,18 @@
                     android:layout_below="@+id/recipeName"
                     android:layout_toEndOf="@+id/recipeImage"
                     android:paddingLeft="7dp"
-                    app:srcCompat="@drawable/user_icon" />
+                    app:srcCompat="@drawable/user_icon"
+                    android:tint="@color/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/recipeSource"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="21dp"
                     android:layout_below="@+id/recipeName"
                     android:layout_toEndOf="@+id/imageView2"
-                    android:textAllCaps="true"
                     android:paddingLeft="5dp"
                     android:text="TextView"
+                    android:textAllCaps="true"
                     android:textSize="16sp"
                     tools:layout_editor_absoluteX="104dp"
                     tools:layout_editor_absoluteY="29dp" />
@@ -103,18 +104,20 @@
                     android:layout_alignBottom="@+id/hourTime"
                     android:layout_toEndOf="@+id/recipeImage"
                     android:paddingLeft="7dp"
-                    app:srcCompat="@drawable/clock"/>
+                    app:srcCompat="@drawable/clock"
+                    android:tint="@color/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/hourTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
                     android:layout_alignStart="@+id/recipeSource"
                     android:layout_below="@+id/recipeSource"
+                    android:paddingLeft="5dp"
                     android:text="TextView"
                     android:textSize="16sp"
                     tools:layout_editor_absoluteX="207dp"
-                    tools:layout_editor_absoluteY="16dp"
-                    android:paddingLeft="5dp"/>
+                    tools:layout_editor_absoluteY="16dp" />
 
             </LinearLayout>
 

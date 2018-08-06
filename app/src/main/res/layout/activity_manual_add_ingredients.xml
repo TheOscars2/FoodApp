@@ -30,7 +30,8 @@
         android:onClick="onAddIngredient"
         android:text="Add"
         tools:layout_editor_absoluteX="280dp"
-        tools:layout_editor_absoluteY="447dp" />
+        tools:layout_editor_absoluteY="447dp"
+        android:backgroundTint="@color/colorPrimary"/>
 
     <EditText
         android:id="@+id/newIngredient"
@@ -52,7 +53,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/btnAddIngredient"
         android:onClick="ingredientsFinished"
-        android:text="Next" />
+        android:text="Next"
+        android:backgroundTint="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/textView4"

@@ -24,19 +24,24 @@
 
             <ImageView
                 android:id="@+id/imageFood"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/barcodescan1"
+                app:srcCompat="@drawable/barcode"
                 tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp" />
+                tools:layout_editor_absoluteY="0dp"
+                android:tint="@color/colorPrimary"
+                android:backgroundTint="#ffffff"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
+                android:layout_gravity="center"/>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
-                android:background="#af9d97"
                 android:minHeight="10dp">
 
                 <TextView
@@ -49,8 +54,7 @@
                     android:textAllCaps="true"
                     android:textSize="16dp"
                     android:textStyle="bold"
-                    android:textColor="#000000"
-                    android:background="#af9d97"/>
+                    android:textColor="#000000" />
 
             </RelativeLayout>
 
@@ -79,20 +83,21 @@
 
             <ImageView
                 android:id="@+id/image33"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/plupic"
+                app:srcCompat="@drawable/code"
                 tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp" />
+                tools:layout_editor_absoluteY="0dp"
+                android:layout_gravity="center"
+                android:tint="@color/colorPrimary"
+                android:paddingTop="10dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
-                android:background="#af9d97"
-
                 android:minHeight="10dp">
 
                 <TextView
@@ -105,7 +110,6 @@
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     android:textColor="#000000"
-                    android:background="#af9d97"
                     android:textSize="16dp" />
 
             </RelativeLayout>
@@ -133,22 +137,22 @@
 
             <ImageView
                 android:id="@+id/image353"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 android:layout_weight="1"
-                android:background="@android:color/darker_gray"
+                android:background="@android:color/white"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
-                android:tint="#c60148"
+                android:tint="@color/colorPrimary"
                 app:srcCompat="@drawable/plus_1"
                 tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp" />
+                tools:layout_editor_absoluteY="0dp"
+                android:layout_gravity="center"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
-                android:background="#af9d97"
 
                 android:minHeight="10dp">
 
@@ -162,7 +166,6 @@
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     android:textColor="#000000"
-                    android:background="#af9d97"
                     android:textSize="16dp" />
 
             </RelativeLayout>

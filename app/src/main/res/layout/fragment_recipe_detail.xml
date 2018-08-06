@@ -113,10 +113,10 @@
                 android:text="TextView" />
         </LinearLayout>
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/ingredientsMissing"
             android:layout_width="match_parent"
-            android:layout_height="97dp"
+            android:layout_height="wrap_content"
             android:paddingLeft="10dp" />
 
         <TextView
@@ -126,10 +126,11 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/timeRecipeDV"
             android:paddingLeft="10dp"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:text="INGREDIENTS"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/ingredientsDV"
@@ -152,7 +153,8 @@
             android:paddingTop="20dp"
             android:text="INSTRUCTIONS"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/instructionsDV"
@@ -173,7 +175,9 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/mybutton"
             android:text="@string/btnCooked"
-            android:textColor="@android:color/background_light"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="#ffffff
+"
             android:textSize="18dp" />
     </LinearLayout>
 </ScrollView>

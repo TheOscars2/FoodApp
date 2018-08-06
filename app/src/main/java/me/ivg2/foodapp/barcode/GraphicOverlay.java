@@ -174,7 +174,7 @@ public class GraphicOverlay extends View {
             canvas.drawRect(0, 0, canvas.getWidth(), 450, paint);                                           //top rect
             canvas.drawRect(0, 450, 300, canvas.getHeight() - 450, paint);                              //left rect
             canvas.drawRect(canvas.getWidth() - 300, 450, canvas.getWidth(), canvas.getHeight() - 450, paint);  //right rect
-            paint.setColor(getResources().getColor(R.color.Pink3));
+            paint.setColor(getResources().getColor(R.color.colorPrimary));
             paint.setStrokeWidth(14);
             float[] pointsArray =
                     {300 - paint.getStrokeWidth() / 2, 450, 375, 450,                                                                               //top left

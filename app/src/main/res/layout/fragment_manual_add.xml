@@ -15,7 +15,8 @@
         android:layout_marginBottom="72dp"
         android:background="@drawable/mybutton"
         android:text="add to fridge"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:backgroundTint="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/textView"
@@ -66,6 +67,7 @@
         android:layout_alignBottom="@id/etFoodQuantity"
         android:layout_marginBottom="10dp"
         android:layout_toEndOf="@+id/etFoodQuantity"
-        android:layout_toRightOf="@+id/etFoodQuantity" />
+        android:layout_toRightOf="@+id/etFoodQuantity"
+        android:backgroundTint="@color/colorPrimary"/>
 
 </RelativeLayout>
