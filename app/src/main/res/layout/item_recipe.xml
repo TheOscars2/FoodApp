@@ -8,8 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    app:cardCornerRadius="1dp"
-    app:cardElevation="2dp">
+    app:cardCornerRadius="4dp"
+    app:cardElevation="3dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -117,11 +117,6 @@
                     android:paddingLeft="5dp"/>
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/missingIngredient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

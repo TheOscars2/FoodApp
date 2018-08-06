@@ -74,10 +74,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                         .into(holder.ivRecipeImage);
             }
         }
-        if (recipe.getIngredientsMissing().size() > 0) {
-            holder.missingIngredient.setText("You have one missing ingredient");
-            holder.missingIngredient.setTextColor(0xFFFF0000);
-        }
     }
 
     @Override
@@ -96,8 +92,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         TextView tvRecipeSource;
         @BindView(R.id.options)
         TextView tvOptions;
-        @BindView(R.id.missingIngredient)
-        TextView missingIngredient;
 
         public ViewHolder(View itemView) {
             super(itemView);
