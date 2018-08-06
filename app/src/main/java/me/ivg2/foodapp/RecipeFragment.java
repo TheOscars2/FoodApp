@@ -1,13 +1,15 @@
 package me.ivg2.foodapp;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,7 +48,13 @@ public class RecipeFragment extends Fragment {
     RecipeItemRepository recipes;
     private RecipeAdapter recipeAdapter;
     private Unbinder unbinder;
-    private SwipeRefreshLayout swipeContainer;
+    private TabLayout tabs;
+
+    private static ArrayList<Recipe> browsingRecipes = new ArrayList<>();
+    private static ArrayList<Recipe> cookingRecipes = new ArrayList<>();
+
+    private final int RECIPES_TO_COOK_POSITION = 0;
+    private final int RECIPES_CLOSE_TO_COOKING = 1;
 
     interface Callback {
         void goToRecipeDetail(Recipe recipe, int index);
@@ -86,20 +94,119 @@ public class RecipeFragment extends Fragment {
         rvRecipes.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvRecipes.setAdapter(recipeAdapter);
 
-        swipeContainer = view.findViewById(R.id.swipeContainer);
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        RecipeItemRepository.set(cookingRecipes);
+        recipeAdapter.notifyDataSetChanged();
+
+        tabs = view.findViewById(R.id.tab_host);
+        tabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
+        tabs.setTabTextColors(Color.parseColor("#000000"),getResources().getColor(R.color.colorAccent));
+
+        tabs.getTabAt(RECIPES_TO_COOK_POSITION).getIcon().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+        tabs.getTabAt(RECIPES_CLOSE_TO_COOKING).getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
+
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onRefresh() {
-                loadRecommendedRecipes();
-                recipeAdapter.notifyDataSetChanged();
-                swipeContainer.setRefreshing(false);
+            public void onTabSelected(TabLayout.Tab tab) {
+                refreshRecommendedRecipes();
+
+                switch (tab.getPosition()) {
+                    case RECIPES_TO_COOK_POSITION:
+                        RecipeItemRepository.set(cookingRecipes);
+                        recipeAdapter.notifyDataSetChanged();
+                        rvRecipes.smoothScrollToPosition(0);
+                        tab.getIcon().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+                        tabs.getTabAt(RECIPES_CLOSE_TO_COOKING).getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
+                        return;
+
+                    case RECIPES_CLOSE_TO_COOKING:
+                        ArrayList<Recipe> tempRecipes = new ArrayList<>();
+                        for (int j = 0; j < 5; j++) {
+                            for (int i = 0; i < browsingRecipes.size(); i++) {
+                                if (browsingRecipes.get(i).getIngredientsMissing().size() == j) {
+                                    tempRecipes.add(browsingRecipes.get(i));
+                                }
+                            }
+                        }
+                        browsingRecipes = tempRecipes;
+                        RecipeItemRepository.set(browsingRecipes);
+                        recipeAdapter.notifyDataSetChanged();
+                        rvRecipes.smoothScrollToPosition(0);
+                        tab.getIcon().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+                        tabs.getTabAt(RECIPES_TO_COOK_POSITION).getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
+                        return;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        tab.getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
+                        return;
+                    case 1:
+                        tab.getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
+                        return;
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+    }
+
+    public void refreshRecommendedRecipes() {
+        ArrayList<Recipe> allRecipes = appendRecipes(cookingRecipes, browsingRecipes);
+        ArrayList<Food> fridge = FoodItemRepository.getAll();
+        RecipeItemRepository.clear();
+        ArrayList<ArrayList<Food>> ingredientsMissingFromRecipes = new ArrayList<ArrayList<Food>>();
+        //loop over every recipe given
+        for (int i = 0; i < allRecipes.size(); i++) {
+            boolean isRecipeValid = true;
+            ArrayList<Food> recipe = new ArrayList<>();
+            //loop over every food in recipe ingredients
+            ArrayList<Food> recipeIngredients = allRecipes.get(i).getIngredients();
+            for (int j = 0; j < recipeIngredients.size(); j++) {
+                boolean isIngredientFound = false;
+                //compare each individual food to every food in fridge
+                for (int k = 0; k < fridge.size(); k++) {
+                    if (recipeIngredients.get(j).getName().equalsIgnoreCase(fridge.get(k).getName())) {
+                        //found this ingredient in fridge
+                        isIngredientFound = true;
+                        break;
+                    }
+                }
+                if (!isIngredientFound) {
+                    //creates list of all ingredients missing for each recipe in allRecipes
+                    isRecipeValid = false;
+                    recipe.add(recipeIngredients.get(j));
+                }
+            }
+            ingredientsMissingFromRecipes.add(i, recipe);
+            if (isRecipeValid) {
+                cookingRecipes.add(allRecipes.get(i));
+            }
+        }
+
+        for (int i = 0; i < ingredientsMissingFromRecipes.size(); i++) {
+            if (ingredientsMissingFromRecipes.get(i).size() <= 5 && ingredientsMissingFromRecipes.get(i).size() > 0) {
+                browsingRecipes.add(allRecipes.get(i));
+                browsingRecipes.get(browsingRecipes.size() - 1).setIngredientsMissing(ingredientsMissingFromRecipes.get(i));
+            }
+        }
+    }
+
+    public ArrayList<Recipe> appendRecipes(ArrayList<Recipe> cooking, ArrayList<Recipe> browsing) {
+        ArrayList<Recipe> allRecipes = new ArrayList<>();
+        for (int i = 0; i < cooking.size() + browsing.size(); i++) {
+            if (i < cooking.size()) {
+                allRecipes.add(cooking.get(i));
+            } else {
+                allRecipes.add(browsing.get(i - cooking.size()));
+            }
+        }
+        return allRecipes;
     }
 
     public void loadRecommendedRecipes() {
@@ -135,11 +242,12 @@ public class RecipeFragment extends Fragment {
             }
         }
         for (int i = 0; i < ingredientsMissingFromRecipes.size(); i++) {
-            if (ingredientsMissingFromRecipes.get(i).size() == 1) {
-                RecipeItemRepository.addToEnd(allRecipes.get(i));
-                RecipeItemRepository.get(RecipeItemRepository.size() - 1).setIngredientsMissing(ingredientsMissingFromRecipes.get(i));
+            if (ingredientsMissingFromRecipes.get(i).size() <= 5 && ingredientsMissingFromRecipes.get(i).size() > 0) {
+                browsingRecipes.add(allRecipes.get(i));
+                browsingRecipes.get(browsingRecipes.size() - 1).setIngredientsMissing(ingredientsMissingFromRecipes.get(i));
             }
         }
+        cookingRecipes = RecipeItemRepository.getAll();
     }
 
     /**

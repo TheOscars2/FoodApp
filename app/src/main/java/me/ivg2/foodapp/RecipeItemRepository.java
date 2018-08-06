@@ -64,4 +64,8 @@ class RecipeItemRepository {
     public static void addToEnd(Recipe recipe) {
         getInstance().recipes.add(getInstance().recipes.size(), recipe);
     }
+
+    public static void set(ArrayList<Recipe> newRecipes) {
+        getInstance().recipes = newRecipes;
+    }
 }
