@@ -13,9 +13,7 @@ public class Recipe {
     private int cookTimeMinutes;
     private String cookTime;
     private Bitmap imageBitmap;
-
     private String sourceLink;
-
     private ArrayList<Food> ingredientsMissing;
     private ArrayList<Food> ingredients;
     private ArrayList<String> instructions;

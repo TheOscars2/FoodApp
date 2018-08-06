@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,7 +32,6 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,10 +61,15 @@ public class ManualAddFragment extends Fragment {
     private Unbinder unbinder;
     private String unitEntered;
     private boolean isNewBarcode;
+    String inDatabase;
 
     interface Callback {
         void goToFridge();
-        void goToDatePicker(int index, String tempName, String tempQuantity, String tempbarcode);
+
+        void goToDatePickerWithNewBarcode(int index, String tempName, String tempQuantity, String tempbarcode);
+
+        void goToDatePicker(int index, String tempName, String tempQuantity);
+
         void goToBarcodeWithNewFood();
     }
 
@@ -101,16 +104,24 @@ public class ManualAddFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-
         try {
             String name = getArguments().getString("productName");
             etFoodName.setText(name);
             index = getArguments().getInt("index", NEW_ENTRY);
         } catch (NullPointerException n) {
         }
-        if (getArguments() != null && !isNewBarcode) {
+        isNewBarcode = false;
+        String checkIfNew = "";
+        try {
+            checkIfNew = getArguments().getString("notInDatabase");
+            if (!checkIfNew.isEmpty()) {
+                isNewBarcode = true;
+            }
+        } catch (NullPointerException n) {
+        }
+        if (getArguments() != null) {
             isEditMode = true;
-            if (index > -1) {
+            if (index > -1) {//it's in edit mode and the item already exists in our repository
                 etFoodName.setText(FoodItemRepository.get(index).getName());
                 etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()));
                 etFoodExpDate.setText(dateFormat.format(FoodItemRepository.get(index).getExpirationDate().toDate()));
@@ -118,20 +129,22 @@ public class ManualAddFragment extends Fragment {
                 isEditMode = false;
                 if (index == NEW_ENTRY) {
                     etFoodName.setText(getArguments().getString("tempName"));
-                    gotCode = getArguments().getString("tempBarcode");
+                    gotCode = getArguments().getString("tempBarcode", "");
                     etFoodQuantity.setText(getArguments().getString("tempQuantity"));
                     etFoodExpDate.setText(getArguments().getString("newExpDate"));
                 }
             }
-
         }
-
         Spinner dynamicSpinner = view.findViewById(R.id.dynamic_spinner);
         etFoodExpDate.setInputType(InputType.TYPE_NULL);
         etFoodExpDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.goToDatePicker(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString(), getArguments().getString("notInDatabase"));
+                if (isNewBarcode) {
+                    callback.goToDatePickerWithNewBarcode(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString(), getArguments().getString("notInDatabase"));
+                } else {
+                    callback.goToDatePicker(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString());
+                }
             }
         });
         etFoodExpDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -140,7 +153,11 @@ public class ManualAddFragment extends Fragment {
                 if (hasFocus) {
                     InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getRootView().getWindowToken(), 0);
-                    callback.goToDatePicker(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString(), getArguments().getString("notInDatabase"));
+                    if (isNewBarcode) {
+                        callback.goToDatePickerWithNewBarcode(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString(), getArguments().getString("notInDatabase"));
+                    } else {
+                        callback.goToDatePicker(index, etFoodName.getText().toString(), etFoodQuantity.getText().toString());
+                    }
                 }
             }
         });
@@ -188,14 +205,32 @@ public class ManualAddFragment extends Fragment {
                 break;
             }
         }
+        boolean alreadyCombined = false;
         if (isEditMode) {
             newFood.setImageURL(FoodItemRepository.get(index).getImageURL());
             FoodItemRepository.update(index, newFood);
         } else {
-            FoodItemRepository.create(newFood);
+            //check if food in fridge
+            for (Food f : FoodItemRepository.getInstance().getAll()) {
+                if (newFood.getName().toLowerCase().equals(f.getName().toLowerCase())) {
+                    f.setQuantity(f.getQuantity() + newFood.getQuantity());
+                    //keeps more pressing expiration date
+                    if (newFood.getExpirationDate().isBefore(f.getExpirationDate())) {
+                        f.setExpirationDate(newFood.getExpirationDate());
+                    }
+                    alreadyCombined = true;
+                    break;
+                }
+            }
+            if (!alreadyCombined) {
+                FoodItemRepository.create(newFood);
+            }
         }
-        SaveBarcodeTask task = (SaveBarcodeTask) new SaveBarcodeTask(gotCode, etFoodName.getText().toString()).execute();
-
+        if (!gotCode.isEmpty()) {
+            SaveBarcodeTask task = (SaveBarcodeTask) new SaveBarcodeTask(gotCode, etFoodName.getText().toString()).execute();
+        } else {
+            callback.goToFridge();
+        }
     }
 
     class SaveBarcodeTask extends AsyncTask {
@@ -211,7 +246,6 @@ public class ManualAddFragment extends Fragment {
         @Override
         protected String doInBackground(Object[] objects) {
             URL url = null;
-            Log.d("doInBackground", gotCode);
             String savedItemName = "";
             try {
                 url = UrlManager.saveBarcodeEndpoint(barcode, itemName);
@@ -219,18 +253,18 @@ public class ManualAddFragment extends Fragment {
                 InputStream in = connection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 savedItemName = reader.readLine();
+                Log.d("right after readline", savedItemName);
                 connection.disconnect();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (savedItemName == null) {
+            if (savedItemName == null) {//THIS IS WHERE THE CRASH IS
                 Toast.makeText(getContext(), "Error saving barcode, try again", Toast.LENGTH_LONG).show();
             } else {
                 callback.goToFridge();
             }
-
             return null;
         }
     }

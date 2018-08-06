@@ -55,10 +55,8 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
                 return false;
             }
         });
-
         new RecipeFragment().loadRecommendedRecipes();
     }
-
 
     public static class BottomNavigationViewHelper {
         @SuppressLint("RestrictedApi")
@@ -124,7 +122,11 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     public void goToManualFoodAdditionFromBarcode(String foodName, String barcode) {
         Bundle arguments = new Bundle();
         arguments.putString("tempName", foodName);
-        arguments.putString("notInDatabase", barcode);
+        if (foodName == "") {//barcode isn't in our database yet
+            arguments.putString("notInDatabase", barcode);
+        } else {
+            arguments.putString("notInDatabase", "");//barcode is in database
+        }
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
@@ -185,7 +187,6 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         Bundle arguments = new Bundle();
         arguments.putInt("index", index);
         arguments.putInt("tab", tab);
-
         RecipeFragment recipeFragment = new RecipeFragment();
         recipeFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, recipeFragment).commit();
@@ -201,11 +202,22 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToDatePicker(int index, String tempName, String tempQuantity, String tempbarcode) {
+    public void goToDatePickerWithNewBarcode(int index, String tempName, String tempQuantity, String tempbarcode) {
         Bundle arguments = new Bundle();
         arguments.putInt("index", index);
         arguments.putString("tempName", tempName);
         arguments.putString("tempBarcode", tempbarcode);
+        arguments.putString("tempQuantity", tempQuantity);
+        DialogFragment dialogFragment = new DatePickerFragment();
+        dialogFragment.setArguments(arguments);
+        dialogFragment.show(fragmentManager, "datePicker");
+    }
+
+    @Override
+    public void goToDatePicker(int index, String tempName, String tempQuantity) {
+        Bundle arguments = new Bundle();
+        arguments.putInt("index", index);
+        arguments.putString("tempName", tempName);
         arguments.putString("tempQuantity", tempQuantity);
         DialogFragment dialogFragment = new DatePickerFragment();
         dialogFragment.setArguments(arguments);
@@ -233,5 +245,4 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         barcodeFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, barcodeFragment).commit();
     }
-
 }

@@ -73,10 +73,8 @@ public class RecipeDetailFragment extends Fragment {
     private Unbinder unbinder;
     RecipeItemRepository recipeItemRepository = RecipeItemRepository.getInstance();
     Recipe recipe;
-
     private final int RECIPES_TO_COOK_POSITION = 0;
     private final int RECIPES_CLOSE_TO_COOKING = 1;
-
     //List view for ingredients missing
     ArrayList<String> items;
     private MissingIngredientsAdapter itemsAdapter;
@@ -85,7 +83,9 @@ public class RecipeDetailFragment extends Fragment {
 
     interface Callback {
         void goToRecipes();
+
         void goToRecipesList(int index, int tab);
+
         void goToEditRecipe(int index);
     }
 
@@ -145,17 +145,13 @@ public class RecipeDetailFragment extends Fragment {
                 tvRecipeName.setTextColor(Color.parseColor("#000000"));
             }
         }
-
         ImageButton backBtn = view.findViewById(R.id.imageButton);
-
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToRecipeList(v);
             }
         });
-
-
         if (recipe.getIngredientsMissing().size() > 0) {
             ArrayList<Food> ingMissing = recipe.getIngredientsMissing();
             ingMissing.add(0, new Food("You are missing the following ingredients: "));
