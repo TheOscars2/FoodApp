@@ -80,9 +80,7 @@ public class FoodDetailFragment extends Fragment {
         Bundle arguments = getArguments();
         index = arguments.getInt("index");
         etFoodName.setText(FoodItemRepository.get(index).getName());
-        etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()) + " " +  FoodItemRepository.get(index).getUnit());
-
-
+        etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()) + " " + FoodItemRepository.get(index).getUnit());
         //setting food expiration date to proper format
         DateTime targetDateTime = FoodItemRepository.get(index).getExpirationDate();
         Period period = new Period(DateTime.now(), targetDateTime);

@@ -61,7 +61,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 menu.show();
             }
         });
-        Recipe recipe = recipes.get(index);
+        Recipe recipe = RecipeItemRepository.getInstance().get(index);
         holder.tvHourTime.setText(recipe.getCookTime());
         holder.tvRecipeName.setText(recipe.getName());
         holder.tvRecipeSource.setText(recipe.getSource());

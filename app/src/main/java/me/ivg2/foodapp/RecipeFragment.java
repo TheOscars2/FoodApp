@@ -2,7 +2,6 @@ package me.ivg2.foodapp;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,10 +48,8 @@ public class RecipeFragment extends Fragment {
     private RecipeAdapter recipeAdapter;
     private Unbinder unbinder;
     private TabLayout tabs;
-
     private static ArrayList<Recipe> browsingRecipes = new ArrayList<>();
     private static ArrayList<Recipe> cookingRecipes = new ArrayList<>();
-
     private final int RECIPES_TO_COOK_POSITION = 0;
     private final int RECIPES_CLOSE_TO_COOKING = 1;
 
@@ -87,33 +84,28 @@ public class RecipeFragment extends Fragment {
                 callback.goToAddRecipe();
             }
         });
-
         rvRecipes = (RecyclerView) view.findViewById(R.id.rvRecipe);
         recipes = RecipeItemRepository.getInstance();
         recipeAdapter = new RecipeAdapter(recipes);
+        //recipeAdapter = new RecipeAdapter(RecipeItemRepository.getInstance());
         rvRecipes.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvRecipes.setAdapter(recipeAdapter);
-
         RecipeItemRepository.set(cookingRecipes);
+        refreshRecommendedRecipes();
+        rvRecipes.scrollToPosition(0);
         recipeAdapter.notifyDataSetChanged();
-
         tabs = view.findViewById(R.id.tab_host);
         tabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
-        tabs.setTabTextColors(Color.parseColor("#000000"),getResources().getColor(R.color.colorAccent));
-
-
+        tabs.setTabTextColors(Color.parseColor("#000000"), getResources().getColor(R.color.colorAccent));
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                refreshRecommendedRecipes();
-
                 switch (tab.getPosition()) {
                     case RECIPES_TO_COOK_POSITION:
                         RecipeItemRepository.set(cookingRecipes);
                         recipeAdapter.notifyDataSetChanged();
                         rvRecipes.smoothScrollToPosition(0);
                         return;
-
                     case RECIPES_CLOSE_TO_COOKING:
                         ArrayList<Recipe> tempRecipes = new ArrayList<>();
                         for (int j = 0; j < 5; j++) {
@@ -133,15 +125,12 @@ public class RecipeFragment extends Fragment {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
-
         if (getArguments() != null) {
             TabLayout.Tab tab = tabs.getTabAt(getArguments().getInt("tab"));
             tab.select();
@@ -183,7 +172,6 @@ public class RecipeFragment extends Fragment {
                 cookingRecipes.add(allRecipes.get(i));
             }
         }
-
         for (int i = 0; i < ingredientsMissingFromRecipes.size(); i++) {
             if (ingredientsMissingFromRecipes.get(i).size() <= 5 && ingredientsMissingFromRecipes.get(i).size() > 0) {
                 browsingRecipes.add(allRecipes.get(i));
@@ -208,9 +196,11 @@ public class RecipeFragment extends Fragment {
         ArrayList<Recipe> allRecipes = setUpRecipeList();
         ArrayList<Food> fridge = FoodItemRepository.getAll();
         RecipeItemRepository.clear();
-        ArrayList<ArrayList<Food>> ingredientsMissingFromRecipes = new ArrayList<ArrayList<Food>>();
+        ArrayList<ArrayList<Food>> ingredientsMissingFromRecipes = new ArrayList<>();
         //loop over every recipe given
         for (int i = 0; i < allRecipes.size(); i++) {
+            //clear each recipes missing ingredient array here
+            allRecipes.get(i).setIngredientsMissing(new ArrayList<Food>()); ///THIS IS DIFF FROM ISABEL'S CHECK IT!!
             boolean isRecipeValid = true;
             ArrayList<Food> recipe = new ArrayList<>();
             //loop over every food in recipe ingredients
@@ -250,16 +240,13 @@ public class RecipeFragment extends Fragment {
      * Eventually pull from API or backend
      */
     public ArrayList<Recipe> setUpRecipeList() {
-        ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+        ArrayList<Recipe> recipes = new ArrayList<>();
         GetRecipes jsonRecipes = new GetRecipes();
         jsonRecipes.execute();
-
         String jsonRecipesArray = jsonRecipes.line;
-
         while (jsonRecipesArray == null) {
             jsonRecipesArray = jsonRecipes.line;
         }
-
         try {
             JSONObject jsonObject = new JSONObject(jsonRecipesArray);
             JSONArray jsonArray = jsonObject.getJSONArray("recipes");
@@ -272,7 +259,6 @@ public class RecipeFragment extends Fragment {
                 recipe.setCookTimeHours(recipeObject.getInt("cookTimeHours"));
                 recipe.setCookTimeMinutes(recipeObject.getInt("cookTimeMinutes"));
                 recipe.setImageUrl(recipeObject.getString("imageUrl"));
-
                 JSONArray ingredients = recipeObject.getJSONArray("ingredients");
                 ArrayList<Food> recipeIngredients = new ArrayList<>();
                 for (int j = 0; j < ingredients.length(); j++) {
@@ -288,20 +274,17 @@ public class RecipeFragment extends Fragment {
                     recipeIngredients.add(food);
                 }
                 recipe.setIngredients(recipeIngredients);
-
                 JSONArray instructions = recipeObject.getJSONArray("instructions");
                 ArrayList<String> recipeInstructions = new ArrayList<>();
                 for (int k = 0; k < instructions.length(); k++) {
                     recipeInstructions.add(instructions.getString(k));
                 }
                 recipe.setInstructions(recipeInstructions);
-
                 recipes.add(recipe);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return recipes;
     }
 
@@ -339,33 +322,26 @@ public class RecipeFragment extends Fragment {
     }
 
     class GetRecipes extends AsyncTask {
-
         String line = null;
 
         @Override
         protected String doInBackground(Object[] objects) {
             URL url = null;
-
             try {
                 url = UrlManager.getRecipeEndpoint();
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 InputStream in = connection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
                 StringBuilder sb = new StringBuilder();
-
                 while ((line = reader.readLine()) != null) {
                     sb.append(line);
                 }
-
                 line = sb.toString();
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             if (line != null) {
                 return line;
             }

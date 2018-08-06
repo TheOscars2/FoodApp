@@ -126,17 +126,13 @@ public class BarcodeFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             if (foodName == null) {
                 Toast.makeText(getContext(), "This barcode is not in our records. Enter it manually", Toast.LENGTH_LONG).show();
             } else {
-                Log.d("barcodeFrag pre crash", foodName);
                 callback.goToManualFoodAdditionFromBarcode(foodName, barcode);
-
             }
             return null;
         }
-
     }
 
     /**

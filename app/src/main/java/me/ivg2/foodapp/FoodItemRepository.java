@@ -15,7 +15,7 @@ public class FoodItemRepository {
         foods.add(new Food("pizza", "https://www.messforless.net/wp-content/uploads/2018/01/2-ingredient-pizza-dough-weight-watchers-9.jpg"));
         foods.add(new Food("smoothie", "http://images.media-allrecipes.com/userphotos/960x960/3756353.jpg"));
         foods.add(new Food("pringles", "https://images-na.ssl-images-amazon.com/images/I/71LeHo4XhwL._SY679_.jpg"));
-        foods.add(new Food("banana", "https://images-na.ssl-images-amazon.com/images/I/71gI-IUNUkL._SY355_.jpg"));
+        foods.add(new Food("bananas", "https://images-na.ssl-images-amazon.com/images/I/71gI-IUNUkL._SY355_.jpg"));
         foods.add(new Food("all purpose flour"));
         foods.add(new Food("apples"));
         foods.add(new Food("artichoke hearts"));
@@ -102,14 +102,12 @@ public class FoodItemRepository {
         foods.add(new Food("water"));
         foods.add(new Food("white wine vinegar"));
         foods.add(new Food("whole wheat flour"));
-
         foods.add(new Food("fresh parsley"));
         foods.add(new Food("gorgonzola"));
         foods.add(new Food("olive oil"));
         foods.add(new Food("onions"));
         foods.add(new Food("pine nuts"));
         foods.add(new Food("quinoa"));
-        foods.add(new Food("water"));
     }
 
     private void save() {
@@ -153,11 +151,19 @@ public class FoodItemRepository {
         getInstance().save();
     }
 
+    public ArrayList<String> getFoodNames() {
+        ArrayList<String> allFoodNames = new ArrayList<>();
+        for (Food f : getInstance().foods) {
+            allFoodNames.add(f.getName());
+        }
+        return allFoodNames;
+    }
+
     public static int size() {
         return getInstance().foods.size();
     }
 
-    public static int getIndex(Food f){
+    public static int getIndex(Food f) {
         return getAll().indexOf(f);
     }
 }

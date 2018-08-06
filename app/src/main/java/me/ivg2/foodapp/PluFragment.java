@@ -105,7 +105,6 @@ public class PluFragment extends Fragment {
                 }
                 pluProgress.setVisibility(ProgressBar.VISIBLE);
                 final int pluCode = Integer.parseInt(userCode.getText().toString());
-
                 userCode.setText("");
                 GetPluTask task = (GetPluTask) new GetPluTask(pluCode).execute();
             }
@@ -130,7 +129,6 @@ public class PluFragment extends Fragment {
         protected String doInBackground(Object[] objects) {
             String foodName = null;
             URL url = null;
-
             try {
                 url = UrlManager.getPluEndpoint(pluCode);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -143,7 +141,6 @@ public class PluFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             if (foodName == null) {
                 Toast.makeText(getContext(), "Error during PLU look up, try again", Toast.LENGTH_LONG).show();
                 pluProgress.setVisibility(ProgressBar.INVISIBLE);
@@ -152,6 +149,5 @@ public class PluFragment extends Fragment {
             }
             return null;
         }
-
     }
 }
