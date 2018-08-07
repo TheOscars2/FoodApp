@@ -158,7 +158,7 @@ public class RecipeFragment extends Fragment {
         if (getArguments() != null) {
             TabLayout.Tab tab = tabs.getTabAt(getArguments().getInt("tab"));
             tab.select();
-            rvRecipes.smoothScrollToPosition(getArguments().getInt("index"));
+            rvRecipes.scrollToPosition(getArguments().getInt("index"));
         }
     }
 
