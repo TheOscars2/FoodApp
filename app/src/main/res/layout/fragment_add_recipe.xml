@@ -5,14 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".AddRecipeFragment">
 
+
+
     <EditText
 
         android:id="@+id/etRecipeSource"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/etRecipeName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="99dp"
         android:ems="10"
         android:hint="Enter recipe source"
         android:inputType="textMultiLine" />
@@ -21,9 +22,9 @@
         android:id="@+id/etRecipeName"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/etRecipeSource"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-94dp"
+        android:layout_marginTop="67dp"
         android:ems="10"
         android:hint="Enter recipe name"
         android:inputType="textMultiLine" />
@@ -32,24 +33,11 @@
         android:id="@+id/btnAddIng"
         android:layout_width="321dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="232dp"
-        android:background="@drawable/mybutton"
+        android:layout_centerInParent="true"
+        android:backgroundTint="@color/colorPrimary"
         android:text="Next"
-        android:textColor="@android:color/background_light"
-        android:backgroundTint="@color/colorPrimary"/>
+        android:textColor="@android:color/background_light" />
 
-    <TextView
-        android:id="@+id/textView54"
-        android:layout_width="match_parent"
-        android:paddingLeft="5dp"
-        android:layout_height="46dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center_horizontal"
-        android:text="ADD YOUR RECIPE"
-        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/textView4"

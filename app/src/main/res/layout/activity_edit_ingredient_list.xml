@@ -27,7 +27,7 @@
         android:layout_alignEnd="@+id/etIngredient"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/etIngredient"
-        android:background="@drawable/mybutton"
+        android:background="@color/colorPrimary"
         android:onClick="onSaveItem"
         android:text="Save"
         android:textColor="@android:color/background_light"

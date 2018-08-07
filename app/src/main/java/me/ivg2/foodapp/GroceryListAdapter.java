@@ -36,7 +36,7 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int index) {
         Food groceryItem = groceryList.get(index);
-        holder.tvFoodName.setText(groceryItem.getName() + " (" + Double.toString(groceryItem.getQuantity()) + " " + groceryItem.getUnit() + ")");
+        holder.tvFoodName.setText(groceryItem.getName() + " (" + quantityManupilation.formatQuantity(groceryItem.getQuantity()) + " " + groceryItem.getUnit() + ")");
 
         if (index % 2 == 0) {
             holder.layout.setBackgroundColor(ContextCompat.getColor(context, R.color.grey));
