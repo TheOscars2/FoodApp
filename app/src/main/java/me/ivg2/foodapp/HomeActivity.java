@@ -21,6 +21,7 @@ import me.ivg2.foodapp.barcode.BarcodeFragment;
 
 public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback, AddRecipeFragment.Callback, ManualAddFragment.Callback, BarcodeFragment.Callback, PluFragment.Callback, RecipeDetailFragment.Callback, FoodDetailFragment.Callback, DatePickerFragment.Callback {
     FragmentManager fragmentManager;
+    private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,4 +233,5 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         barcodeFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, barcodeFragment).commit();
     }
+    
 }
