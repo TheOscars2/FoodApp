@@ -57,7 +57,7 @@ public class MissingIngredientsAdapter extends RecyclerView.Adapter<MissingIngre
         @Override
         public void onClick(View v) {
             int index = getAdapterPosition();
-            if (index != RecyclerView.NO_POSITION) {
+            if (index != RecyclerView.NO_POSITION && index != 0) {
                 GroceryListItemRepository.create(ingredients.get(index));
                 Toast.makeText(context, ingredients.get(index).getName() + " added to grocery list", Toast.LENGTH_SHORT).show();
             }
