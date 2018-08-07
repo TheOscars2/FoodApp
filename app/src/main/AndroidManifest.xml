@@ -19,7 +19,7 @@
             android:value="barcode" />
 
         <activity android:name=".HomeActivity"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
