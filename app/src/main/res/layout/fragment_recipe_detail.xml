@@ -60,6 +60,16 @@
                 android:textColor="#ffffff"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:srcCompat="@drawable/back"
+                android:tint="@color/colorPrimary"
+                android:backgroundTint="#00FFFFFF"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -74,10 +84,12 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/recipeImageDetail"
                 android:paddingLeft="15dp"
-                app:srcCompat="@drawable/user_icon" />
+                app:srcCompat="@drawable/user_icon"
+                android:tint="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/RecipeSourceDV"
+
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_below="@+id/recipeImageDetail"
@@ -100,7 +112,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/RecipeSourceDV"
                 android:paddingLeft="15dp"
-                app:srcCompat="@drawable/clock" />
+                app:srcCompat="@drawable/clock"
+                android:tint="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/timeRecipeDV"
