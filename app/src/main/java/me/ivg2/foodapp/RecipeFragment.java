@@ -101,8 +101,6 @@ public class RecipeFragment extends Fragment {
         tabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         tabs.setTabTextColors(Color.parseColor("#000000"),getResources().getColor(R.color.colorAccent));
 
-        tabs.getTabAt(RECIPES_TO_COOK_POSITION).getIcon().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
-        tabs.getTabAt(RECIPES_CLOSE_TO_COOKING).getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -114,8 +112,6 @@ public class RecipeFragment extends Fragment {
                         RecipeItemRepository.set(cookingRecipes);
                         recipeAdapter.notifyDataSetChanged();
                         rvRecipes.smoothScrollToPosition(0);
-                        tab.getIcon().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
-                        tabs.getTabAt(RECIPES_CLOSE_TO_COOKING).getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
                         return;
 
                     case RECIPES_CLOSE_TO_COOKING:
@@ -131,22 +127,13 @@ public class RecipeFragment extends Fragment {
                         RecipeItemRepository.set(browsingRecipes);
                         recipeAdapter.notifyDataSetChanged();
                         rvRecipes.smoothScrollToPosition(0);
-                        tab.getIcon().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
-                        tabs.getTabAt(RECIPES_TO_COOK_POSITION).getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
                         return;
                 }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        tab.getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
-                        return;
-                    case 1:
-                        tab.getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
-                        return;
-                }
+
             }
 
             @Override

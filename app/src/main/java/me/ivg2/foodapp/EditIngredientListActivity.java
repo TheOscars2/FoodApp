@@ -23,7 +23,7 @@ public class EditIngredientListActivity extends AppCompatActivity {
         position = getIntent().getIntExtra("item_position", 0);
     }
 
-    //prepares and passes updated item text into MainActivity.java at original position
+    //prepares and passes updated item text into SplashActivity.java at original position
     public void onSaveItem(View v) {
         Intent data = new Intent();
         data.putExtra("item_text", etItemText.getText().toString());
