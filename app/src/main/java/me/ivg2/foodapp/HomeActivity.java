@@ -180,6 +180,17 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
+    public void goToRecipesList(int index, int tab) {
+        Bundle arguments = new Bundle();
+        arguments.putInt("index", index);
+        arguments.putInt("tab", tab);
+
+        RecipeFragment recipeFragment = new RecipeFragment();
+        recipeFragment.setArguments(arguments);
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, recipeFragment).commit();
+    }
+
+    @Override
     public void goToEditFood(int index) {
         Bundle arguments = new Bundle();
         arguments.putInt("index", index);

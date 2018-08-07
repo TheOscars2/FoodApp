@@ -69,7 +69,8 @@
                 android:layout_alignParentTop="true"
                 app:srcCompat="@drawable/back"
                 android:tint="@color/colorPrimary"
-                android:backgroundTint="#00FFFFFF"/>
+                android:backgroundTint="#00FFFFFF"
+                android:onClick="backToRecipeList"/>
         </RelativeLayout>
 
         <LinearLayout
