@@ -233,5 +233,5 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         barcodeFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, barcodeFragment).commit();
     }
-    
+
 }
