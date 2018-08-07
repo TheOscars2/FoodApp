@@ -11,19 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/toolbar">
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/textView"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/playfair_display"
             android:gravity="center"
-            android:fontFamily="cursive"
-            android:text="APPetite "
-            android:textStyle="bold|italic"
+            android:text="appetite "
             android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#ffffff"
             android:textSize="34sp" />
 
     </android.support.v7.widget.Toolbar>
