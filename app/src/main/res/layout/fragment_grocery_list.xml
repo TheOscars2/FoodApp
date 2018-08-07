@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".GroceryListFragment">
 
     <LinearLayout
@@ -22,4 +23,20 @@
 
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/etIngredient"
+        android:layout_width="290dp"
+        android:layout_height="47dp"
+        android:ems="10"
+        android:hint="Add new item..."
+        android:inputType="textMultiLine"
+        android:layout_gravity="bottom"
+        />
+
+    <Button
+        android:id="@+id/submitGroceryItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_gravity="bottom|right"/>
 </FrameLayout>
