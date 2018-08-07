@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -73,6 +74,9 @@ public class RecipeDetailFragment extends Fragment {
     RecipeItemRepository recipeItemRepository = RecipeItemRepository.getInstance();
     Recipe recipe;
 
+    private final int RECIPES_TO_COOK_POSITION = 0;
+    private final int RECIPES_CLOSE_TO_COOKING = 1;
+
     //List view for ingredients missing
     ArrayList<String> items;
     private MissingIngredientsAdapter itemsAdapter;
@@ -81,7 +85,7 @@ public class RecipeDetailFragment extends Fragment {
 
     interface Callback {
         void goToRecipes();
-
+        void goToRecipesList(int index, int tab);
         void goToEditRecipe(int index);
     }
 
@@ -142,6 +146,15 @@ public class RecipeDetailFragment extends Fragment {
             }
         }
 
+        ImageButton backBtn = view.findViewById(R.id.imageButton);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backToRecipeList(v);
+            }
+        });
+
 
         if (recipe.getIngredientsMissing().size() > 0) {
             ArrayList<Food> ingMissing = recipe.getIngredientsMissing();
@@ -149,6 +162,15 @@ public class RecipeDetailFragment extends Fragment {
             itemsAdapter = new MissingIngredientsAdapter(ingMissing);
             rvMissingIngredients.setLayoutManager(new LinearLayoutManager(getActivity()));
             rvMissingIngredients.setAdapter(itemsAdapter);
+        }
+    }
+
+    public void backToRecipeList(View v) {
+        //toggle back to browse view
+        if (recipe.getIngredientsMissing().size() > 0) {
+            callback.goToRecipesList(index, RECIPES_CLOSE_TO_COOKING);
+        } else {
+            callback.goToRecipesList(index, RECIPES_TO_COOK_POSITION);
         }
     }
 

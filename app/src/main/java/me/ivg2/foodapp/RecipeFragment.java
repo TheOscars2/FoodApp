@@ -154,6 +154,11 @@ public class RecipeFragment extends Fragment {
 
             }
         });
+
+        if (getArguments() != null) {
+            tabs.setTabMode(getArguments().getInt("tab"));
+            rvRecipes.smoothScrollToPosition(getArguments().getInt("index"));
+        }
     }
 
     public void refreshRecommendedRecipes() {
