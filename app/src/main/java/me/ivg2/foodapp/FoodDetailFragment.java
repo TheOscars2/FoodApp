@@ -82,7 +82,7 @@ public class FoodDetailFragment extends Fragment {
         Bundle arguments = getArguments();
         index = arguments.getInt("index");
         etFoodName.setText(capitalize(FoodItemRepository.get(index).getName()));
-        etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()) + " " + FoodItemRepository.get(index).getUnit());
+        etFoodQuantity.setText(quantityManupilation.formatQuantity(FoodItemRepository.get(index).getQuantity()) + " " + FoodItemRepository.get(index).getUnit());
         final int[] colors = {
                 ContextCompat.getColor(getContext(), R.color.Brown2),
                 ContextCompat.getColor(getContext(), R.color.colorPrimary),

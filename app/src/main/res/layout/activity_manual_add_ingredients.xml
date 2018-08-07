@@ -6,6 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ManualAddIngredientsActivity">
 
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="ADD YOUR INGREDIENTS"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
+
+    </android.support.v7.widget.Toolbar>
     <ListView
         android:id="@+id/lvIngredients"
         android:layout_width="match_parent"
@@ -14,7 +35,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="46dp"
         tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="34dp"></ListView>
+        tools:layout_editor_absoluteY="34dp"/>
 
     <Button
 
@@ -56,15 +77,5 @@
         android:text="Next"
         android:backgroundTint="@color/colorPrimary"/>
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:paddingLeft="5dp"
-        android:layout_height="46dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center_horizontal"
-        android:text="ADD YOUR INGREDIENTS"
-        android:textSize="30sp" />
 
 </RelativeLayout>

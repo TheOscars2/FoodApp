@@ -10,7 +10,7 @@
         android:layout_width="310dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        
+
         android:fontFamily="@font/fauna_one"
         android:paddingBottom="10dp"
         android:text="TextView"

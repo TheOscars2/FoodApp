@@ -27,7 +27,7 @@
         android:layout_alignEnd="@+id/etInstruction"
         android:layout_alignParentTop="true"
         android:layout_marginTop="156dp"
-        android:background="@drawable/mybutton"
+        android:background="@color/colorPrimary"
         android:onClick="onSaveItem"
         android:text="Save"
         android:textColor="@android:color/background_light"
