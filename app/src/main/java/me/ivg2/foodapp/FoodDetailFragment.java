@@ -2,19 +2,18 @@ package me.ivg2.foodapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -29,7 +28,7 @@ import butterknife.Unbinder;
  */
 public class FoodDetailFragment extends Fragment {
     @BindView(R.id.foodImage)
-    ImageView ivFoodImage;
+    TextView tvFoodImage;
     @BindView(R.id.name)
     TextView etFoodName;
     @BindView(R.id.quantity)
@@ -79,8 +78,10 @@ public class FoodDetailFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         Bundle arguments = getArguments();
         index = arguments.getInt("index");
-        etFoodName.setText(FoodItemRepository.get(index).getName());
-        etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()) + " " + FoodItemRepository.get(index).getUnit());
+        etFoodName.setText(capitalize(FoodItemRepository.get(index).getName()));
+        etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()) + " " +  FoodItemRepository.get(index).getUnit());
+
+
         //setting food expiration date to proper format
         DateTime targetDateTime = FoodItemRepository.get(index).getExpirationDate();
         Period period = new Period(DateTime.now(), targetDateTime);
@@ -92,11 +93,39 @@ public class FoodDetailFragment extends Fragment {
             etFoodExpDate.setText("Expires in " + period.getDays() + " days");
         }
         String url = FoodItemRepository.get(index).getImageURL();
-        if (url != null) {
-            Glide.with(this)
-                    .load(url)
-                    .into(ivFoodImage);
+
+        tvFoodImage = view.findViewById(R.id.foodImage);
+
+        int[] oranges = {ContextCompat.getColor(getContext(), R.color.Orange5),
+                ContextCompat.getColor(getContext(), R.color.Orange4),
+                ContextCompat.getColor(getContext(), R.color.Orange3),
+                ContextCompat.getColor(getContext(), R.color.Orange2),
+                ContextCompat.getColor(getContext(), R.color.Orange1)};
+
+
+        if (FoodItemRepository.get(index).getName().length() > 2) {
+            tvFoodImage.setText(capitalize(FoodItemRepository.get(index).getName()).substring(0, 2));
+            tvFoodImage.setBackgroundColor(oranges[index % oranges.length]);
+            tvFoodImage.setTextColor(Color.parseColor("#ffffff"));
         }
+    }
+
+
+    public String capitalize(String name) {
+        String[] split =  name.split(" ");
+        StringBuilder builder = new StringBuilder();
+
+        for (String item : split) {
+            builder.append(item.substring(0, 1).toUpperCase());
+            builder.append(item.substring(1, item.length()));
+            builder.append(" ");
+        }
+
+        String capitalized = builder.toString();
+        if (capitalized.length() > 1) {
+            capitalized = capitalized.substring(0, capitalized.length() - 1);
+        }
+        return capitalized;
     }
 
     @Override

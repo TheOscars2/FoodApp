@@ -1,17 +1,16 @@
 package me.ivg2.foodapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,17 +71,38 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
         });
         Collections.sort(listOfFoodObjects, Food.ALPHABETICAL);
         Food food = listOfFoodObjects.get(i);
-        viewHolder.foodName.setText(food.getName());
-        if (food.getImageURL() != null) {
-            Glide.with(context)
-                    .load(food.getImageURL())
-                    .into(viewHolder.foodImage);
+        viewHolder.foodName.setText(capitalize(food.getName()));
+
+
+        int[] oranges = {ContextCompat.getColor(context, R.color.Orange5),
+                ContextCompat.getColor(context, R.color.Orange4),
+                ContextCompat.getColor(context, R.color.Orange3),
+                ContextCompat.getColor(context, R.color.Orange2),
+                ContextCompat.getColor(context, R.color.Orange1)};
+
+
+        if (food.getName().length() > 2) {
+            viewHolder.foodImage.setText(capitalize(food.getName()).substring(0, 2));
+            viewHolder.foodImage.setBackgroundColor(oranges[i % oranges.length]);
+            viewHolder.foodImage.setTextColor(Color.parseColor("#ffffff"));
         }
-        if (food.getImageURL() == null) {
-            Glide.with(context)
-                    .load(R.drawable.fooditemplaceholder)
-                    .into(viewHolder.foodImage);
+    }
+
+    public String capitalize(String name) {
+        String[] split =  name.split(" ");
+        StringBuilder builder = new StringBuilder();
+
+        for (String item : split) {
+            builder.append(item.substring(0, 1).toUpperCase());
+            builder.append(item.substring(1, item.length()));
+            builder.append(" ");
         }
+
+        String capitalized = builder.toString();
+        if (capitalized.length() > 1) {
+            capitalized = capitalized.substring(0, capitalized.length() - 1);
+        }
+        return capitalized;
     }
 
     @Override
@@ -109,12 +129,12 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.imageFood)
-        ImageView foodImage;
         @BindView(R.id.name)
         TextView foodName;
         @BindView(R.id.options)
         TextView options;
+        @BindView(R.id.imageFood)
+        TextView foodImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
