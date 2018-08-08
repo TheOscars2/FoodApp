@@ -10,8 +10,7 @@ class GroceryListItemRepository {
     private void load() {
         groceryList = new ArrayList<>();
 
-        groceryList.add(new Food("carrot", 3, "gal"));
-        groceryList.add(new Food("yellow onion", 3, "cups"));
+        groceryList.add(new Food("peas", 1, "cups"));
         groceryList.add(new Food("potatoes", 1, "cups"));
     }
 

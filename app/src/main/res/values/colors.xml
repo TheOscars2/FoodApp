@@ -4,12 +4,15 @@
     <color name="colorPrimaryDark">#923900</color>
     <color name="colorAccent">#923900</color>
     <color name="colorLight">#ff9545</color>
-    <!--<color name="colorPrimary">#CC0000</color>-->
-    <!--<color name="colorPrimaryDark">#B90000</color>-->
-    <!--<color name="colorAccent">#C70000</color>-->
-    <color name="Orange1">#ffd7b5</color>
-    <color name="Pink3">#F50057</color>
-    <color name="Pink4">#c60148</color>
-    <color name="brown1">#C51162</color>
+
+
+
+    <color name="PLU_Orange">#ffd7b5</color>
+
+    <color name="Orange1">#FFB74D</color>
+    <color name="Orange2">#FFA726</color>
+    <color name="Orange3">#FF9800</color>
+    <color name="Orange4">#FB8C00</color>
+    <color name="Orange5">#F57C00</color>
 
 </resources>
