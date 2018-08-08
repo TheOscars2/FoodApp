@@ -97,6 +97,7 @@ public class RecipeFragment extends Fragment {
         tabs = view.findViewById(R.id.tab_host);
         tabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         tabs.setTabTextColors(Color.parseColor("#000000"), getResources().getColor(R.color.colorAccent));
+
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
