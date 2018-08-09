@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -253,7 +252,6 @@ public class ManualAddFragment extends Fragment {
                 InputStream in = connection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 savedItemName = reader.readLine();
-                Log.d("right after readline", savedItemName);
                 connection.disconnect();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
