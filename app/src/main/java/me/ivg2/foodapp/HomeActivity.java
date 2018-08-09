@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 
@@ -21,6 +22,7 @@ import me.ivg2.foodapp.barcode.BarcodeFragment;
 
 public class HomeActivity extends AppCompatActivity implements RecipeFragment.Callback, AddFoodFragment.Callback, FridgeFragment.Callback, AddRecipeFragment.Callback, ManualAddFragment.Callback, BarcodeFragment.Callback, PluFragment.Callback, RecipeDetailFragment.Callback, FoodDetailFragment.Callback, DatePickerFragment.Callback {
     FragmentManager fragmentManager;
+    BottomNavigationView bottomNavigationView;
     private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
 
     @Override
@@ -33,7 +35,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         final Fragment fridgeFragment = new FridgeFragment();
         final Fragment groceryListFragment = new GroceryListFragment();
         fragmentManager.beginTransaction().replace(R.id.homeFragment, recipeFragment).commit();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -104,6 +106,12 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
+    public void goToAddFood() {
+        Toast.makeText(this, "added to your fridge", Toast.LENGTH_LONG).show();
+        fragmentManager.beginTransaction().replace(R.id.homeFragment, new AddFoodFragment()).commit();
+    }
+
+    @Override
     public void goToBarcodeScanner() {
         fragmentManager.beginTransaction().replace(R.id.homeFragment, new BarcodeFragment()).commit();
     }
@@ -158,6 +166,7 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
 
     @Override
     public void goToFridge() {
+        //bottomNavigationView.setSelectedItemId(R.id.fridge);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, new FridgeFragment()).commit();
     }
 
@@ -235,14 +244,5 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
         ManualAddFragment manualAddFragment = new ManualAddFragment();
         manualAddFragment.setArguments(arguments);
         fragmentManager.beginTransaction().replace(R.id.homeFragment, manualAddFragment).commit();
-    }
-
-    @Override
-    public void goToBarcodeWithNewFood() {
-        Bundle arguments = new Bundle();
-        arguments.putInt("index", FoodItemRepository.size() - 1);
-        BarcodeFragment barcodeFragment = new BarcodeFragment();
-        barcodeFragment.setArguments(arguments);
-        fragmentManager.beginTransaction().replace(R.id.homeFragment, barcodeFragment).commit();
     }
 }

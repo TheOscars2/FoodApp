@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class ManualAddFragment extends Fragment {
     private Unbinder unbinder;
     private String unitEntered;
     private boolean isNewBarcode;
-    String inDatabase;
+    FoodItemRepository f;
 
     interface Callback {
         void goToFridge();
@@ -69,7 +70,7 @@ public class ManualAddFragment extends Fragment {
 
         void goToDatePicker(int index, String tempName, String tempQuantity);
 
-        void goToBarcodeWithNewFood();
+        void goToAddFood();
     }
 
     @Override
@@ -228,7 +229,7 @@ public class ManualAddFragment extends Fragment {
         if (!gotCode.isEmpty()) {
             SaveBarcodeTask task = (SaveBarcodeTask) new SaveBarcodeTask(gotCode, etFoodName.getText().toString()).execute();
         } else {
-            callback.goToFridge();
+            callback.goToAddFood();
         }
     }
 
@@ -262,7 +263,7 @@ public class ManualAddFragment extends Fragment {
             if (savedItemName == null) {//THIS IS WHERE THE CRASH IS
                 Toast.makeText(getContext(), "Error saving barcode, try again", Toast.LENGTH_LONG).show();
             } else {
-                callback.goToFridge();
+                callback.goToAddFood();
             }
             return null;
         }
