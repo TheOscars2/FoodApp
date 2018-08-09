@@ -28,7 +28,7 @@ public class MissingIngredientsAdapter extends RecyclerView.Adapter<MissingIngre
     public MissingIngredientsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View recipeView = inflater.inflate(R.layout.item_missing_ingredients, viewGroup, false);
+        View recipeView = inflater.inflate(R.layout.simple_text, viewGroup, false);
         MissingIngredientsAdapter.ViewHolder view = new MissingIngredientsAdapter.ViewHolder(recipeView);
         return view;
     }
@@ -45,7 +45,7 @@ public class MissingIngredientsAdapter extends RecyclerView.Adapter<MissingIngre
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.missing_ingredient)
+        @BindView(R.id.simple_text)
         TextView tvMissingIngredient;
 
         public ViewHolder(View itemView) {

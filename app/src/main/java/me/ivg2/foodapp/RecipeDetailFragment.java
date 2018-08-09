@@ -56,8 +56,6 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvRecipeTime;
     @BindView(R.id.ingredientsDV)
     TextView tvRecipeIngredients;
-    @BindView(R.id.instructionsDV)
-    TextView tvRecipeInstructions;
     @BindView(R.id.RecipeSourceDV)
     TextView tvRecipeSource;
     @BindView(R.id.options)
@@ -80,6 +78,10 @@ public class RecipeDetailFragment extends Fragment {
     private MissingIngredientsAdapter itemsAdapter;
     @BindView(R.id.ingredientsMissing)
     RecyclerView rvMissingIngredients;
+
+    private InstructionsAdapter instructionsAdapter;
+    @BindView(R.id.instructions)
+    RecyclerView rvInstructions;
 
     interface Callback {
         void goToRecipes();
@@ -181,13 +183,9 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     public void setInstructionsInView(ArrayList<String> instructions) {
-        String instDisplay = "";
-        for (String instruction : instructions) {
-            instDisplay += '\u2022' + " " + instruction + "\n";
-        }
-        if (instDisplay.length() > 0) {
-            tvRecipeInstructions.setText(instDisplay.substring(0, instDisplay.length() - 1));
-        }
+        instructionsAdapter = new InstructionsAdapter(instructions);
+        rvInstructions.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvInstructions.setAdapter(instructionsAdapter);
     }
 
     @Override

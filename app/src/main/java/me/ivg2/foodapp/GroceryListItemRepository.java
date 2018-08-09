@@ -11,6 +11,7 @@ class GroceryListItemRepository {
         groceryList = new ArrayList<>();
 
         groceryList.add(new Food("peas", 1, "cups"));
+        groceryList.add(new Food("chicken", 3, "servings"));
         groceryList.add(new Food("potatoes", 1, "cups"));
     }
 

@@ -11,6 +11,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha=".4"
+            android:visibility="gone"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -171,15 +178,11 @@
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"/>
 
-        <TextView
-            android:id="@+id/instructionsDV"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/instructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textViewInstructions"
-            android:paddingLeft="20dp"
-            android:text="As is talked about in this post, sometimes you want the ScrollView content to fill the screen. For example, if you had some buttons at the end of a readme. You want the buttons to always be at the end of the text and at bottom of the screen, even if the text doesn't scroll.  If the content scrolls, everything is fine. However, if the content is smaller than the size of the screen, the buttons are not at the bottom."
-            android:textSize="18sp" />
+            android:paddingLeft="10dp" />
 
         <Button
             android:id="@+id/cookedBtn"
