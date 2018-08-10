@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,9 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
-import org.joda.time.Period;
+import org.joda.time.Days;
+import org.joda.time.Months;
+import org.joda.time.Years;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,30 +82,45 @@ public class FoodDetailFragment extends Fragment {
         Bundle arguments = getArguments();
         index = arguments.getInt("index");
         etFoodName.setText(capitalize(FoodItemRepository.get(index).getName()));
-        etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()) + " " +  FoodItemRepository.get(index).getUnit());
-
+        etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()) + " " + FoodItemRepository.get(index).getUnit());
 
         //setting food expiration date to proper format
         DateTime targetDateTime = FoodItemRepository.get(index).getExpirationDate();
-        Period period = new Period(DateTime.now(), targetDateTime);
-        if (period.getYears() > 0) {
-            etFoodExpDate.setText("Expires in " + period.getYears() + " years");
-        } else if (period.getMonths() > 0) {
-            etFoodExpDate.setText("Expires in " + period.getMonths() + " months");
+
+        //get today
+        DateTime rightNow = DateTime.now();
+
+        //get differences
+        int yearsToExpire = Years.yearsBetween(rightNow, targetDateTime).getYears();
+        int monthsToExpire = Months.monthsBetween(rightNow, targetDateTime).getMonths();
+        int daysToExpire = Days.daysBetween(rightNow, targetDateTime).getDays();
+        Log.d("days between", (daysToExpire + " days"));
+        Log.d("months between", (monthsToExpire + " months"));
+        Log.d("years between", (yearsToExpire + " years"));
+        if (yearsToExpire > 1) {
+            etFoodExpDate.setText("Expires in " + yearsToExpire + " years");
+        } else if (yearsToExpire == 1) {
+            etFoodExpDate.setText("Expires in " + yearsToExpire + " year");
+        } else if (monthsToExpire > 1) {
+            etFoodExpDate.setText("Expires in " + monthsToExpire + " months");
+        } else if (monthsToExpire == 1) {
+            etFoodExpDate.setText("Expires in " + monthsToExpire + " month");
+        } else if (daysToExpire == 0) {
+            etFoodExpDate.setText("Expires tomorrow!");
+        } else if (daysToExpire < 0) {
+            etFoodExpDate.setText("ITEM IS EXPIRED");
+        } else if (daysToExpire == 1) {
+            etFoodExpDate.setText("Expires in " + daysToExpire + " day");
         } else {
-            etFoodExpDate.setText("Expires in " + period.getDays() + " days");
+            etFoodExpDate.setText("Expires in " + daysToExpire + " days");
         }
         String url = FoodItemRepository.get(index).getImageURL();
-
         tvFoodImage = view.findViewById(R.id.foodImage);
-
         int[] oranges = {ContextCompat.getColor(getContext(), R.color.Orange5),
                 ContextCompat.getColor(getContext(), R.color.Orange4),
                 ContextCompat.getColor(getContext(), R.color.Orange3),
                 ContextCompat.getColor(getContext(), R.color.Orange2),
                 ContextCompat.getColor(getContext(), R.color.Orange1)};
-
-
         if (FoodItemRepository.get(index).getName().length() > 2) {
             tvFoodImage.setText(capitalize(FoodItemRepository.get(index).getName()).substring(0, 2));
             tvFoodImage.setBackgroundColor(oranges[index % oranges.length]);
@@ -110,17 +128,14 @@ public class FoodDetailFragment extends Fragment {
         }
     }
 
-
     public String capitalize(String name) {
-        String[] split =  name.split(" ");
+        String[] split = name.split(" ");
         StringBuilder builder = new StringBuilder();
-
         for (String item : split) {
             builder.append(item.substring(0, 1).toUpperCase());
             builder.append(item.substring(1, item.length()));
             builder.append(" ");
         }
-
         String capitalized = builder.toString();
         if (capitalized.length() > 1) {
             capitalized = capitalized.substring(0, capitalized.length() - 1);
