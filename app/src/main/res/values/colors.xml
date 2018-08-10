@@ -2,19 +2,19 @@
 <resources>
     <color name="colorPrimary">#c96613</color>
     <color name="colorPrimaryDark">#923900</color>
+    <color name="Brown2">#9A4E0F</color>
+    <color name="Brown1">#B25A11</color>
     <color name="colorAccent">#923900</color>
     <color name="colorLight">#ff9545</color>
 
+    <color name="Orange5">#E07215</color>
     <color name="PLU_Orange">#ffd7b5</color>
 
     <color name="Orange1">#FFB74D</color>
     <color name="Orange2">#FFA726</color>
     <color name="Orange3">#FF9800</color>
-    <color name="Orange4">#FB8C00</color>
-    <color name="Orange5">#F57C00</color>
+    <color name="Orange4">#F57C00</color>
     <color name="white">#ffffff</color>
-    <color name="Brown1">#B25A11</color>
-    <color name="Brown2">#9A4E0F</color>
 
 
 </resources>

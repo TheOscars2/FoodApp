@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
+import org.joda.time.Weeks;
 import org.joda.time.Years;
 
 import butterknife.BindView;
@@ -83,6 +83,15 @@ public class FoodDetailFragment extends Fragment {
         index = arguments.getInt("index");
         etFoodName.setText(capitalize(FoodItemRepository.get(index).getName()));
         etFoodQuantity.setText(Double.toString(FoodItemRepository.get(index).getQuantity()) + " " + FoodItemRepository.get(index).getUnit());
+        final int[] colors = {
+                ContextCompat.getColor(getContext(), R.color.Brown2),
+                ContextCompat.getColor(getContext(), R.color.colorPrimary),
+                ContextCompat.getColor(getContext(), R.color.Orange5),
+                ContextCompat.getColor(getContext(), R.color.Orange4),
+                ContextCompat.getColor(getContext(), R.color.Orange3),
+                ContextCompat.getColor(getContext(), R.color.Orange2),
+                ContextCompat.getColor(getContext(), R.color.Orange1),
+        };
 
         //setting food expiration date to proper format
         DateTime targetDateTime = FoodItemRepository.get(index).getExpirationDate();
@@ -94,9 +103,9 @@ public class FoodDetailFragment extends Fragment {
         int yearsToExpire = Years.yearsBetween(rightNow, targetDateTime).getYears();
         int monthsToExpire = Months.monthsBetween(rightNow, targetDateTime).getMonths();
         int daysToExpire = Days.daysBetween(rightNow, targetDateTime).getDays();
-        Log.d("days between", (daysToExpire + " days"));
-        Log.d("months between", (monthsToExpire + " months"));
-        Log.d("years between", (yearsToExpire + " years"));
+        int weeksToExpire = Weeks.weeksBetween(rightNow, targetDateTime).getWeeks();
+
+        //set exp date text
         if (yearsToExpire > 1) {
             etFoodExpDate.setText("Expires in " + yearsToExpire + " years");
         } else if (yearsToExpire == 1) {
@@ -105,6 +114,8 @@ public class FoodDetailFragment extends Fragment {
             etFoodExpDate.setText("Expires in " + monthsToExpire + " months");
         } else if (monthsToExpire == 1) {
             etFoodExpDate.setText("Expires in " + monthsToExpire + " month");
+        } else if (weeksToExpire > 1) {
+            etFoodExpDate.setText("Expires in " + weeksToExpire + " weeks");
         } else if (daysToExpire == 0) {
             etFoodExpDate.setText("Expires tomorrow!");
         } else if (daysToExpire < 0) {
@@ -114,17 +125,28 @@ public class FoodDetailFragment extends Fragment {
         } else {
             etFoodExpDate.setText("Expires in " + daysToExpire + " days");
         }
-        String url = FoodItemRepository.get(index).getImageURL();
-        tvFoodImage = view.findViewById(R.id.foodImage);
-        int[] oranges = {ContextCompat.getColor(getContext(), R.color.Orange5),
-                ContextCompat.getColor(getContext(), R.color.Orange4),
-                ContextCompat.getColor(getContext(), R.color.Orange3),
-                ContextCompat.getColor(getContext(), R.color.Orange2),
-                ContextCompat.getColor(getContext(), R.color.Orange1)};
+
+        //set name abbreviation
         if (FoodItemRepository.get(index).getName().length() > 2) {
             tvFoodImage.setText(capitalize(FoodItemRepository.get(index).getName()).substring(0, 2));
-            tvFoodImage.setBackgroundColor(oranges[index % oranges.length]);
             tvFoodImage.setTextColor(Color.parseColor("#ffffff"));
+        }
+
+        //set background color based on exp date
+        if (daysToExpire < 0) {
+            tvFoodImage.setBackgroundColor(colors[0]);
+        } else if (daysToExpire < 2) {
+            tvFoodImage.setBackgroundColor(colors[1]);
+        } else if (weeksToExpire < 2) {
+            tvFoodImage.setBackgroundColor(colors[2]);
+        } else if (monthsToExpire < 1) {
+            tvFoodImage.setBackgroundColor(colors[3]);
+        } else if (monthsToExpire < 3) {
+            tvFoodImage.setBackgroundColor(colors[4]);
+        } else if (monthsToExpire < 6) {
+            tvFoodImage.setBackgroundColor(colors[5]);
+        } else {
+            tvFoodImage.setBackgroundColor(colors[6]);
         }
     }
 

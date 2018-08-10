@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.widget.DatePicker;
 
 import org.joda.time.DateTime;
@@ -56,7 +55,7 @@ public class DatePickerFragment extends DialogFragment
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         int index = getArguments().getInt("index");
         String rawDate = "";
-        if (++month < 9) {
+        if (++month < 10) {
             rawDate += "0";
         }
         rawDate += month + "/";
