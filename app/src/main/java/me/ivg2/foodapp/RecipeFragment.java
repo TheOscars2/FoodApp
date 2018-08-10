@@ -148,6 +148,7 @@ public class RecipeFragment extends Fragment {
         ArrayList<ArrayList<Food>> ingredientsMissingFromRecipes = new ArrayList<ArrayList<Food>>();
         //loop over every recipe given
         for (int i = 0; i < allRecipes.size(); i++) {
+            allRecipes.get(i).getIngredientsMissing().clear();
             boolean isRecipeValid = true;
             ArrayList<Food> recipe = new ArrayList<>();
             //loop over every food in recipe ingredients
@@ -176,6 +177,7 @@ public class RecipeFragment extends Fragment {
         for (int i = 0; i < ingredientsMissingFromRecipes.size(); i++) {
             if (ingredientsMissingFromRecipes.get(i).size() <= 5 && ingredientsMissingFromRecipes.get(i).size() > 0) {
                 browsingRecipes.add(allRecipes.get(i));
+                browsingRecipes.get(browsingRecipes.size() - 1).getIngredientsMissing().clear();
                 browsingRecipes.get(browsingRecipes.size() - 1).setIngredientsMissing(ingredientsMissingFromRecipes.get(i));
             }
         }

@@ -155,9 +155,9 @@ public class RecipeDetailFragment extends Fragment {
             }
         });
         if (recipe.getIngredientsMissing().size() > 0) {
-            ArrayList<Food> ingMissing = recipe.getIngredientsMissing();
-            ingMissing.add(0, new Food("You are missing the following ingredients: "));
-            itemsAdapter = new MissingIngredientsAdapter(ingMissing);
+            TextView notification = view.findViewById(R.id.missingIngredientNotification);
+            notification.setText("You are missing the following ingredients (tap to add to grocery list): ");
+            itemsAdapter = new MissingIngredientsAdapter(recipe.getIngredientsMissing());
             rvMissingIngredients.setLayoutManager(new LinearLayoutManager(getActivity()));
             rvMissingIngredients.setAdapter(itemsAdapter);
         }

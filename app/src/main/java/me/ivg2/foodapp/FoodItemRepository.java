@@ -10,12 +10,7 @@ public class FoodItemRepository {
     //will load from a server but for now I will hardcode Food data in
     private void load() {
         foods = new ArrayList<>();
-        foods.add(new Food("apple", "https://www.vaporfi.com.au/media/catalog/product/cache/34/thumbnail/600x600/9df78eab33525d08d6e5fb8d27136e95/v/z/vz_eliquid_juicy_red_apple.jpg"));
-        foods.add(new Food("pear", "http://vaporhauschicago.com/wp-content/uploads/2017/06/pear.jpg"));
-        foods.add(new Food("pizza", "https://www.messforless.net/wp-content/uploads/2018/01/2-ingredient-pizza-dough-weight-watchers-9.jpg"));
-        foods.add(new Food("smoothie", "http://images.media-allrecipes.com/userphotos/960x960/3756353.jpg"));
-        foods.add(new Food("pringles", "https://images-na.ssl-images-amazon.com/images/I/71LeHo4XhwL._SY679_.jpg"));
-        foods.add(new Food("bananas", "https://images-na.ssl-images-amazon.com/images/I/71gI-IUNUkL._SY355_.jpg"));
+
         foods.add(new Food("all purpose flour"));
         foods.add(new Food("apples"));
         foods.add(new Food("artichoke hearts"));
@@ -70,8 +65,6 @@ public class FoodItemRepository {
         foods.add(new Food("milk"));
         foods.add(new Food("nutmeg"));
         foods.add(new Food("olive oil"));
-        foods.add(new Food("onion"));
-        foods.add(new Food("onions"));
         foods.add(new Food("oregano"));
         foods.add(new Food("parmesan cheese"));
         foods.add(new Food("pecorino romano"));
@@ -88,13 +81,10 @@ public class FoodItemRepository {
         foods.add(new Food("salt"));
         foods.add(new Food("salt and pepper"));
         foods.add(new Food("semi sweet chocolate chips"));
-        foods.add(new Food("sguar"));
         foods.add(new Food("sirloin steak"));
         foods.add(new Food("sugar"));
-        foods.add(new Food("tomato"));
-        foods.add(new Food("tomatoes"));
+        foods.add(new Food("tomato"));;
         foods.add(new Food("unsalted butter"));
-        foods.add(new Food("vanilla"));
         foods.add(new Food("vanilla extract"));
         foods.add(new Food("vegetable oil"));
         foods.add(new Food("vinegar"));

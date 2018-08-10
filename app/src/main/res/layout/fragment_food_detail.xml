@@ -15,8 +15,8 @@
         android:layout_marginBottom="148dp"
         android:paddingLeft="10dp"
         android:text="expiration"
-        android:textSize="17dp"
-        android:textStyle="bold" />
+        android:textSize="16dp"
+        android:fontFamily="@font/fauna_one" />
 
     <TextView
         android:id="@+id/quantity"
@@ -26,11 +26,12 @@
         android:layout_toRightOf="@id/textQuantity"
 
         android:text="3"
-        android:textSize="17dp"
+        android:textSize="16dp"
         tools:layout_editor_absoluteX="80dp"
         tools:layout_editor_absoluteY="342dp"
         android:paddingLeft="5dp"
-        android:paddingTop="10dp"/>
+        android:paddingTop="10dp"
+        android:fontFamily="@font/fauna_one"/>
 
     <TextView
         android:id="@+id/foodImage"
@@ -65,12 +66,12 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="184dp"
         android:text="Quantity:"
-        android:textSize="17dp"
-        android:textStyle="bold"
+        android:textSize="16dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="342dp"
         android:paddingLeft="10dp"
-        android:paddingTop="10dp"/>
+        android:paddingTop="10dp"
+        android:fontFamily="@font/fauna_one"/>
 
 
     <TextView
