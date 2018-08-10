@@ -103,10 +103,15 @@ public class RecipeFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case RECIPES_TO_COOK_POSITION:
-                        ArrayList<Recipe> tempCooking = new ArrayList<>();
-                        for (int i = 0; i < cookingRecipes.size(); i++) {
-                            
-                        }
+//                        ArrayList<Recipe> tempCooking = new ArrayList<>(cookingRecipes);
+//                        for (int i = 0; i < cookingRecipes.size(); i++) {
+//                            int minTime = tempCooking.get(0).getCookTimeHours() * 60 + tempCooking.get(0).getCookTimeMinutes();
+//                            for (int j = 0; j < tempCooking.size(); j++) {
+//                                if (minTime > tempCooking.get(j).getCookTimeHours() * 60 + tempCooking.get(j).getCookTimeMinutes()) {
+//                                    minTime =
+//                                }
+//                            }
+//                        }
 
                         RecipeItemRepository.set(cookingRecipes);
                         recipeAdapter.notifyDataSetChanged();
