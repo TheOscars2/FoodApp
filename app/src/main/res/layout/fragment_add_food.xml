@@ -20,12 +20,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingVertical="8dp">
 
             <ImageView
                 android:id="@+id/imageFood"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
+                android:layout_width="115dp"
+                android:layout_height="115dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/barcode"
@@ -50,10 +51,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:text="Scan barcode"
-                    android:textAllCaps="true"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
+                    android:text="Scan Barcode"
+                    android:textSize="18sp"
                     android:textColor="#000000" />
 
             </RelativeLayout>
@@ -79,12 +78,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingVertical="13dp">
 
             <ImageView
                 android:id="@+id/image33"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
+                android:layout_width="105dp"
+                android:layout_height="105dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/code"
@@ -98,19 +98,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
-                android:minHeight="10dp">
+                android:minHeight="10dp"
+                android:paddingBottom="5dp">
 
                 <TextView
                     android:id="@+id/TextView123"
+                    android:paddingTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:text="Input plu"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
+                    android:text="Input PLU"
                     android:textColor="#000000"
-                    android:textSize="16dp" />
+                    android:textSize="18sp" />
 
             </RelativeLayout>
 
@@ -133,12 +133,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingVertical="8dp">
 
             <ImageView
                 android:id="@+id/image353"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
+                android:layout_width="115dp"
+                android:layout_height="115dp"
                 android:layout_weight="1"
                 android:background="@android:color/white"
                 android:padding="10dp"
@@ -162,11 +163,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:text="Add manually"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
+                    android:text="Add Manually"
                     android:textColor="#000000"
-                    android:textSize="16dp" />
+                    android:textSize="18sp" />
 
             </RelativeLayout>
 

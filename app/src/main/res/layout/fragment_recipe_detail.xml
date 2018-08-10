@@ -41,7 +41,7 @@
                 android:layout_alignBottom="@+id/recipeImageDetail"
                 android:layout_alignParentStart="true"
                 android:layout_weight="10"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/playfair_display"
                 android:paddingLeft="10dp"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -97,15 +97,14 @@
 
             <TextView
                 android:id="@+id/RecipeSourceDV"
-
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_below="@+id/recipeImageDetail"
                 android:layout_toEndOf="@+id/imageView"
-                android:fontFamily="@font/alice"
                 android:gravity="center"
                 android:paddingLeft="10dp"
-                android:text="TextView" />
+                android:text="TextView"
+                android:fontFamily="@font/fauna_one"/>
 
         </LinearLayout>
 
@@ -130,11 +129,21 @@
                 android:layout_height="29dp"
                 android:layout_alignStart="@+id/RecipeSourceDV"
                 android:layout_below="@+id/RecipeSourceDV"
-                android:fontFamily="@font/alice"
                 android:gravity="center"
                 android:paddingLeft="10dp"
-                android:text="TextView" />
+                android:text="TextView"
+                android:fontFamily="@font/fauna_one"/>
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/missingIngredientNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fauna_one"
+            android:textSize="15sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ingredientsMissing"
@@ -151,7 +160,7 @@
             android:layout_below="@+id/timeRecipeDV"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
-            android:text="INGREDIENTS"
+            android:text="Ingredients"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"/>
@@ -162,11 +171,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView2"
-            android:fontFamily="@font/alice"
             android:paddingLeft="40dp"
             android:text="As is talked about in this post, sometimes you want the ScrollView content to fill the screen. For example, if you had some buttons at the end of a readme. You want the buttons to always be at the end of the text and at bottom of the screen, even if the text doesn't scroll.  If the content scrolls, everything is fine. However, if the content is smaller than the size of the screen, the buttons are not at the bottom."
-            android:textSize="18sp"
-            android:paddingRight="40dp"/>
+            android:paddingRight="40dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/fauna_one"/>
 
         <TextView
             android:id="@+id/textViewInstructions"
@@ -177,7 +186,7 @@
             android:layout_marginTop="0dp"
             android:paddingLeft="10dp"
             android:paddingTop="20dp"
-            android:text="INSTRUCTIONS"
+            android:text="Instructions"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"/>
