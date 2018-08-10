@@ -103,15 +103,19 @@ public class RecipeFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case RECIPES_TO_COOK_POSITION:
-//                        ArrayList<Recipe> tempCooking = new ArrayList<>(cookingRecipes);
-//                        for (int i = 0; i < cookingRecipes.size(); i++) {
-//                            int minTime = tempCooking.get(0).getCookTimeHours() * 60 + tempCooking.get(0).getCookTimeMinutes();
-//                            for (int j = 0; j < tempCooking.size(); j++) {
-//                                if (minTime > tempCooking.get(j).getCookTimeHours() * 60 + tempCooking.get(j).getCookTimeMinutes()) {
-//                                    minTime =
-//                                }
-//                            }
-//                        }
+                        ArrayList<Recipe> tempCooking = new ArrayList<>(cookingRecipes);
+                        for (int i = 0; i < cookingRecipes.size(); i++) {
+                            int minIndex = 0 ;
+                            for (int j = 0; j < tempCooking.size(); j++) {
+                                int minTime = tempCooking.get(minIndex).getCookTimeHours() * 60 + tempCooking.get(minIndex).getCookTimeMinutes();
+                                int currentTime = tempCooking.get(j).getCookTimeHours() * 60 + tempCooking.get(j).getCookTimeMinutes();
+                                if (minTime > currentTime) {
+                                    minIndex = j;
+                                }
+                            }
+                            cookingRecipes.set(i, tempCooking.get(minIndex));
+                            tempCooking.remove(minIndex);
+                        }
 
                         RecipeItemRepository.set(cookingRecipes);
                         recipeAdapter.notifyDataSetChanged();
@@ -246,6 +250,22 @@ public class RecipeFragment extends Fragment {
             }
         }
         cookingRecipes = RecipeItemRepository.getAll();
+
+        ArrayList<Recipe> tempCooking = new ArrayList<>(cookingRecipes);
+        for (int i = 0; i < cookingRecipes.size(); i++) {
+            int minIndex = 0 ;
+            for (int j = 0; j < tempCooking.size(); j++) {
+                int minTime = tempCooking.get(minIndex).getCookTimeHours() * 60 + tempCooking.get(minIndex).getCookTimeMinutes();
+                int currentTime = tempCooking.get(j).getCookTimeHours() * 60 + tempCooking.get(j).getCookTimeMinutes();
+                if (minTime > currentTime) {
+                    minIndex = j;
+                }
+            }
+            cookingRecipes.set(i, tempCooking.get(minIndex));
+            tempCooking.remove(minIndex);
+        }
+
+        RecipeItemRepository.set(cookingRecipes);
     }
 
     /**
