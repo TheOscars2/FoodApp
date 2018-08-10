@@ -199,7 +199,7 @@ public class ManualAddFragment extends Fragment {
             if (newFood.getName().toLowerCase().equals(f.getName().toLowerCase())) {
                 f.setQuantity(f.getQuantity() - newFood.getQuantity());
                 if (f.getQuantity() <= 0) {
-                    groceryList.delete(groceryList.getIndex(f));
+                    GroceryListItemRepository.getInstance().delete(groceryList.getIndex(f));
                 }
                 break;
             }
