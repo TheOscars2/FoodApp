@@ -62,6 +62,14 @@ public class Food {
         this.unit = unit;
     }
 
+    public Food(Food f) {
+        this.name = f.getName();
+        this.quantity = f.getQuantity();
+        this.unit = f.getUnit();
+        this.expirationDate = f.getExpirationDate();
+    }
+
+
     public String getName() {
         return name;
     }
