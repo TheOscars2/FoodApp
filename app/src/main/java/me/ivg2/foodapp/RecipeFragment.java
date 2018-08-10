@@ -103,6 +103,11 @@ public class RecipeFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case RECIPES_TO_COOK_POSITION:
+                        ArrayList<Recipe> tempCooking = new ArrayList<>();
+                        for (int i = 0; i < cookingRecipes.size(); i++) {
+                            
+                        }
+
                         RecipeItemRepository.set(cookingRecipes);
                         recipeAdapter.notifyDataSetChanged();
                         rvRecipes.smoothScrollToPosition(0);
