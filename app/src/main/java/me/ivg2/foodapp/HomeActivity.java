@@ -106,8 +106,8 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
     }
 
     @Override
-    public void goToAddFood() {
-        Toast.makeText(this, "added to your fridge", Toast.LENGTH_LONG).show();
+    public void goToAddFood(String foodName, String foodQuantity, String foodUnits) {
+        Toast.makeText(this, foodQuantity + " " + foodUnits + " of " + foodName + " added to your fridge", Toast.LENGTH_LONG).show();
         fragmentManager.beginTransaction().replace(R.id.homeFragment, new AddFoodFragment()).commit();
     }
 
