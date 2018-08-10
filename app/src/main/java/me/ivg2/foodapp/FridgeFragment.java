@@ -13,12 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.ivg2.foodapp.Model.Food;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,11 +83,6 @@ public class FridgeFragment extends Fragment {
     }
 
     public static void onFoodViewClicked(int index) {
-        ArrayList<Food> foodItemRepoArray = foods.getAll();
-        ArrayList<Food> fridgeArray = gridAdapter.getListOfFoodObjects();
-        Food foodClicked = fridgeArray.get(index);
-        int indexInRepos = foodItemRepoArray.indexOf(foodClicked);
-
         callback.goToFoodDetail(foods.getAll().indexOf(gridAdapter.getListOfFoodObjects().get(index)));
     }
 
