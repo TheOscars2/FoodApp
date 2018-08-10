@@ -160,7 +160,7 @@ public class ManualAddFragment extends Fragment {
                 }
             }
         });
-        final String[] items = new String[]{"servings", "gal", "cups", "mL"};
+        final String[] items = new String[]{"servings", "gals", "cups", "mLs"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
         dynamicSpinner.setAdapter(adapter);
         dynamicSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
