@@ -45,7 +45,11 @@
     <Button
         android:id="@+id/submitGroceryItem"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|right"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="3dp"
         android:text="Add"
-        android:layout_gravity="bottom|right"/>
+        android:textColor="#ffffff"
+        android:textSize="18dp" />
 </FrameLayout>

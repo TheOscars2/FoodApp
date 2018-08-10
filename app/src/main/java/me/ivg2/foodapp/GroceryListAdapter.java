@@ -2,11 +2,13 @@ package me.ivg2.foodapp;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -34,9 +36,11 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int index) {
         Food groceryItem = groceryList.get(index);
-        holder.tvFoodName.setText(groceryItem.getName());
-        holder.tvFoodQuantity.setText(Double.toString(groceryItem.getQuantity()));
-        holder.tvFoodUnit.setText(groceryItem.getUnit());
+        holder.tvFoodName.setText(groceryItem.getName() + " (" + Double.toString(groceryItem.getQuantity()) + " " + groceryItem.getUnit() + ")");
+
+        if (index % 2 == 0) {
+            holder.layout.setBackgroundColor(ContextCompat.getColor(context, R.color.grey));
+        }
     }
 
     @Override
@@ -47,12 +51,10 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.groceryFoodName)
         TextView tvFoodName;
-        @BindView(R.id.groceryFoodQuantity)
-        TextView tvFoodQuantity;
-        @BindView(R.id.groceryFoodUnit)
-        TextView tvFoodUnit;
         @BindView(R.id.checkBox)
         CheckBox checkBox;
+        @BindView(R.id.listItem)
+        LinearLayout layout;
 
         public ViewHolder(View itemView) {
             super(itemView);
