@@ -18,24 +18,15 @@
         android:text="add to fridge"
         android:textColor="@android:color/background_light" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
-        android:text="ADD ITEM"
-        android:textSize="30sp" />
-
 
     <EditText
         android:id="@+id/etFood"
         android:layout_width="247dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView"
+
+        android:layout_alignStart="@+id/etFoodExpirationDate"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="91dp"
+        android:layout_marginTop="74dp"
         android:ems="10"
         android:hint="Name of item"
         android:inputType="textPersonName" />
@@ -44,7 +35,7 @@
         android:id="@+id/etFoodQuantity"
         android:layout_width="59dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/etFood"
+        android:layout_alignStart="@+id/etFoodExpirationDate"
         android:layout_below="@+id/etFoodExpirationDate"
         android:ems="10"
         android:hint="  Qty"
@@ -53,8 +44,8 @@
     <EditText
         android:id="@+id/etFoodExpirationDate"
         android:layout_width="304dp"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/etFood"
         android:layout_below="@+id/etFood"
         android:ems="10"
         android:hint="Expiration date (MM/DD/YYYY)"

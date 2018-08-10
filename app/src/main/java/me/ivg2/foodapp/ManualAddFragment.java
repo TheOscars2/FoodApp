@@ -70,7 +70,7 @@ public class ManualAddFragment extends Fragment {
 
         void goToDatePicker(int index, String tempName, String tempQuantity);
 
-        void goToAddFood();
+        void goToAddFood(String foodName, String foodQuantity, String foodUnits);
     }
 
     @Override
@@ -229,7 +229,7 @@ public class ManualAddFragment extends Fragment {
         if (!gotCode.isEmpty()) {
             SaveBarcodeTask task = (SaveBarcodeTask) new SaveBarcodeTask(gotCode, etFoodName.getText().toString()).execute();
         } else {
-            callback.goToAddFood();
+            callback.goToAddFood(etFoodName.getText().toString(), etFoodQuantity.getText().toString(), unitEntered);
         }
     }
 
@@ -263,7 +263,7 @@ public class ManualAddFragment extends Fragment {
             if (savedItemName == null) {//THIS IS WHERE THE CRASH IS
                 Toast.makeText(getContext(), "Error saving barcode, try again", Toast.LENGTH_LONG).show();
             } else {
-                callback.goToAddFood();
+                callback.goToAddFood(etFoodName.getText().toString(), etFoodQuantity.getText().toString(), unitEntered);
             }
             return null;
         }
