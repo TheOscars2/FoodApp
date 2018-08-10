@@ -12,6 +12,12 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Months;
+import org.joda.time.Weeks;
+import org.joda.time.Years;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -72,20 +78,49 @@ public class FridgeGridAdapter extends RecyclerView.Adapter<FridgeGridAdapter.Vi
         Collections.sort(listOfFoodObjects, Food.ALPHABETICAL);
         Food food = listOfFoodObjects.get(i);
         viewHolder.foodName.setText(capitalize(food.getName()));
-
-
-        int[] oranges = {ContextCompat.getColor(context, R.color.Orange5),
+        int[] colors = {
+                ContextCompat.getColor(context, R.color.Brown2),
+                ContextCompat.getColor(context, R.color.colorPrimary),
+                ContextCompat.getColor(context, R.color.Orange5),
                 ContextCompat.getColor(context, R.color.Orange4),
                 ContextCompat.getColor(context, R.color.Orange3),
                 ContextCompat.getColor(context, R.color.Orange2),
                 ContextCompat.getColor(context, R.color.Orange1)};
 
+        //setting food expiration date to proper format
+        DateTime targetDateTime = food.getExpirationDate();
+
+        //get today
+        DateTime rightNow = DateTime.now();
+
+        //get differences
+        int yearsToExpire = Years.yearsBetween(rightNow, targetDateTime).getYears();
+        int monthsToExpire = Months.monthsBetween(rightNow, targetDateTime).getMonths();
+        int daysToExpire = Days.daysBetween(rightNow, targetDateTime).getDays();
+        int weeksToExpire = Weeks.weeksBetween(rightNow, targetDateTime).getWeeks();
 
         if (food.getName().length() > 2) {
             viewHolder.foodImage.setText(capitalize(food.getName()).substring(0, 2));
-            viewHolder.foodImage.setBackgroundColor(oranges[i % oranges.length]);
             viewHolder.foodImage.setTextColor(Color.parseColor("#ffffff"));
         }
+
+        //set background color based on exp date
+        if (daysToExpire < 0) {
+            viewHolder.foodImage.setBackgroundColor(colors[0]);
+        } else if (daysToExpire < 2) {
+            viewHolder.foodImage.setBackgroundColor(colors[1]);
+        } else if (weeksToExpire < 2) {
+            viewHolder.foodImage.setBackgroundColor(colors[2]);
+        } else if (monthsToExpire < 1) {
+            viewHolder.foodImage.setBackgroundColor(colors[3]);
+        } else if (monthsToExpire < 3) {
+            viewHolder.foodImage.setBackgroundColor(colors[4]);
+        } else if (monthsToExpire < 6) {
+            viewHolder.foodImage.setBackgroundColor(colors[5]);
+        } else {
+            viewHolder.foodImage.setBackgroundColor(colors[6]);
+        }
+
     }
 
     public String capitalize(String name) {

@@ -65,9 +65,9 @@ public class FridgeFragment extends Fragment {
         foods = FoodItemRepository.getInstance();
         fridgeSearchBar = view.findViewById(R.id.searchBarFridge);
         gridAdapter = new FridgeGridAdapter(foods);
-        rvFoods.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        rvFoods.setLayoutManager(gridLayoutManager);
         rvFoods.setAdapter(gridAdapter);
-        rvFoods.scrollToPosition(0);
         fridgeSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
