@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -62,6 +61,8 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvOptions;
     @BindView(R.id.cookedBtn)
     Button cookedBtn;
+    @BindView(R.id.recipeBackBtn)
+    TextView backBtn;
     private int hours;
     private int minutes;
     private String cookTime = "";
@@ -147,7 +148,6 @@ public class RecipeDetailFragment extends Fragment {
                 tvRecipeName.setTextColor(Color.parseColor("#000000"));
             }
         }
-        ImageButton backBtn = view.findViewById(R.id.imageButton);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
