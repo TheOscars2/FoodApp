@@ -40,7 +40,6 @@ public class FoodItemRepository {
         foods.add(new Food("cream cheese"));
         foods.add(new Food("cucumber"));
         foods.add(new Food("dried thyme"));
-        foods.add(new Food("egg"));
         foods.add(new Food("egg whites"));
         foods.add(new Food("eggs"));
         foods.add(new Food("fat free yogurt"));

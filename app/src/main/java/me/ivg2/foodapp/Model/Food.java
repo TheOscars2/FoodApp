@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import java.util.Comparator;
+import java.util.Random;
 
 import static java.lang.String.format;
 
@@ -23,9 +24,19 @@ public class Food {
         imageURL = null;
         this.unit = "servings";
         this.quantity = 2;
-        String eventDate = "10/28/2018";
-        String eventTime = "00:00";
-        expirationDate = DateTime.parse(format("%s %s", eventDate, eventTime), DateTimeFormat.forPattern("MM/dd/yyyy HH:mm"));
+
+        //randomly assign exp dates
+        Random gen = new Random();
+        int range = 300;
+        DateTime randomDate = DateTime.now().plusDays(gen.nextInt(range));
+        expirationDate = randomDate;
+
+        //add in some expired foods
+        gen = new Random();
+        range = 30;
+        if(gen.nextInt(range) == 1) {
+            expirationDate = DateTime.now().minusDays(2);
+        }
     }
 
     public Food(String name, double quantity, DateTime expirationDate) {
