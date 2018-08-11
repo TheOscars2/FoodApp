@@ -193,11 +193,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView2"
+            android:fontFamily="@font/fauna_one"
             android:paddingLeft="40dp"
-            android:text="As is talked about in this post, sometimes you want the ScrollView content to fill the screen. For example, if you had some buttons at the end of a readme. You want the buttons to always be at the end of the text and at bottom of the screen, even if the text doesn't scroll.  If the content scrolls, everything is fine. However, if the content is smaller than the size of the screen, the buttons are not at the bottom."
             android:paddingRight="40dp"
-            android:textSize="16sp"
-            android:fontFamily="@font/fauna_one"/>
+            android:text="As is talked about in this post, sometimes you want the ScrollView content to fill the screen. For example, if you had some buttons at the end of a readme. You want the buttons to always be at the end of the text and at bottom of the screen, even if the text doesn't scroll.  If the content scrolls, everything is fine. However, if the content is smaller than the size of the screen, the buttons are not at the bottom."
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textViewInstructions"
