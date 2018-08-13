@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,14 +16,9 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,14 +28,12 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -190,7 +182,7 @@ public class RecipeDetailFragment extends Fragment {
     public void setIngredientsInView(ArrayList<Food> ingredients) {
         String ingDisplay = "";
         for (Food ingredient : ingredients) {
-            ingDisplay += '\u2022' + " " + quantityManupilation.formatQuantity(ingredient.getQuantity()) + " " + ingredient.getUnit() + " " + ingredient.getName() + "\n\n";
+            ingDisplay += '\u2022' + " " + quantityManupilation.formatQuantity(ingredient.getQuantity()) + " " + ingredient.getUnit() + " "  + "\n\n";
             ingDisplay = ingDisplay.trim();//trims in the case that the ingredient has no unit (to avoid double spaces)
             ingDisplay += " " + ingredient.getName().trim() + "\n";
         }
