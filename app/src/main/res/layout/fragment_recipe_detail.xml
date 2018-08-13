@@ -179,16 +179,13 @@
             android:textStyle="bold"
             android:visibility="gone" />
 
-
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ingredientsMissing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:visibility="gone" />
-
-
+        
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
