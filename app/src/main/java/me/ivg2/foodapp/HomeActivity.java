@@ -57,6 +57,8 @@ public class HomeActivity extends AppCompatActivity implements RecipeFragment.Ca
                 return false;
             }
         });
+        RecipeFragment.browsingRecipes.clear();
+        RecipeFragment.cookingRecipes.clear();
         new RecipeFragment().loadRecommendedRecipes();
     }
 
