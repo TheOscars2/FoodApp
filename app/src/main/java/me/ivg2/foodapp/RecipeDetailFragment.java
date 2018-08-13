@@ -182,7 +182,7 @@ public class RecipeDetailFragment extends Fragment {
     public void setIngredientsInView(ArrayList<Food> ingredients) {
         String ingDisplay = "";
         for (Food ingredient : ingredients) {
-            ingDisplay += '\u2022' + " " + quantityManupilation.formatQuantity(ingredient.getQuantity()) + " " + ingredient.getUnit() + " "  + "\n\n";
+            ingDisplay += '\u2022' + " " + quantityManupilation.formatQuantity(ingredient.getQuantity()) + " " + ingredient.getUnit();
             ingDisplay = ingDisplay.trim();//trims in the case that the ingredient has no unit (to avoid double spaces)
             ingDisplay += " " + ingredient.getName().trim() + "\n";
         }
