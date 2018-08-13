@@ -123,13 +123,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_below="@+id/recipeImageDetail"
+                android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/imageView"
                 android:fontFamily="@font/fauna_one"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:text="TextView"
-                android:textSize="24sp"
-                android:layout_marginTop="5dp"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -156,13 +156,13 @@
                 android:layout_height="29dp"
                 android:layout_alignStart="@+id/RecipeSourceDV"
                 android:layout_below="@+id/RecipeSourceDV"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/fauna_one"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:text="TextView"
-                android:fontFamily="@font/fauna_one"
-                android:textSize="24sp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:textSize="18sp" />
         </LinearLayout>
 
         <TextView
@@ -246,6 +246,7 @@
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/colorPrimary"
             android:textAllCaps="false"
+            android:paddingHorizontal="20dp"
             android:text="meal complete"
             android:textColor="#ffffff"
             android:textSize="18dp"
