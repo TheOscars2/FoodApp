@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".AddFoodFragment">
 
-
-
-
     <android.support.v7.widget.CardView
         android:id="@+id/barcodeBtn"
         android:layout_marginLeft="10dp"
