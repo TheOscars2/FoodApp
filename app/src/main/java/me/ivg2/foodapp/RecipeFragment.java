@@ -48,8 +48,8 @@ public class RecipeFragment extends Fragment {
     private RecipeAdapter recipeAdapter;
     private Unbinder unbinder;
     private TabLayout tabs;
-    private static ArrayList<Recipe> browsingRecipes = new ArrayList<>();
-    private static ArrayList<Recipe> cookingRecipes = new ArrayList<>();
+    public static ArrayList<Recipe> browsingRecipes = new ArrayList<>();
+    public static ArrayList<Recipe> cookingRecipes = new ArrayList<>();
     private final int RECIPES_TO_COOK_POSITION = 0;
     private final int RECIPES_CLOSE_TO_COOKING = 1;
 
